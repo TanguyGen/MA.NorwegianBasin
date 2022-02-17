@@ -64,7 +64,7 @@ basin <- st_difference(basin %>% st_transform(crs), Inshore) %>%
   transmute(Region = "Norwegian Basin", Shore = "Offshore") %>% 
   rbind(Inshore) %>% 
   mutate(Elevation = exactextractr::exact_extract(raster::raster("../Shared data/GEBCO_2020.nc"), ., fun = "mean"),
-         Area = as.numeric(st_area(.)))                                 # Measure the size of each cell
+         area = as.numeric(st_area(.)))                                 # Measure the size of each cell
 
 plot(basin)
 
