@@ -52,11 +52,11 @@ mat %>%
 #### Rayrender ####
 
 tic()
-render_highquality(print_scene_info = T, parallel = TRUE, lightintensity = 0, samples = 150, filename = "rayshade-hi.png", 
-                   scene_elements = bind_rows(rayrender::sphere(z = 100, y = 13000, x = 600, radius = 500,
-                                                                material = rayrender::light(color = "white", intensity = 2500)),
-                                              rayrender::text3d(label = "Norwegian Basin", angle = c(30, 60, 0), z = 5000, y = 1600, x = -650, 
-                                                                text_height = 1500, material = rayrender::light(color = "white", intensity = 100))),  
+render_highquality(print_scene_info = T, parallel = TRUE, lightintensity = 0, samples = 450, filename = "rayshade-hi.png", 
+                   scene_elements = bind_rows(rayrender::sphere(z = 100, y = 6000, x = 600, radius = 250,
+                                                                material = rayrender::light(color = "white", intensity = 2000)),
+                                              rayrender::text3d(label = "Norwegian Basin", angle = c(-30, 60, 0), z = 6000, y = 1200, x = -650, 
+                                                                text_height = 500, material = rayrender::light(color = "white", intensity = 100))),  
                    clamp_value = 2, aperture = 120, # Bigger aperture, more blur
                    min_variance = 0)
 toc()
