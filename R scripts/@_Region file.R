@@ -1,6 +1,7 @@
 
 ## Set repeated commands specific to the project region
-## This version is parameterised for the Barents sea
+## This version is parameterised for the Norwegian Basin
+implementation <- "Norwegian_Basin"
 
 library(sf)
 
@@ -29,7 +30,7 @@ shape <-  matrix %>%
   list() %>% 
   st_polygon() %>% 
   st_sfc() %>% 
-  st_sf(Region = "Norwegian Shelf", geometry = .)
+  st_sf(Region = implementation, geometry = .)
   st_crs(shape) <- st_crs(4326)                                        
   shape <- st_transform(shape, crs = crs)
   return(shape)
@@ -49,7 +50,7 @@ Region_mask <- matrix(c(16.23, 70,
   list() %>% 
   st_polygon() %>% 
   st_sfc() %>% 
-  st_sf(Region = "Norwegian Sea",.)
+  st_sf(Region = implementation,.)
 st_crs(Region_mask) <- st_crs(4326)                                        
 Region_mask <- st_transform(Region_mask, crs = crs)
 
@@ -73,7 +74,7 @@ river_expansion <- matrix(c(5, 62,
   list() %>% 
   st_polygon() %>% 
   st_sfc() %>% 
-  st_sf(Region = "Norwegian Sea",.)
+  st_sf(Region = implementation,.)
 st_crs(river_expansion) <- st_crs(4326)                                          
 river_expansion <- st_transform(river_expansion, crs = 3035)
 
