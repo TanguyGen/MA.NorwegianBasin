@@ -7,7 +7,7 @@ packages <- c("tidyverse", "sf", "stars")                                   # Li
 lapply(packages, library, character.only = TRUE)                            # Load packages
 source("./R scripts/@_Region file.R")                                       # Define project region 
 
-domains <- readRDS("./Data/Shelf domain.rds")
+domains <- readRDS("../Norwegian Shelf/Objects/Domains.rds")
 
 polygons <- read_sf("./Data/Norway management areas/") 
 
@@ -81,7 +81,8 @@ basin <- st_difference(offshore, final_trim) %>%
   transmute(Region = "Norwegian Basin",
             Shore,
             Elevation = exactextractr::exact_extract(raster::raster("../Shared data/GEBCO_2020.nc"), ., fun = "mean"),
-            area = as.numeric(st_area(.)))                                 # Measure the size of each cell
+            area = as.numeric(st_area(.))) %>%                                # Measure the size of each cell
+  arrange(Shore)
 
 plot(basin)
 
