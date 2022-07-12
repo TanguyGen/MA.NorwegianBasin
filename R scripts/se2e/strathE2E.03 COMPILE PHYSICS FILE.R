@@ -35,10 +35,18 @@ My_H_Flows <- readRDS("./Objects/H-Flows.rds") %>%
   mutate(Flow = abs(Flow * 86400)) %>%                                      # Multiply for total daily from per second, and correct sign for "out" flows
   arrange(Month)                                                            # Order by month to match template
 
-My_V_Flows <- readRDS("./Objects/vertical diffusivity.rds") %>%
+My_V_Diff <- readRDS("./Objects/vertical diffusivity.rds") %>%
   filter(between(Year, 2010, 2019)) %>%                                     # Limit to reference period
   group_by(Month) %>% 
   summarise(V_diff = mean(Vertical_diffusivity, na.rm = T)) %>% 
+  ungroup() %>% 
+  arrange(Month)                                                            # Order by month to match template
+
+My_V_Flows <- readRDS("./Objects/SO_DO exchanges.rds") %>%
+  filter(between(Year, 2010, 2019)) %>%                                     # Limit to reference period
+  group_by(Month) %>% 
+  summarise(Upwelling = mean(Upwelling, na.rm = T),
+            Downwelling = mean(Downwelling, na.rm = T)) %>% 
   ungroup() %>% 
   arrange(Month)                                                            # Order by month to match template
 
@@ -47,6 +55,24 @@ My_volumes <- readRDS("./Objects/TS.rds") %>%
   group_by(Compartment, Month) %>%                                          # By compartment and month
   summarise(across(Salinity_avg:Zonal_avg, mean, na.rm = T)) %>%         # Average across years for multiple columns
   ungroup() %>% 
+  arrange(Month)                                                            # Order by month to match template
+
+My_overhang_diffusivity <- readRDS("./Objects/overhang diffusivity.rds") %>%
+  filter(between(Year, 2010, 2019)) %>%                                     # Limit to reference period
+  group_by(Month) %>% 
+  summarise(V_diff = mean(Vertical_diffusivity, na.rm = T)) %>% 
+  ungroup() %>% 
+  arrange(Month)                                                            # Order by month to match template
+
+My_overhang_velocity <- readRDS("./Objects/overhang exchanges.rds") %>% 
+  filter(between(Year, 2010, 2019)) %>%                                     # Limit to reference period
+  group_by(Month, Direction) %>%                                            # Group by flow and time step
+  summarise(Flow = mean(Vertical_velocity, na.rm = T)) %>%                  # Average flows by month over years
+  ungroup() %>% 
+  mutate(Shore = "Offshore", slab_layer = "D") %>% 
+  left_join(My_scale) %>%                                                   # Attach compartment volumes
+  mutate(Flow = Flow/Volume) %>%                                            # Scale flows by compartment volume
+  mutate(Flow = Flow * 86400) %>%                                           # Multiply for total daily from per second
   arrange(Month)                                                            # Order by month to match template
 
 #### Create new file ####
@@ -62,25 +88,15 @@ Physics_new <- mutate(Physics_template, ## Flows, should be proportions of volum
                      D_temp = filter(My_volumes, Compartment == "Offshore D")$Temperature_avg,
                      SI_temp = filter(My_volumes, Compartment == "Inshore S")$Temperature_avg ,
                      ## Vertical diffusivity
-                     log10Kvert = log10(My_V_Flows$V_diff),
-                     DO_log10Kvert = -5,                              #!!# Adding overhang specific variables
-                     D_SO_upwelling = 0,
-                     SO_D_downwelling = 0, 
+                     log10Kvert = log10(My_V_Diff$V_diff),
+                     ## Overhang variables
+                     D_SO_upwelling = My_V_Flows$Upwelling,
+                     SO_D_downwelling = My_V_Flows$Downwelling, 
+                     DO_log10Kvert = log10(My_overhang_diffusivity$V_diff),
                      DO_mixLscale = 0.9,
-                     DO_D_upwelling = 0.001,
-                     D_DO_downwelling = 0.000001) %>% 
-  select(-Upwelling)                                                  # Removed superseded column 
-                     
+                     DO_D_upwelling = filter(My_overhang_velocity, Direction == "Upwelling")$Flow,
+                     D_DO_downwelling = filter(My_overhang_velocity, Direction == "Downwelling")$Flow)  
+
 write.csv(Physics_new, 
           file = stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/physics_{toupper(implementation)}_2010-2019.csv"),
           row.names = F)
-
-
-
-#New <- c("SLight",	"SO_LogeSPM", "SI_LogeSPM", "SO_temp", "D_temp", "SI_temp", "Rivervol_SI", "log10Kvert", "mixLscale", "D_SO_upwelling", 
-#"SO_D_downwelling", "SO_OceanIN", "D_OceanIN", "SI_OceanIN", "SI_OceanOUT", "SO_SI_flow", "habS1_pdist", "habS2_pdist", "habS3_pdist", 
-#"habD1_pdist", "habD2_pdist", "habD3_pdist", "Inshore_waveheight", "DO_log10Kvert", "DO_mixLscale", "DO_D_upwelling", "D_DO_downwelling")
-
-#add <- setdiff(New, names(Physics_template))
-#drop <- setdiff(names(Physics_template), New)
-
