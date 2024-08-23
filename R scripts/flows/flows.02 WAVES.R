@@ -5,7 +5,7 @@
 
 rm(list=ls())
 
-Packages <- c("MiMeMo.tools", "exactextractr", "raster")                    # List packages
+Packages <- c("tidyverse", "exactextractr", "raster")                    # List packages
 lapply(Packages, library, character.only = TRUE)                            # Load packages
 source("./R scripts/@_Region file.R")
 

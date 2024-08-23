@@ -2,7 +2,8 @@
 ## Set repeated commands specific to the project region
 ## This version is parameterised for the Norwegian Basin
 implementation <- "Norwegian_Basin"
-
+ssp <- "ssp370"
+  
 library(sf)
 
 #EPSG <- rgdal::make_EPSG()
@@ -53,6 +54,13 @@ Region_mask <- matrix(c(16.23, 70,
   st_sf(Region = implementation,.)
 st_crs(Region_mask) <- st_crs(4326)                                        
 Region_mask <- st_transform(Region_mask, crs = crs)
+
+## Fix straggly bit of the offshore zone
+
+trim  <- matrix(c(8.2, 16, 16, 8.2, 8.2,    # Longitudes
+                  66.95, 66, 69, 67.05, 66.95), ncol = 2, byrow = F) %>% 
+  shape() %>% 
+  st_transform(crs = 4326)
 
 #### bounds.2 MAKE TRANSECTS ####
 

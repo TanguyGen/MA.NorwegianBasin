@@ -12,12 +12,17 @@ domains <- readRDS("./Objects/Domains.rds")                                 # Lo
 Edges <- readRDS("./Objects/Split_boundary.rds") %>%                        # Load in segments of domain boundaries
   mutate(Segment = as.numeric(Segment))
 
-#### Create a NEMO-MEDUSA grid to intersect with transects ####
+#### Create a NEMO-ERSEM grid to intersect with transects ####
 
-points <- readRDS("./Objects/Months/NM.01.1980.rds") %>%                     # Import an NM summary object
+points <- readRDS("./Objects/NE_Days/NE.01.2015.rds") %>%                   # Import an NM summary object
   filter(slab_layer == "S") %>%                                             # Limit to the shallow layer to avoid duplication (and it's bigger)
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)  %>%             # Set as sf object
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)  %>%            # Set as sf object
   st_transform(crs = crs)
+
+days <- ifelse(nrow(points)%%6 == 1, 5, 6)                                  # If the number of rows is not divisible into 6 then it is a 5 day february
+
+points <- mutate(points, Day = rep(1:days, each = nrow(points)/days)*5) %>%       # Insert a column of days
+  filter(Day == 5)
 
 grid <- st_union(points) %>%                                                # Combine              
   st_voronoi() %>%                                                          # And create a voronoi tesselation
@@ -27,7 +32,7 @@ grid <- st_union(points) %>%                                                # Co
   arrange(x, y)                                                             # Order the polygons to match the points
 
 ggplot(grid) +                                                              # Check the polygons match correctly with points
-  geom_sf(aes(fill = Ice_conc), size = 0.05, colour = "white") +
+  geom_sf(aes(fill = Meridional), size = 0.05, colour = NA) +
   geom_sf(data = Edges, colour = "orange") +
   zoom +
   theme_minimal() +
@@ -38,11 +43,19 @@ ggsave("./Figures/flows/check.04.1.png")
 
 #### Characterise transects (weights, target current, nature of water exchanges) ####
 
-labelled <- st_intersection(Edges, grid) %>% 
+labelled <- st_intersection(st_make_valid(Edges), st_make_valid(grid)) %>% 
   mutate(split_length = as.numeric(st_length(.))) %>% 
   select(x, y, slab_layer, Shore, split_length, Bathymetry) %>% 
+  filter(split_length > 0.001) %>%                                              # Drop 6 tiny transects which are breaking the algorithm
+  slice(-2095) %>%                                                              # Problem small transect introduced whre I trimmed the offshore polygon (both straddling points were outside the polygon)
   characterise_flows(domains, precision = 10000) %>%                            # In which direction? (in or out of box and with which neighbour)
   filter(Neighbour != "Offshore")                                               # Offshore as a neighbour is a rare artefact from resolution.
+
+# check <- slice(labelled[[2]], labelled[[1]]$V3)
+# 
+# ggplot() +
+#   geom_sf(data = domains, colour = "black") +
+#   geom_sf(data = check, colour = "red")
 
 ggplot(labelled) +                                                              # Check segments are labelled
   geom_sf(aes(colour = Neighbour)) +
@@ -76,6 +89,7 @@ boundary_conditions <- bind_rows(filter(shallow, Neighbour == "Ocean"),         
   mutate(perimeter = T)
 
 test <- anti_join(boundary_conditions, water_exchanges)                                # Check boundary transects are a subset of water_exchange transects          
+nrow(test) ==0 # We want TRUE
 
 Transects <- left_join(water_exchanges, boundary_conditions)                           # Attach column indicating rows to drop when sumarising the boundary
 

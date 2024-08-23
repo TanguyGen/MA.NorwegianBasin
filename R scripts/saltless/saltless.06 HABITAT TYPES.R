@@ -12,13 +12,20 @@ source("./R scripts/@_Region file.R")
 domains <- readRDS("./Objects/Domains.rds") %>%                  # Load SF polygons of the MiMeMo model domains
   st_transform(crs = 4326)                                       # Transform to Lat/Lon to match other objects
 
-sediment <- readRDS("../Sediment/Objects/modelled_sediment.rds") # Import full sediment grid
+sediment <- readRDS("./Data/modelled_sediment.rds") # Import full sediment grid
 
 translate <- read.csv("./Data/Sediment habitats.csv") %>%        # Import sediment aggregations
   mutate(Sed_class = as.factor(SEDKORNSTR)) %>% 
   select(Sed_class, Habitat)                                     # Drop excess columns
 
+overhang <- readRDS("./Objects/Overhang.rds") %>%                # Import overhang to scale proportions
+  st_transform(crs = 4326) %>% 
+  mutate(Habitat = "Overhang") %>% 
+  st_make_valid()
+
 #### Define geographic extent of each habitat type ####
+
+sf_use_s2(F)
 
 habitats <- left_join(sediment, translate) %>%                   # Attach habitat labels to predicted NGU classes
   mutate(Sed_class = as.factor(Sed_class),                       # Convert to factors
@@ -42,6 +49,35 @@ polygons <- st_intersection(st_make_valid(st_transform(polygons, crs = crs)), # 
   select(-c(Elevation, area)) %>%                                # Drop excess data
   st_transform(crs = 4326)                                       # Switch back to mercator
 
+#saveRDS(polygons, "./Objects/Habitats.rds")
+
+#### Accommodate overhang ####
+
+ggplot() +                                                       # Check for overhang overlap with sediment data
+  geom_sf(data = polygons, aes(fill = Habitat)) +
+  geom_sf(data = overhang, aes(fill = Habitat), colour = "red", alpha = 0.5) +
+  theme_minimal()
+
+polygons <- st_difference(polygons, overhang) %>%                # Cut overhang out of sediment
+  st_cast("POLYGON") %>%                                         # Expose each shape to allow removing whispy bits
+  mutate(clean = as.numeric(st_area(.))) %>%                     # Get the size of each shape, assuming whisps are small
+  filter(clean > 150) %>%                                        # Adjust to get rid of ghosts around the edge of the overhang
+  group_by(Habitat, Shore, area) %>%                             # Cheat way to return to "MULTIPOLYGON", and drop redundant columns
+  summarise(Elevation = mean(Elevation)) %>%                     # Clean
+  bind_rows(overhang) %>%                                        # Add overhang polygon
+  mutate(Habitat = str_remove(Habitat, "_strath"))               # Clean Habitat labels
+#sf_use_s2(T)
+
+G_Y2 <- c(`Inshore Rock` = "#40333C", `Inshore Silt` = "#284481", `Inshore Sand` = "#9097CC", `Inshore Gravel` = "#4A8FA1",
+          `Offshore Rock` = "#d7c288", `Offshore Silt` = "#ffb700", `Offshore Sand` = "#FFD25F", `Offshore Gravel` = "#ffedbd", `Offshore Overhang` = '#b01313')
+
+ggplot() +                                                       # Check for overhang overlap with sediment data
+  geom_sf(data = polygons, aes(fill = paste(Shore, Habitat))) +
+  scale_fill_manual(values = (G_Y2)) +
+  theme_minimal()
+
+ggsave("./Figures/saltless/habitats dominant.png", bg = "white")
+
 saveRDS(polygons, "./Objects/Habitats.rds")
 
 #### Calculate proportion of model zones in each habitat ####
@@ -63,4 +99,3 @@ ggplot(proportions) +
   labs(y = "Cover (%)", x = NULL, caption = "Percentage of model domain in each habitat class")
 
 ggsave("./Figures/saltless/Habitat types.png", width = 16, height = 8, units = "cm")
-

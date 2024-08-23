@@ -41,8 +41,8 @@ coords <- select(data, latitude, longitude) %>%                             # Wo
   st_drop_geometry() %>%                                                    # Drop SF formatting
   mutate(Shore = as.factor(Shore))                                          
 
-ggplot() + geom_sf(data = coords, aes(colour = Shore)) +                   # Visual check of grid
-  geom_sf(data = domains, fill = NA)
+#ggplot() + geom_sf(data = coords, aes(colour = Shore)) +                   # Visual check of grid
+#  geom_sf(data = domains, fill = NA)
 
 #### Summarise ####
 

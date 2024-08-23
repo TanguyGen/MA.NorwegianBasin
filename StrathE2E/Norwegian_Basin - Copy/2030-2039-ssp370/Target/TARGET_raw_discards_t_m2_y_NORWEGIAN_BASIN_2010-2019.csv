@@ -1,0 +1,13 @@
+"Gear_name","Gear_code","Discardweight_PF","Discardweight_DF","Discardweight_MF","Discardweight_FDB","Discardweight_CSB","Discardweight_CZ","Discardweight_BD","Discardweight_SL","Discardweight_CT","Discardweight_KP"
+"Mollusc_dredge","MD",0,0,0,0,0,0,0,0,0,0
+"Harpoons","Harp",0,0,0,0,0,0,0,0,0,0
+"Kelp_harvester","KH",0,0,0,0,0,0,0,0,0,0
+"Longlines+Gillnets","LLGN",0,0,0,0,0,0,0,0,0,0
+"Pelagic_trawl+seine","PTS",8.70371432953735e-11,0,1.37240846678115e-11,0,0,0,0,0,0,0
+"Creels","CR",0,0,0,0,0,0,0,0,0,0
+"Recreational","Rec",0,0,0,0,0,0,0,0,0,0
+"Shelf_Trawlers","ST",1.36097332467908e-10,3.59583756362133e-09,0,0,0,0,0,0,0,0
+"Blank1","B1",0,0,0,0,0,0,0,0,0,0
+"Blank2","B2",0,0,0,0,0,0,0,0,0,0
+"Blank3","B3",0,0,0,0,0,0,0,0,0,0
+"Blank4","B4",0,0,0,0,0,0,0,0,0,0

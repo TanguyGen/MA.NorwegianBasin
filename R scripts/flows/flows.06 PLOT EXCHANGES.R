@@ -9,7 +9,7 @@ source("./R scripts/@_Region file.R")                                       # De
 
 H_Flows <- readRDS("./Objects/H-Flows.rds") %>%                             # Load flow data
   mutate(Neighbour = ifelse(Shore == "Inshore" & Neighbour == "Ocean", "Shelf", Neighbour)) %>% 
-  filter(Year == 1980 & Month == 1)                                         # Use an example year
+  filter(Year == 2015 & Month == 1)                                         # Use an example year
 
 V_Flows <- readRDS("./Objects/vertical diffusivity.rds")
 

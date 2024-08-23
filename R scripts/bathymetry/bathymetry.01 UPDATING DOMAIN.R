@@ -59,14 +59,18 @@ ggsave("./Figures/bathymetry/Norwegian Basin.png")
 
 
 Inshore <- st_union(domains) %>% 
-  st_sf(Region = "Norwegian Basin", Shore = "Inshore", geometry = .)
+  st_sf(Region = "Norwegian Basin", Shore = "Inshore", geometry = .) %>% 
+  st_transform(crs)
 
 basin <- st_difference(basin %>% st_transform(crs), Inshore) %>%
   transmute(Region = "Norwegian Basin", Shore = "Offshore") %>% 
+  st_difference(st_transform(trim, crs = crs)) %>%  
+  select(-Region.1) %>% 
   rbind(Inshore) %>% 
   mutate(Elevation = exactextractr::exact_extract(raster::raster("../Shared data/GEBCO_2020.nc"), ., fun = "mean"),
          area = as.numeric(st_area(.)))                                 # Measure the size of each cell
 
 plot(basin)
+plot(filter(basin, Shore == "Offshore"))
 
 saveRDS(basin, "./Objects/Domains.rds")

@@ -50,5 +50,5 @@ ggsave("./Figures/saltless/Atmospheric N Deposition.png", last_plot(), dpi = 500
 #### Save ####
 
 Deposition %>% 
-  dplyr::select(Month, Oxidation_state, Shore,  Year) %>%  
+  dplyr::select(Month, Oxidation_state, Shore,  Year, Measured) %>%  
   saveRDS("./Objects/Atmospheric N deposition.rds")
