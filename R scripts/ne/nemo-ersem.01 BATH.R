@@ -9,24 +9,20 @@ rm(list=ls())                                                               # Wi
 packages <- c("MiMeMo.tools", "ncdf4", "sf")                                # List handy data packages
 lapply(packages, library, character.only = TRUE)                            # Load packages
 
-Space <- list.files("../Shared data/NEMO_ERSEM/Yuri_test/", recursive = TRUE, full.names = TRUE) %>% 
-  .[8] %>%                                                                  # Name an example NE file
-  nemoRsem::get_spatial(depthvar = "depth")                                # And pull the spatial variables
+Space <- nemoRsem::get_spatial("I:/Science/MS-Marine/MA/CNRM_ssp370/N3_n/2016/CNRM_ssp370_5d_20160101_20160131_ptrc_T_N3_n.nc", depthdim = "deptht")                                # And pull the spatial variables
 
 #### Get NEMO-MEDUSA bathymetry data ####
 
-NE_bath <- "../Shared data/NEMO_ERSEM/Yuri_test/STRATH_bathymetry.nc"
-
-raw <- nc_open(NE_bath)
+raw <- nc_open("I:/Science/MS-Marine/MA/domain_cfg_zps.closea.compressed.nc")
 bath_lat <- ncvar_get(raw, varid = "nav_lat")
 bath_lon <- ncvar_get(raw, varid = "nav_lon")
-bath_bath <- ncvar_get(raw, varid = "bathy")
+bath_bath <- ncvar_get(raw, varid = "bathy_metry")
 nc_close(raw)
 
 #### Crop to the shared data files extent ####
 
-tl <- which(bath_lat == Space$nc_lat[1,1] & bath_lon == Space$nc_lon[1,1], arr.ind = TRUE) # Cut out Bathymetry columns which match SA CROP
-tr <- which(bath_lat == Space$nc_lat[1,ncol(Space$nc_lat)] & bath_lon == Space$nc_lon[1,ncol(Space$nc_lon)], arr.ind = TRUE)# Where in the big grid matches each corner of SA?
+tl <- which(bath_lat == Space$nc_lat[1,1] & bath_lon == Space$nc_lon[1,1], arr.ind = TRUE) # Cut out Bathymetry columns which match the CROP
+tr <- which(bath_lat == Space$nc_lat[1,ncol(Space$nc_lat)] & bath_lon == Space$nc_lon[1,ncol(Space$nc_lon)], arr.ind = TRUE)# Where in the big grid matches each corner?
 bl <- which(bath_lat == Space$nc_lat[nrow(Space$nc_lat),1] & bath_lon == Space$nc_lon[nrow(Space$nc_lon),1], arr.ind = TRUE)  
 br <- which(bath_lat == Space$nc_lat[nrow(Space$nc_lat), ncol(Space$nc_lat)] & bath_lon == Space$nc_lon[nrow(Space$nc_lon),ncol(Space$nc_lon)], arr.ind = TRUE)
 
