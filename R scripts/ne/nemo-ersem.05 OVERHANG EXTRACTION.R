@@ -15,7 +15,7 @@ plan(multisession)
 domain <- readRDS("./Objects/Overhang.rds") %>%                             # Get the horizontal area to extract over 
   select(Shore) 
 
-example <- list.files("I:/Science/MS/Shared/MA/CNRM_ssp370",            # File to pull dimensions from 
+example <- list.files("I:/Science/MS-Marine/MA/CNRM_ssp370",            # File to pull dimensions from 
                       recursive = T, full.names = TRUE, pattern = "difvho")[5]
 
 #### Create summary scheme to interpolate a depth layer over a given area #####
@@ -24,31 +24,7 @@ Bathymetry <- readRDS("./Objects/NE_grid.rds") %>%                          # Im
   st_drop_geometry() %>%                                                    # Drop sf geometry column 
   select(-c("x", "y"), latitude = Latitude, longitude = Longitude)          # Clean column so the bathymetry is joined by lat/lon
 
-scheme <- scheme_interp_slice(get_spatial(example, depthvar = "depth"), DDepth, domain) # Get a scheme for linear interpolation between 2 depth layers
-
-#### !!!! Get Yuri's temporary mask fix. ####
-
-raw <- nc_open("I:/Science/MS/Shared/MA/STRATH_GS1p0_reg025_mesh_mask.nc")
-mask <- ncvar_get(raw, varid = "Tmask")                                          # 3D array where 1 is ocean
-nav_lat <- ncvar_get(raw, varid = "lat")                                        # We need lat lon to join the grid to our different crop
-nav_lon <- ncvar_get(raw, varid = "lon")                                        
-nc_close(raw)
-
-image(mask[,,1])
-image(mask[,,53])
-
-fix <- reshape2::melt(mask, varname = c("x", "y", "layer"), value.name = "ocean_mask") %>% 
-  filter(ocean_mask == 1) 
-
-scheme <- scheme %>% 
-  left_join(fix) %>% 
-  drop_na(ocean_mask) %>% 
-  select(-ocean_mask) %>% 
-  group_by(y, x) %>%                                                        # Rebuild grouping in case any pixels are dropped, ruining the order
-  mutate(group = cur_group_id()) %>%                                            
-  ungroup()
-
-#### end fix ####
+scheme <- scheme_interp_slice(get_spatial(example, depthdim = "depth"), DDepth, domain) # Get a scheme for linear interpolation between 2 depth layers
 
 start <- scheme_to_start()                                                  # Get netcdf vectors which define the minimum
 count <- scheme_to_count()                                                  # amount of data to import
@@ -67,12 +43,16 @@ summary <- filter(scheme, layer == 1) %>%                                   # Cr
 
 #### Extract ####
 
-W_files <- rbind(categorise_files("I:/Science/MS/Shared/MA/CNRM_ssp370", recursive = FALSE),      # For historical and projection runs
-                 categorise_files("I:/Science/MS/Shared/MA/CNRM_hist/", recursive = FALSE)) %>%   # Build metadata for each file
+W_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
+                 categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
+                 categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
+                 categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
+                 categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
+                 categorise_files("I:/Science/MS-Marine/MA/GFDL_hist", recursive = TRUE)) %>%   # Build metadata for each file
   drop_na() %>% 
   select(-Name) %>% 
   filter(Type %in% c( "difvho", "wo")) %>% 
-  split(., f = list(.$Month, .$Year))                                       # Get a DF of file names for each time step to summarise to
+  split(., f = list(paste(.$Month, .$Year, .$Forcing, .$SSP)))                  # Specify the timestep to average files over.
 
 tic()
 W_files %>%
@@ -81,7 +61,7 @@ W_files %>%
            out_dir = "./Objects/overhang", scheme = scheme,
            start = start, count = count, summary = summary, 
            collapse_days = FALSE, .progress = T)
-toc() # 12.5 minutes
+toc() # 6.9 minutes
 
 #### Check ####
 
