@@ -43,8 +43,8 @@ International <- t(((EU + IMR) *                                            # Su
                      domain_size +  t(Faroe+Iceland)/eez_size                                        # add Faroe and Iceland and convert to per m^2
 
 International["Shelf_Trawlers", "Macrophyte"] <- 0                                  # There's one tiny bit of seaweed we think should be removed.
-International["Recreational", "Demersal (quota limited)"] <- 9856 / domain_size # Add recreational fishing activity.
-International["Recreational", "Migratory"] <- 20 / domain_size              # Add recreational fishing activity.
+International["Recreational", "Demersal (quota limited)"] <- 18493 / domain_size # Add recreational fishing activity.
+International["Recreational", "Migratory"] <- 69.42 / domain_size              # Add recreational fishing activity.
 
 heatmap(International)
 
