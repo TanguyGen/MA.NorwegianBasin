@@ -11,10 +11,10 @@ Domains <- st_transform(readRDS("./Objects/Domains.rds"), crs = 4326)         # 
 
 habitats <- readRDS("./Objects/Habitats.rds")                                 # Load habitat polygons
 
-gear <- read.csv2("./Data/MiMeMo gears.csv") 
+gear <- read.csv("./Data/MiMeMo_gears.csv") 
 
 target <- expand.grid(Habitat = paste0(habitats$Shore, " ", habitats$Habitat), 
-                      Aggregated_gear = unique(gear$Aggregated_gear))         # Get combinations of gear and guild
+                      Aggregated_gear = unique(gear$Aggregated_gear))         # Get combinations of gear and habitat
 
 Regions <- sf::read_sf(dsn="./Data/IMR/Regions/") %>%                      # Import IMR regions shapefile
   st_as_sf() %>%                                                              # Convert to SF
@@ -31,15 +31,15 @@ GFW_pots <- brick("./Objects/GFW_pots.nc", varname = "NOR-pots_and_traps") %>%  
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
-GFW_seiners <- brick("./Objects/GFW_seiners.nc", varname = "NOR-seiners") %>%      # For each class of gear
+GFW_seiners <- brick("./Objects/GFW_seiners.nc", varname = "NOR-Seiners") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
-GFW_trawlers <- brick("./Objects/GFW_ptrawlers.nc", varname = "NOR-strawlers") %>%      # For each class of gear
+GFW_ptrawlers <- brick("./Objects/GFW_ptrawlers.nc", varname = "NOR-Pelagic_trawlers") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
-GFW_trawlers <- brick("./Objects/GFW_strawlers.nc", varname = "NOR-ptrawlers") %>%      # For each class of gear
+GFW_strawlers <- brick("./Objects/GFW_strawlers.nc", varname = "NOR-Shelf_trawlers") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
@@ -73,12 +73,12 @@ IMR <- full_join(IMR, Unrepresented) %>%                                      # 
 
 habitat_weights <- rownames_to_column(IMR, var = "Feature") %>%               # Create a column to track each IMR region and gear combination
   st_intersection(habitats) %>%                                               # Crop the IMR region polygons to habitat types
-  mutate(GFW = case_when(Gear_type == "Shelf_trawlers" ~ exact_extract(GFW_strawlers, .x, fun = "sum"), # Depending on gear type
-                         Gear_type == "Pelagic_trawlers" ~ exact_extract(GFW_ptrawlers, .x, fun = "sum"),
-                         Gear_type == "Seiners" ~ exact_extract(GFW_seiners, .x, fun = "sum"),
-                         Gear_type == "pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets" ~ exact_extract(GFW_longlines, .x, fun = "sum"),
-                         Gear_type == "pots_and_traps" ~ exact_extract(GFW_pots, .x, fun = "sum"),
-                         Gear_type == "dredge_fishing" ~ exact_extract(GFW_dredge, .x, fun = "sum")),            # From GFW by mobile and static gear
+  mutate(GFW = case_when(Gear_type == "Shelf_trawlers" ~ exact_extract(GFW_strawlers, ., fun = "sum"), # Depending on gear type
+                         Gear_type == "Pelagic_trawlers" ~ exact_extract(GFW_ptrawlers, ., fun = "sum"),
+                         Gear_type == "Seiners" ~ exact_extract(GFW_seiners, ., fun = "sum"),
+                         Gear_type == "pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets" ~ exact_extract(GFW_longlines, ., fun = "sum"),
+                         Gear_type == "pots_and_traps" ~ exact_extract(GFW_pots, ., fun = "sum"),
+                         Gear_type == "dredge_fishing" ~ exact_extract(GFW_dredge, ., fun = "sum")),            # From GFW by mobile and static gear
          Habitat = paste0(Shore, " ", Habitat)) %>%                           # Combine habitat labels
   group_by(Region, Aggregated_gear) %>%                                       # Per region and gear
   mutate(habitat_share = GFW / sum(GFW, na.rm = T)) %>%                       # Work out the proportion of activity in each piece split over habitats
@@ -115,3 +115,4 @@ saveRDS(Absolute_effort_habitats, "./Objects/IMR absolute habitat effort.rds")# 
 
 ## How much of the corrected effort is allocated a habitat type?
 sum(Absolute_effort_habitats, na.rm = T) / sum(IMR_effort$corrected_effort, na.rm = T)
+

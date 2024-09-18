@@ -3,60 +3,142 @@
 
 #### Set up ####
 
-library(tidyverse)
+# Wipe environment and load required data
+rm(list = ls())
 
-gear <- read.csv2("./Data/MiMeMo gears.csv") %>%                                   # Import gear names
-  dplyr::select(Aggregated_gear, `gear type` = Gear_code)                         # Limit to FAO system
+packages <- c("data.table","tidyr","purrr", "furrr", "future", "tictoc", "raster", "sf","progressr","tictoc","dplyr","tibble","exactextractr")
+lapply(packages, library, character.only = TRUE)
+
+
+gear <- read.csv("./Data/MiMeMo_gears.csv")                     # Limit to FAO system
   
-guild <- read.csv2("./Data/MiMeMo fish guilds.csv") %>%                            # Import guild names
-  dplyr::select(Guild, species = FAO) %>%                                         # Limit to FAO system
-  drop_na() %>%                                                                   # Drop those without a code
-  distinct() %>%                                                                  # Drop duplicated rows which hang around after ditching other systems
-  group_by(species) %>%                                                           # 1 duplicated code to remove ()
-  slice_head() %>%                                                                # So only take the first instance of each code
+guild <- read.csv2("./Data/MiMeMo fish guilds.csv")
+
+Domains <- st_transform(readRDS("./Objects/Domains.rds"), crs = 4326) %>%
+  st_as_sf() %>%
+  mutate(Keep = TRUE)
+
+Files <- list.files(path = "./Data/Fiskeridirektoratet/Open_data",
+                    pattern = "*.csv",
+                    full.names = T) # Get a list of files to import
+
+# Set up parallel execution with furrr
+plan(multisession)
+tic()
+options(future.globals.maxSize = 2 * 1024 ^ 3)
+with_progress({
+  p <- progressor(along = Files)
+  Landings <- future_map(Files, ~ {
+    p()
+    # For each csv
+    fread(.x, , sep = ";", dec = ",") %>%
+      dplyr::select(
+        `Redskap (kode)`,
+        `Art FAO (kode)`,
+        `Produktvekt`,
+        `Lon (lokasjon)`,
+        `Lat (lokasjon)`
+      ) %>%
+      mutate(
+        Gear_code = `Redskap (kode)`,
+        FAO = `Art FAO (kode)`,
+        Gear_code = as.character(Gear_code),
+      ) %>%
+      left_join(gear) %>%                                                         # Attach gear labels
+      left_join(guild) %>%                                                        # Attach guild labels
+      filter(Aggregated_gear == "Dredging")%>%
+      mutate(Points=st_sfc(map2(`Lon (lokasjon)`, `Lat (lokasjon)`, ~ st_point(c(.x, .y))), crs = 4326),
+             Within=map_lgl(Points, ~ any(st_within(., Domains, sparse = FALSE)))
+      )%>%
+      filter(between(`Lat (lokasjon)`, 62, 75),                                 # Keep fishing location in the Norwegian Sea
+             between(`Lon (lokasjon)`, -7, 16),
+             Within==TRUE) %>%
+      dplyr::select(`Produktvekt`, Aggregated_gear, Guild) %>%
+      as.data.frame()                                           # Convert to data frame to play nicely with rasters
+  })%>%
+    data.table::rbindlist() %>%
+    group_by(Aggregated_gear, Guild) %>%         # Remove missing data
+    summarise(`Produktvekt` = mean(`Produktvekt`, na.rm = TRUE)) %>%                            # Mean the offal percentage for each gear and guild
+    ungroup()
+})
+toc()
+
+landings_target <- expand.grid(Guild = unique(guild$Guild), # Forces birds and pinnipeds back in 
+                               Aggregated_gear = unique(gear$Aggregated_gear) ) 
+
+
+Dredge_Landings<- Landings%>% 
+  right_join(landings_target)%>% # Create one big data frame
+  filter(Aggregated_gear != "Dropped") %>%                                  # Ditch the unneeded gear class
+  replace_na(replace = list(Produktvekt = 0)) %>%                      # Nas are actually landings of 0
+  pivot_wider(names_from = Aggregated_gear, values_from = Produktvekt) %>% # Spread dataframe to look like a matrix
+  column_to_rownames('Guild') %>%                                           # Remove character column
+  as.matrix() %>%                                                           # Convert to matrix
+  .[order(row.names(.)), order(colnames(.))] 
+
+saveRDS(Dredge_Landings, "./Objects/Mollusc dredge landings.rds")
+#Dredge_Landings<-readRDS("./Objects/Mollusc dredge landings.rds")
+
+GFW_dredge <- brick("./Objects/GFW_dredge.nc", varname = "NOR-dredge_fishing") %>%      # For each class of gear
+  calc(mean, na.rm = T)%>%
+  projectRaster(crs = crs(Domains))
+
+effort_target <- dplyr::select(gear, Aggregated_gear) %>%                     # Select gear names
+  distinct() %>%                                                              # Drop duplicates
+  filter(Aggregated_gear != "Dropped")  
+
+habitats <- readRDS("./Objects/Habitats.rds") %>%                           # Load habitat polygons
+  mutate(area = as.numeric(st_area(.)))
+
+habitat_target <- expand.grid(Habitat = paste0(habitats$Shore, " ", habitats$Habitat), 
+                      Aggregated_gear = unique(gear$Aggregated_gear))         # Get combinations of gear and habitat
+
+
+
+Effort_dredge <-c(
+  "NOR-dredge_fishing",
+  "FRO-dredge_fishing",
+  "ISL-dredge_fishing",
+  "RUS-dredge_fishing",
+  "EU+UK-dredge_fishing",
+  "REST-dredge_fishing"
+) %>%
+  future_map(~{ brick("./Objects/GFW_dredge.nc", varname = .x ) %>%                   # Import a brick of all years
+      exact_extract(habitats, fun = "sum") %>%                             # Sum fishing hours within habitat types 
+      mutate(Variable = .x) %>%                                            # Attach the variable name to keep track
+      cbind(sf::st_drop_geometry(habitats))})%>%
+  rbindlist()%>%
+  pivot_longer(starts_with("sum"), names_to = "Year", values_to = "Hours") %>%# Reshape so all years are in a column
+  separate(Variable, into = c("Flag", "Gear_type"), sep = "-") %>%# Split variable name into flag and gear type
+  left_join(gear)%>%
+  mutate(Year = as.numeric(str_remove(Year, "sum.X")) + 2011,
+         Habitat = paste0(Shore, " ", Habitat))%>%
+  dplyr::select(Year,Hours,Habitat,Aggregated_gear)%>%
+  group_by(Aggregated_gear,Habitat)%>%
+  summarise(Hours=mean(Hours,na.rm=TRUE))%>%
   ungroup()
 
-target <- expand.grid(Guild = unique(read.csv2("./Data/MiMeMo fish guilds.csv")$Guild), # Create our target matrix to fill
-                      Aggregated_gear = unique(read.csv2("./Data/MiMeMo gears.csv")$Aggregated_gear))
+total_effort<-Effort_dredge%>%
+  group_by(Aggregated_gear)%>%
+  summarise(Hours=sum(Hours,na.rm=TRUE))%>%
+  ungroup()%>%
+  right_join(effort_target)%>%
+  filter(Aggregated_gear != "Dropped") %>%                                    # Ditch the unneeded gear class
+  replace_na(replace = list(Hours = 0)) %>%                                   # Nas are actually effort of 0
+  column_to_rownames('Aggregated_gear') %>%                                   # Remove character column
+  as.matrix() %>%                                                             # Convert to matrix
+  .[order(row.names(.)),] 
 
-#### Import data ####
 
-data <- map(2:6,                                                                 # For each year in it's own sheet
-    ~{readxl::read_excel("./Data/EU_fish/FDI-catches-by-country.xlsx", sheet = .x) %>% # Import data
-    filter(`sub-region` %in% c("27.2.A"))}) %>%    # Limit to regions of interest
-  data.table::rbindlist() %>%                                                    # Combine
-  left_join(guild) %>%                                                           # Classify species by guild
-  left_join(gear) %>%                                                            # Classify gears by group
-  drop_na(Guild, Aggregated_gear)                                                # Drop NAs as we known these aren't in our domain from other spatially explicit data
-  
-#### Get discard rates ####
+habitat_effort<-Effort_dredge%>%
+  right_join(habitat_target)%>%
+  filter(Aggregated_gear != "Dropped") %>%                                    # Ditch the unneeded gear class
+  replace_na(replace = list(Hours = 0)) %>%                                  # Nas are actually landings of 0
+  pivot_wider(names_from = Aggregated_gear, values_from = Hours) %>%         # Spread dataframe to look like a matrix
+  column_to_rownames('Habitat') %>%                                           # Remove character column
+  as.matrix() %>%                                                             # Convert to matrix
+  .[order(row.names(.)), order(colnames(.))]
 
-known <- data %>%                                                                # NK = not known, C = confidential, basically fewer than 3 ships
-  mutate(reports = ifelse(!`total discards (tonnes)` %in% c("NK", "C"), "Value", `total discards (tonnes)`)) %>% 
-  count(reports) %>%                                                             # Count how many reports for discards are confidential, known, or just missing
-  mutate(n = n/sum(n))                                                           # Calculate proportion
-
-rate <- filter(data, !`total discards (tonnes)` %in% c("NK", "C")) %>%           # Limit to discards we know about
-  mutate(discards = as.numeric(`total discards (tonnes)`),                       # Convert to a number
-         landed = as.numeric(`total live weight landed (tonnes)`)) %>%              
-  mutate(Discard_rate = discards/(discards + landed)) %>%                        # Calculate discard rate
-  drop_na() %>%                                                                  # There are a couple of 0 landings and 0 discards so drop these
-  group_by(Guild, Aggregated_gear) %>% 
-  summarise(Discard_rate = mean(Discard_rate)) %>%                               # Get the average discard rate per guild and gear combo
-  ungroup() %>% 
-  right_join(target) %>%                                                         # Join to all combinations of gear and guild
-  filter(Aggregated_gear != "Dropped") %>%                                       # Ditch the uneeded gear class
-  replace_na(replace = list(Discard_rate = 0)) %>%                               # Nas get a rate of 0
-  pivot_wider(names_from = Aggregated_gear, values_from = Discard_rate) %>%      # Spread dataframe to look like a matrix
-  column_to_rownames('Guild') %>%                                                # Remove character column
-  as.matrix() %>%                                                                # Convert to matrix
-  .[order(row.names(.)), order(colnames(.))] %>%                                 # Alphabetise rows and columns
-  t()
-
-rate[,c("Cetacean", "Macrophyte", "Birds")] <- 1                    # Overwrite guilds which are always discarded
-rate["Harpoons", "Cetacean"] <- 0                                                # Except for specific targeted gears
-rate["Kelp harvesting", "Macrophyte"] <- 0
-
-saveRDS(rate, "./Objects/EU discard rates.rds")
-write.csv(rate,"./Target/discard rates.csv", row.names=TRUE) # Save out target data
+saveRDS(total_effort, "./Objects/Mollusc dredge effort.rds")
+saveRDS(habitat_effort, "./Objects/Mollusc dredge habitat effort.rds")
 

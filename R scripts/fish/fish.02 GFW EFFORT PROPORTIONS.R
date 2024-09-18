@@ -63,7 +63,7 @@ Proportion_effort_ptrawlers <- c(
   "EU+UK-Pelagic_trawlers",
   "REST-Pelagic_trawlers"
 )%>%
-  future_map(~{ brick("./Objects/GFW_trawlers.nc", varname = .x) %>%                   # Import a brick of all years
+  future_map(~{ brick("./Objects/GFW_ptrawlers.nc", varname = .x) %>%                   # Import a brick of all years
       exact_extract(habitats, fun = "sum") %>%                             # Sum fishing hours within habitat types 
       mutate(Variable = .x) %>%                                            # Attach the variable name to keep track
       cbind(sf::st_drop_geometry(habitats))})%>%
@@ -77,7 +77,7 @@ Proportion_effort_strawlers <- c(
   "EU+UK-Shelf_trawlers",
   "REST-Shelf_trawlers"
 )%>%
-  future_map(~{ brick("./Objects/GFW_trawlers.nc", varname = .x) %>%                   # Import a brick of all years
+  future_map(~{ brick("./Objects/GFW_strawlers.nc", varname = .x) %>%                   # Import a brick of all years
       exact_extract(habitats, fun = "sum") %>%                             # Sum fishing hours within habitat types 
       mutate(Variable = .x) %>%                                            # Attach the variable name to keep track
       cbind(sf::st_drop_geometry(habitats))})%>%

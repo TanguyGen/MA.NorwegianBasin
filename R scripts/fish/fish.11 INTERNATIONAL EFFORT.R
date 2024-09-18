@@ -19,6 +19,8 @@ IMR <- readRDS("./Objects/IMR absolute fishing effort.rds")                 # Im
 
 EU <- readRDS("./Objects/EU absolute fishing effort.rds")                   # Import EU fishing effort
 
+Dredge<- readRDS("./Objects/Mollusc dredge effort.rds") # Import dredge fishing effort
+
 target <- read.csv("./Data/MiMeMo_gears.csv") %>%                           # Load fishing gear classifications
   dplyr::select(Aggregated_gear, Gear_type) %>%                             # Select gear names
   distinct() %>%                                                            # Drop duplicates
@@ -126,6 +128,7 @@ Inflation_dredge <- c(
 
 
 
+
 Inflation<-rbind(Inflation_pole_and_line,Inflation_pots_and_traps,Inflation_seiners,Inflation_strawlers,Inflation_ptrawlers,Inflation_dredge)%>%
   group_by(Gear_type) %>%                                                   # Now for each gear type
   mutate(total_gear_effort = sum(Hours)) %>% 
@@ -133,7 +136,7 @@ Inflation<-rbind(Inflation_pole_and_line,Inflation_pots_and_traps,Inflation_sein
   summarise(Inflation = mean(total_gear_effort)/sum(Hours))%>%            # How do we get from non-Russian effort to our known total?
   ungroup() %>%
   right_join(target) %>% 
-  mutate(Inflation = ifelse(Aggregated_gear %in% c("Harpoons", "Rifles", "Kelp harvesting", "Recreational"),
+  mutate(Inflation = ifelse(Aggregated_gear %in% c("Harpoons", "Rifles", "Kelp harvesting", "Recreational","Dredging"),
                           1, Inflation)) %>%
   drop_na()%>%
   column_to_rownames('Aggregated_gear') %>%                                 # Match names to EU and IMR objects
@@ -143,7 +146,7 @@ Inflation<-rbind(Inflation_pole_and_line,Inflation_pots_and_traps,Inflation_sein
 
 ####  Scale to international effort ####
 
-International <- (EU + IMR) * Inflation                                                       
+International <- (EU + IMR+ Dredge) * Inflation                                                      
 
 International["Recreational"] <- 1256616  # Hours from Mike's stories
 
@@ -156,5 +159,5 @@ transformed_International["Kelp harvesting"] <- 1                           # We
 saveRDS(transformed_International, "./Objects/International effort by gear.rds")
 
 
-readRDS("./Objects/International effort by gear.rds")
+#readRDS("./Objects/International effort by gear.rds")
 

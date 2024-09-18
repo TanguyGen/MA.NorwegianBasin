@@ -18,7 +18,7 @@ Region_mask <- st_union(Domains)%>%
 
 habitats <- readRDS("./Objects/Habitats.rds")                                 # Load habitat polygons
 
-gears <- read.csv2("./Data/MiMeMo gears.csv")                                  # Load fishing gear classifications
+gears <- read.csv("./Data/MiMeMo_gears.csv")                                  # Load fishing gear classifications
 
 target <- expand.grid(Habitat = paste0(habitats$Shore, " ", habitats$Habitat), 
                       Aggregated_gear = unique(gears$Aggregated_gear))        # Get combinations of gear and guild
@@ -107,7 +107,7 @@ Absolute_effort_habitats <- left_join(habitat_weights, EU_effort) %>%         # 
   .[order(row.names(.)), order(colnames(.))]                                  # Alphabetise rows and columns
 saveRDS(Absolute_effort_habitats, "./Objects/EU absolute habitat effort.rds") # Save
 
-#heatmap(Absolute_effort_habitats)
+heatmap(Absolute_effort_habitats)
 
 ## How much of the corrected effort is allocated a habitat type?
 sum(Absolute_effort_habitats, na.rm = T) / sum(EU_effort$effort_contributions, na.rm = T)

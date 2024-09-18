@@ -10,7 +10,7 @@ lapply(packages, library, character.only = TRUE)                            # Lo
 
 plan(multisession)
 
-gear <- read.csv2("./Data/MiMeMo gears.csv") 
+gear <- read.csv("./Data/MiMeMo_gears.csv") 
 
 habitats <- readRDS("./Objects/Habitats.rds") %>%                           # Load habitat polygons
   mutate(area = as.numeric(st_area(.)))
@@ -31,7 +31,11 @@ Non_Russian_habitat <- (readRDS("./Objects/IMR absolute habitat effort.rds") + #
 
 Non_Russian_total <- (readRDS("./Objects/IMR absolute fishing effort.rds") +# Import Norwegian fishing effort        
   readRDS("./Objects/EU absolute fishing effort.rds"))/                     # Import EU fishing effort
-  365 * (60 * 60) / domain_size                                             # Convert to same units as international effort
+  365 * (60 * 60) / domain_size    # Convert to same units as international effort
+
+Dredge<- readRDS("./Objects/Mollusc dredge habitat effort.rds")/          
+  365 * (60 * 60) / domain_size  # Import dredge fishing effort
+
 
 #### Get Russian + Faroe + Iceland effort only ####
 
@@ -55,7 +59,7 @@ Habitat_weights_pots <- c("RUS-pots_and_traps") %>%
       mutate(Variable = .x)}) %>%                                           # Attach habitat metadata
   data.table::rbindlist() 
 
-Habitat_weights_seiners <- c("RUS-seiners") %>% 
+Habitat_weights_seiners <- c("RUS-Seiners") %>% 
   future_map(~{ brick("./Objects/GFW_seiners.nc", varname = .x) %>%                 # Import a brick of all years
       calc(mean, na.rm = T) %>% 
       exact_extract(habitats, fun = "sum") %>%                              # Sum fishing hours within habitat types 
@@ -63,7 +67,7 @@ Habitat_weights_seiners <- c("RUS-seiners") %>%
       mutate(Variable = .x)}) %>%                                           # Attach habitat metadata
   data.table::rbindlist() 
 
-Habitat_weights_strawlers <- c("RUS-strawlers") %>% 
+Habitat_weights_strawlers <- c("RUS-Shelf_trawlers") %>% 
   future_map(~{ brick("./Objects/GFW_strawlers.nc", varname = .x) %>%                 # Import a brick of all years
       calc(mean, na.rm = T) %>% 
       exact_extract(habitats, fun = "sum") %>%                              # Sum fishing hours within habitat types 
@@ -71,7 +75,7 @@ Habitat_weights_strawlers <- c("RUS-strawlers") %>%
       mutate(Variable = .x)}) %>%                                           # Attach habitat metadata
   data.table::rbindlist() 
 
-Habitat_weights_ptrawlers <- c("RUS-ptrawlers") %>% 
+Habitat_weights_ptrawlers <- c("RUS-Pelagic_trawlers") %>% 
   future_map(~{ brick("./Objects/GFW_ptrawlers.nc", varname = .x) %>%                 # Import a brick of all years
       calc(mean, na.rm = T) %>% 
       exact_extract(habitats, fun = "sum") %>%                              # Sum fishing hours within habitat types 
@@ -111,17 +115,15 @@ Russian <- t(t(Habitat_weights) * Russian_effort)                           # Sc
 
 ####  Scale to international effort ####
 
-International <- Non_Russian_habitat + Russian                              # Get international effort by gear and habitat
+International <- Non_Russian_habitat + Russian + Dredge                             # Get international effort by gear and habitat
 
 International[,"Recreational"] <- c(habitats$area[1:4],0)             # Distribute recreational activity across the inshore zone according to area
 International[,"Kelp harvesting"] <- 0                                      # We force all kelp harvesting to happen
 International["Inshore Rock", "Kelp harvesting"] <- 1                       # over inshore rock.
 
 International_proportion <-  t(t(International)/colSums(International))      # Scale as proportions within gears
-International_proportion[,1]<-c(0,0,0,0,0)
+
 heatmap(International_proportion)                                           # Visualise
 
 saveRDS(International_proportion, "./Objects/International effort proportion by gear and habitat.rds")
 
-a<-readRDS("./Objects/International effort proportion by gear and habitat.rds")
-write.csv(a,"./Target/habitat effort rates.csv")

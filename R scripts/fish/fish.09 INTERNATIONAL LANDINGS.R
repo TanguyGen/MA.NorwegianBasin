@@ -31,14 +31,16 @@ EU <- readRDS("./Objects/EU landings by gear and guild.rds")
 Iceland <- readRDS("./Objects/Iceland landings by gear and guild.rds")
 Faroe<- readRDS("./Objects/Faroe landings by gear and guild.rds")
 
+Dredge <-readRDS("./Objects/Mollusc dredge landings.rds") #add mollusc dredge landings unavailablein IM or EU data
+
 Nor_algae<-readRDS("./Objects/fiskeridirektoratet landings by gear and guild.rds")
 # Import corrected EU landings
   
 #### Combine EU and IMR landings then inflate to international ####
 
-International <- t(((EU + IMR) *                                            # Sum EU and IMR landings
-                     Inflation$Inflation)+Nor_algae)/                                 # then inflate by Russian activity,
-                     domain_size +  t(Faroe+Iceland)/eez_size                                        # and convert to per m^2
+International <- t(((EU + IMR) *                                            # Sum EU and IMR + kelp + Dredge landings
+                     Inflation$Inflation)+Nor_algae+Dredge)/                                 # then inflate by Russian activity,
+                     domain_size +  t(Faroe+Iceland)/eez_size                                        # add Faroe and Iceland and convert to per m^2
 
 International["Shelf_Trawlers", "Macrophyte"] <- 0                                  # There's one tiny bit of seaweed we think should be removed.
 International["Recreational", "Demersal (quota limited)"] <- 9856 / domain_size # Add recreational fishing activity.
@@ -48,4 +50,3 @@ heatmap(International)
 
 saveRDS(International, "./Objects/International landings.rds")
 
-write.csv(International,"./Target/TARGET_raw_landings_t_m2_y_BARENTS_SEA_2011-2019.csv", row.names=TRUE) # Save out target data
