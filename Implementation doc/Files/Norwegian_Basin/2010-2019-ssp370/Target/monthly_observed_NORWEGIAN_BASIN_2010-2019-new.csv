@@ -1,0 +1,109 @@
+Month,Variable,median,lower_centile,upper_centile,Units,low_cent_value,upp_cent_value,Comments
+Jan,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Feb,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Mar,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Apr,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+May,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jun,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jul,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Aug,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Sep,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Oct,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Nov,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Dec,surface_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jan,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Feb,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Mar,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Apr,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+May,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jun,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jul,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Aug,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Sep,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Oct,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Nov,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Dec,deep_nitrate,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jan,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Feb,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Mar,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Apr,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+May,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jun,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jul,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Aug,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Sep,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Oct,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Nov,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Dec,surface_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_0_30m_2003-2013_not_yet_extracted
+Jan,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Feb,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Mar,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Apr,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+May,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jun,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jul,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Aug,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Sep,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Oct,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Nov,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Dec,deep_ammonia,NA,NA,NA,mMNm3,17,83,ICES_hydrochemical_database_Celtic_Sea_30-seabed_2003-2013_not_yet_extracted
+Jan,surface_chlorophyll,0,0,0,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Feb,surface_chlorophyll,0.137817559,0.126425932,0.150653083,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Mar,surface_chlorophyll,0.175434636,0.166592251,0.19513975,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Apr,surface_chlorophyll,0.208190115,0.195229122,0.25346081,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+May,surface_chlorophyll,0.444140421,0.365559139,0.562225473,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Jun,surface_chlorophyll,0.632483756,0.512165703,0.694197326,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Jul,surface_chlorophyll,0.47983022,0.433036977,0.579283286,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Aug,surface_chlorophyll,0.409674997,0.386866547,0.594837338,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Sep,surface_chlorophyll,0.5364749,0.467937477,0.590082661,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Oct,surface_chlorophyll,0.375493877,0.305854653,0.414337688,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Nov,surface_chlorophyll,0.060643723,0.048603322,0.070107263,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Dec,surface_chlorophyll,0,0,0,mgm3,0.2,0.8,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104 for Norwegian_Basin 2010-2019
+Jan,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Feb,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Mar,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Apr,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+May,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jun,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jul,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Aug,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Sep,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Oct,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Nov,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Dec,omniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jan,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Feb,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Mar,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Apr,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+May,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jun,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jul,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Aug,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Sep,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Oct,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Nov,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Dec,carniv_zooplankton,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jan,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Feb,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Mar,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Apr,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+May,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jun,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jul,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Aug,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Sep,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Oct,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Nov,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Dec,larvae_susp_dep_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jan,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Feb,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Mar,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Apr,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+May,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jun,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Jul,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Aug,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Sep,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Oct,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Nov,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
+Dec,larvae_carn_scav_benthos,NA,NA,NA,mMNm3,17,83,SAHFOS_CPR_data_Celtic_Sea_2003-2013_not_yet_extracted
