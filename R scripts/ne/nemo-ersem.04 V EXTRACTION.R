@@ -53,6 +53,7 @@ W_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursi
   drop_na() %>% 
   select(-Name) %>% 
   filter(Type %in% c( "difvho", "wo")) %>% 
+  filter(Year > 2009) %>% 
   split(., f = list(paste(.$Month, .$Year, .$Forcing, .$SSP)))                  # Specify the timestep to average files over.
   
 tic()

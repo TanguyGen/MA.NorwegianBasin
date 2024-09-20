@@ -43,7 +43,7 @@ summary <- filter(scheme, layer == 1) %>%                                   # Cr
 
 #### Extract ####
 
-W_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
+files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
                  categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
                  categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
                  categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
@@ -52,6 +52,7 @@ W_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursi
   drop_na() %>% 
   select(-Name) %>% 
   filter(Type %in% c("N4", "N3", "RP")) %>%                    # Nitrate, Ammonia, Detritus only
+  filter(Year > 2009) %>% 
   split(., f = list(paste(.$Month, .$Year, .$Forcing, .$SSP)))                  # Specify the timestep to average files over.
 
 tic()

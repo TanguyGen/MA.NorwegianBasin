@@ -12,11 +12,11 @@ source("./R scripts/@_Region file.R")                                       # De
 
 plan(multisession)                                                          # Choose the method to parallelise by with furrr
 
-all_files <- rbind(#categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
-                   #categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
-                  categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
-                  categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
-                   #categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
+all_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
+                   categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
+                   categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
                    categorise_files("I:/Science/MS-Marine/MA/GFDL_hist", recursive = TRUE)) %>%   # Build metadata for each file
   drop_na() %>% 
   select(-Name) %>% 
@@ -66,13 +66,13 @@ ggplot(look) +
 
 #### extract ####
 
-skip <- list.files("./Objects/NE_Days/")                                      # Already processed files
+#skip <- list.files("./Objects/NE_Days/")                                      # Already processed files
 
 tictoc::tic()
 all_files %>%
   filter(Type %in% c("uo", "vo", "N4", "N3", "P1", "P234_n", "RP")) %>%                    # Nitrate, Ammonia, Detritus only
   #skip?
-  filter(str_detect(paste0("NE.",Forcing,".",SSP,".",Month,".",Year,".rds"), paste(skip, collapse = "|"), negate = TRUE)) %>% # Remove files that already have summaries in the cache
+ # filter(str_detect(paste0("NE.",Forcing,".",SSP,".",Month,".",Year,".rds"), paste(skip, collapse = "|"), negate = TRUE)) %>% # Remove files that already have summaries in the cache
   split(., f = list(paste(.$Month, .$Year, .$Forcing, .$SSP))) %>%                                   # Specify the timestep to average files over.
 #  .[1:12] %>%
   future_map(NEMO_ERSEM, analysis = "slabR", summary = scheme_result,
@@ -83,8 +83,8 @@ tictoc::toc() # 5 hours to extract for all files.
 
 #### check ####
 
-NE.01.2016 <- readRDS("./Objects/NE_Days/NE.CNRM.SSP370.01.2016.rds") %>%
-  mutate(day = rep(1:6, each = nrow(scheme_result)))
+#NE.01.2016 <- readRDS("./Objects/NE_Days/NE.CNRM.SSP370.01.2016.rds") %>%
+#  mutate(day = rep(1:6, each = nrow(scheme_result)))
 # 
 # ggplot(NE.01.2016) +
 # #  geom_raster(aes(x = x, y = y, fill = Meridional)) +

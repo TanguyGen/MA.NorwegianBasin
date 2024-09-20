@@ -12,11 +12,11 @@ source("./R scripts/@_Region file.R")                                       # De
 
 plan(multisession)                                                          # Choose the method to parallelise by with furrr
 
-all_files <- rbind(#categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
-                   #categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
+all_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
                    categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
                    categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
-                   #categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
                    categorise_files("I:/Science/MS-Marine/MA/GFDL_hist", recursive = TRUE)) %>%   # Build metadata for each file
   drop_na() %>% 
   select(-Name) %>% 
