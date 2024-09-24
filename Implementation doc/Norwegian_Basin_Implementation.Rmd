@@ -8,6 +8,8 @@ output:
     logo: "https://www.r-project.org/logo/Rlogo.svg"
     img_to_dark: TRUE
     logo_to_white: TRUE
+    front_img: "img/Front.png"
+    back_img: "img/Back.png"
     other_css: "tweaks.css"
 knit: pagedown::chrome_print
 main-color: "#000000"
@@ -20,7 +22,7 @@ bibliography: "IMP.bib"
 ```{r setup, include=FALSE}                
 
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "left")
-
+rm(list=ls())
 library(tidyverse)
 library(sf)
 library(gt)
@@ -32,9 +34,9 @@ table_nums <- captioner::captioner(prefix = "Table ")
 
 table.ref <- function(x) stringr::str_extract(table_nums(x), "[^:]*")
 
-model <- StrathE2E2::e2e_read(implementation, Period, models.path="Files") # Load implementation
+model <- StrathE2E2::e2e_read(implementation, Period, models.path="./Files") # Load implementation
 
-Area <- read.csv(str_glue("Files/{implementation}/{Period}/Param/event_timing_CELTIC_SEA_2003-2013.csv")) %>% 
+Area <- read.csv(str_glue("Files/{implementation}/{Period}/Param/event_timing_{toupper(implementation)}_{Period}.csv")) %>% 
   filter(str_detect(Description, "km2")) %>% 
   .$Value                                                     # Get size of the model domain
 
@@ -43,7 +45,7 @@ Area <- read.csv(str_glue("Files/{implementation}/{Period}/Param/event_timing_CE
 
 # Introduction {-}                         
 
-This document describes the configuration of StrathE2E2 for the Brazilian shelf and its parameterisation to enable stationary state fitting for two time periods; 2010-2019 and 2040-2049. These represent contrasting periods of environmental conditions. 
+This document describes the configuration of StrathE2E2 for the Norwegian basin and its parameterisation to enable stationary state fitting for 2010-2070. These represent contrasting periods of environmental conditions. 
 
 Volumetric and seabed habitat data define the physical configuration of the system. We regard these as being fixed in time. Similarly, we regard the physiological parameters of the ecology model as being fixed in time. Some of these are set from external data. The remainder are fitted, as detailed here. Changes in the model performance between the different time periods therefore stem from the hydrodynamic, hydro-chemical and fishery driving data. These are detailed in the ecological drivers and fishing fleet sections.
 
@@ -53,7 +55,7 @@ Volumetric and seabed habitat data define the physical configuration of the syst
 >
 >E-mail: <m.heath@strath.ac.uk>
 >
->The code written to support this parameterisation is available on [github](https://github.com/Jack-H-Laverick/MA.SouthAfrica).
+>The code written to support this parameterisation is available on [github](https://github.com/Jack-H-Laverick/MA.NorwegianBasin).
 
 <br>
 
@@ -61,17 +63,15 @@ Volumetric and seabed habitat data define the physical configuration of the syst
 
 # Model Domain {-}                         
 
-The model splits the domain into three zones, inshore/shallow, offshore/shallow, and offshore/deep (Figure \@ref(fig:spatialschematic)). The inshore/shallow zone covers waters shallower than `r SDepth` m or `r Distance` km from shore. The offshore zone covers the remaining area of the model domain (Figure \@ref(fig:habitats)). The offshore zone is divided further into a shallow and deep layer. The shallow layer represents water from the surface to `r SDepth` m depth, and shares a boundary with the inshore shallow zone. The offshore/deep zone covers the same area as the offshore/shallow zone, but represents water between `r SDepth` m and `r DDepth` m deep. There is a second internal boundary between the two offshore zones. 
+The model splits the domain into three zones, inshore/shallow, offshore/shallow, and offshore/deep (Figure \@ref(fig:spatialschematic)). The inshore/shallow zone covers waters shallower than `r SDepth` m . The offshore zone covers the remaining area of the model domain (Figure \@ref(fig:habitats)). The offshore zone is divided further into a shallow and deep layer. The shallow layer represents water from the surface to `r SDepth` m depth, and shares a boundary with the inshore shallow zone. The offshore/deep zone covers the same area as the offshore/shallow zone, but represents water between `r SDepth` m and `r DDepth` m deep. There is a second internal boundary between the two offshore zones. 
 
 ![(#fig:spatialschematic) The spatial structure of StrathE2E; Ocean volumes and seafloor habitats. StrathE2E is built around a simplified spatial structure which represents shelf seas. These spatial units are connected to each other and to boundaries as shown to the right. The volumes connected to each spatial component are highlighted in blue.](img/schematic overhang.svg)
 
 \newpage
 
-The seafloor of the model domain is represented by 8 habitat types. There are three sediment classes – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). The fourth class (rock, 0) represents an absence of soft sediment. These sediment classes are defined in both the inshore/shallow and offshore/deep zones, yielding 8 habitats (Figure \@ref(fig:habitats)). The rock class has different geochemical properties and in the inshore zone supports the kelp forests in the model food web.
+The seafloor of the model domain is represented by 5 habitat types. There are three sediment classes for the inshore zone – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). The fourth class (rock, 0) represents an absence of soft sediment. The rock class has different geochemical properties and supports the kelp forests in the model food web. In the offshore zone, the seafloor being too deep to correctly be represented within StrathE2E, a imaginary floating layer of sediment called "overhang" will be added to the model to represent deepsea interactions (Figure \@ref(fig:habitats)). 
 
-As of V.4, StrathE2E2 can represent an offshore "overhang" where open ocean does not contact the seafloor (Figure \@ref(fig:spatialschematic)). We utilise this for the Brazilian shelf implementation to capture fisheries just past the shelf edge.
-
-The perimeter of the model domain is defined by a `r ODepth` m depth contour and the Brazilian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.
+The perimeter of the model domain is defined by a `r Perimeter` m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.
 
 ![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are a composite of ___ and ____ [-@laverick21].](img/habitats.png)
 
@@ -149,21 +149,21 @@ tab_habitat_proportions_cap <- table_nums(name = "tab_habitat_proportions",
 
 physical <- read.csv(str_glue("Files/{implementation}/{Period}/Param/physical_parameters_{toupper(implementation)}.csv"))
   
-proportions <- which(str_detect(physical$Description, "Area_proportion"))
+proportions <- which(str_detect(physical$Description, "Area_proportion")& physical$Value != 0)
 porosity <- which(str_detect(physical$Description, "Defined_porosity"))
 permeability <- which(str_detect(physical$Description, "Defined_permeability"))
 nitrogen <- which(str_detect(physical$Description, "Defined_total_N"))
 grain <- which(str_detect(physical$Description, "grain_size"))
 
-data_frame(Habitat = c("S0", "S1", "S2", "S3", "D0", "D1", "D2", "D3"),
-           Depth = rep(c("Shallow", "Deep"), each = 4),
-           Zone = rep(c("Inshore", "Offshore"), each = 4),
-           Sediment = rep(c("None (Rock)", "Fine", "Medium", "Coarse"), times = 2),
+data_frame(Habitat = c("S0", "S1", "S2", "S3", "D0"),
+           Depth = c("Shallow","Shallow","Shallow","Shallow", "Deep"),
+           Zone = c("Inshore","Inshore","Inshore","Inshore", "Offshore"),
+           Sediment = c("None (Rock)", "Fine", "Medium", "Coarse","None (Overhang)"),
            `Area Proportion` = physical$Value[proportions],
-           `Grain size` = c(NA, physical$Value[grain[1:3]], NA, physical$Value[grain[4:6]]),
-           Porosity = c(NA, physical$Value[porosity[1:3]], NA, physical$Value[porosity[4:6]]),
-           Permeability = c(NA, physical$Value[permeability[1:3]], NA, physical$Value[permeability[4:6]]),
-           `Nitrogen content` = c(NA, physical$Value[nitrogen[1:3]], NA, physical$Value[nitrogen[4:6]])) %>% 
+           `Grain size` = c(NA, physical$Value[grain[1:3]], NA),
+           Porosity = c(NA, physical$Value[porosity[1:3]], NA),
+           Permeability = c(NA, physical$Value[permeability[1:3]], NA),
+           `Nitrogen content` = c(NA, physical$Value[nitrogen[1:3]], NA)) %>% 
   group_by(Zone, Depth) %>% 
   gt() %>% 
   fmt_number(columns = c("Area Proportion", "Grain size", "Porosity", "Permeability", "Nitrogen content"), 
@@ -181,7 +181,7 @@ Log-transformed porosity has been shown to have a sigmoidal relationship with lo
 
 $$log_{10}(porosity) = p_3 + p_4\left(\frac{1}{1+e^{(\frac{-log_{10}(D_{50})-p_1}{p_2})}}\right)$$
 
-We use this relationship to calculate porosity for sea bed sediments in the Barents Sea (`r table.ref("tab_habitat_proportions")`), using an alternative parameterisation to Wilson [@pace21]. This alternative set of parameters extends the relationship to fine, muddy sediments (`r table.ref("tab_porosity")`). 
+We use this relationship to calculate porosity for sea bed sediments in the Norwegian Sea (`r table.ref("tab_habitat_proportions")`), using an alternative parameterisation to Wilson [@pace21]. This alternative set of parameters extends the relationship to fine, muddy sediments (`r table.ref("tab_porosity")`). 
 
 ```{r porosity_cap}
 
@@ -215,9 +215,9 @@ Whole sediment permeability can be related to the proportion of sediment classed
 
 ## Sediment organic nitrogen content {-}   
 
-The magnitude of the static (refactory) organic nitrogen detritus pool in each sediment type is a required input to the model. The code includes an option to impute values from empirical relationships between total organic nitrogen (TON) and mud content, and between mud content and median grain size. This relationship has been documented in the North Sea implementation of the temperate StrathE2E2 package [@heath21], and is based on sediment data off northeast Scotland.
+The magnitude of the static (refactory) organic nitrogen detritus pool in each sediment type is a required input to the model. The code includes an option to impute values from empirical relationships between total organic nitrogen (TON) and mud content, and between mud content and median grain size. This relationship has been documented in the North Sea implementation of the temperate StrathE2E2 package [@heath2021], and is based on sediment data off northeast Scotland.
 
-To supplement the relationship within the package, predictions of sediment organic nitrogen content for the Barents Sea have been sourced from the sediment atlas [@laverick21] to parameterise StrathE2E directly (`r table.ref("tab_habitat_proportions")`).
+To supplement the relationship within the package, predictions of sediment organic nitrogen content for the Norwegian Sea have been sourced from the sediment atlas [@laverick21] to parameterise StrathE2E directly (`r table.ref("tab_habitat_proportions")`).
 
 # Fixed biological {-}                     
 
@@ -255,32 +255,32 @@ The carnivorous zooplankton guild is a key component of the food web, predated o
 
 ### Spawning start and end dates for fish and benthos {-}
 
-For the fish guilds the dates were obtained from literature survey [@heath12], while others came from ecological surveys in Hornsund fjord on southern Spitsbergen [@weslawski88]. The annual weight-specific fecundity is assumed to be shed uniformly between the start and end dates of spawning.
+For the fish guilds the dates were obtained from literature survey. The annual weight-specific fecundity is assumed to be shed uniformly between the start and end dates of spawning. 
+Pelagic planktivorous fish in the model are assumed to be Norwegian Spring-Spawning herring (*Clupea harengus*)
 
 ### Recruitment start and end dates for fish and benthos {-}
 
-Obtained from literature survey [@heath12]. The annual cohort of larvae/juveniles of each fish and benthos guild is assumed to recruit to the settled stage at a uniform daily rate between the start and end dates.
+Obtained from literature survey. The annual cohort of larvae/juveniles of each fish and benthos guild is assumed to recruit to the settled stage at a uniform daily rate between the start and end dates.
 
 ### Extra-domain stock biomass of migratory, and the proportion invading the domain each year. Start and end dates for the annual invasion, and start and end dates for the emigration. (see description below). {-}
 
-The main migratory fish species undertaking a seasonal transit of the North Sea is the Atlantic mackerel. Data on the North East Atlantic stock biomass, the proportion entering the Barents Sea and the timing of the migration, were derived from stock assessment literature [@ices13]. 
+The main migratory fish species undertaking a seasonal transit of the Norwegian Sea are the Atlantic mackerel and the Blue Whiting. Data on the North East Atlantic stock biomass, the proportion entering the Barents Sea and the timing of the migration, were derived from stock assessment literature [@ices2020]. 
 
 ## Event timing parameters (fitted) {-} 
 
-Migratory fish in the Barents Sea model are assumed to be Atlantic mackerel. The fishery for Atlantic mackerel is one of the most valuable in the northeast Atlantic. Spawning takes place off southwest Ireland in April. After spawning, fish rapidly migrate to summer feeding zones thousands of kilometres northwards along the continental shelf edge to the Norwegian and Barents Seas. More recently some fish feed off Iceland [@holst16]. 
+Migratory fish in the Barents Sea model are assumed to be Atlantic mackerel and the Blue whiting. 
+The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. [@iversen2002;@iversen2004;@payne2012]. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area [@dossantosschmidt2024].
 
-For the purposes of the model, we assume that there is no feedback between fishing and environmental conditions in the Barents Sea and the biomass and migration patterns of the whole northeast Atlantic mackerel stock. In this version of StrathE2E*polar* the timing of immigration and emigration, and the mass influx across the ocean boundary during the annual immigration phase are treated as period-specific external driving data.
+For the purposes of the model, we assume that there is no feedback between fishing and environmental conditions in the Norwegian Sea and the biomass and migration patterns of the whole northeast Atlantic mackerel or Blue whiting stock. In this version of StrathE2E2 the timing of immigration and emigration, and the mass influx across the ocean boundary during the annual immigration phase are treated as period-specific external driving data.
 
-Data on the ‘global’ stock of northeast Atlantic mackerel (wet biomass) are available from stock assessments [@ices13], and converted to molar nitrogen mass using appropriate conversion ratios [@greenstreet96]. The proportion of the migrating stock entering the Barents Sea, and the timing of the inward and outward migrations are estimated from monthly resolved data on the spatial distribution of fishery catches. A residual proportion of the peak
-abundance in the North Sea remaining as residents (if any) is estimated from summer trawl survey data. The model setup code calculates the parameters which are needed in the ecology model.These are the only fixed (i.e. non-fitted) ecology model parameters which are period-specific.
+Data on the ‘global’ stock of northeast Atlantic mackerel and Blue whiting (wet biomass) are available from stock assessments [@ices2020], and converted to molar nitrogen mass using appropriate conversion ratios [@pedersen2021]. The proportion of the migrating stock entering the Norwegian Sea [@nottestad2016;@ekerhovd2010], and the timing of the inward and outward migrations [@iversen2002;@payne2012] are estimated from the literature. A residual proportion of the peak abundance in the North Sea remaining as residents (if any) is estimated from summer trawl survey data. The model setup code calculates the parameters which are needed in the ecology model.These are the only fixed (i.e. non-fitted) ecology model parameters which are period-specific.
 
-In addition to migratory fish, birds and cetaceans also migrate to the Barents Sea to feed during the summer, and leave during the winter. Polar bears similarly leave the model area during winter to hibernate. A constant rate of loss is applied to the hibernating guild while outside the model, in contrast to migratory guilds which continue to feed elsewhere. The values used for the timings of these events represent a synthesis of anecdotal reports.
 
 
 ```{r migrant_cap}
 
 tab_migrant_cap <- table_nums(name = "tab_migrant", 
-    caption = "Biological event timing parameters, constant acorss the 2011-2019 and 2040-2049 time periods. The data are processed in the model setup to calculate the immigration flux parameters needed in the ecology model.")
+    caption = "Biological event timing parameters, constant across the 2011-2070 time period. The data are processed in the model setup to calculate the immigration flux parameters needed in the ecology model.")
 ```
 `r table_nums("tab_migrant")`
 ```{r tab_migrant, fig.cap = tab_migrant_cap}

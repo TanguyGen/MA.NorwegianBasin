@@ -8,9 +8,9 @@ lapply(Packages, library, character.only = TRUE)                              # 
 
 source("./R scripts/@_Region file.R")
 
-base <- raster("../Shared data/GEBCO_2020.nc")                            # Import bathymetry
+base <- raster("./Data/gebco_2024_n75.0_s60.0_w-5.0_e15.0.nc")                            # Import bathymetry
 
-domain <- readRDS("./Objects/Habitats.rds") %>% 
+domain <- readRDS("./Implementation doc/Habitats.rds") %>% 
   st_transform(crs = crs)
 
 buffer <- summarise(domain, area = mean(st_area(domain))) %>% 
