@@ -15,7 +15,7 @@ knit: pagedown::chrome_print
 main-color: "#000000"
 secondary-color: "#737372"
 main-font: "Quicksand"
-bibliography: "IMP.bib"
+bibliography: "Impl_Strath_NorwSea.bib"
 
 ---
 
