@@ -253,23 +253,28 @@ The carnivorous zooplankton guild is a key component of the food web, predated o
 
 ## Event timing parameters (not fitted) {-}  
 
-### Spawning start and end dates for fish and benthos {-}
+### Spawning start and end dates for fish {-}
 
 For the fish guilds the dates were obtained from literature survey. The annual weight-specific fecundity is assumed to be shed uniformly between the start and end dates of spawning. 
-Pelagic planktivorous fish in the model are assumed to be Norwegian Spring-Spawning herring (*Clupea harengus*)
+Pelagic planktivorous fish in the model are approximated as Norwegian Spring-Spawning herrings (*Clupea harengus*) as it is the major biomass in the region. The spawning dates  were calculated from [@garcia2021] to be between February and March.
+Demersal fish spawning dates were approximated by the spawning dates of the cod (*Gadus morhua*), saithe (*Pollachius virens*) and haddock (*Melanogrammus aeglefinus*) from [@eikefjord2023].
 
-### Recruitment start and end dates for fish and benthos {-}
+### Recruitment start and end dates for fish {-}
 
 Obtained from literature survey. The annual cohort of larvae/juveniles of each fish and benthos guild is assumed to recruit to the settled stage at a uniform daily rate between the start and end dates.
+Again, the guild **pelagic planktivorous fish** in the model is approximated by Norwegian Spring-Spawning herring. The herring in larval stage, leaves the study area for the Barents Sea for 3-4 years and join the adult population at the end of their wintering [@holst2004].
+Demersal fish recruitment dates were also approximated by the recruitment dates of the cod (*Gadus morhua*), saithe (*Pollachius virens*) and haddock (*Melanogrammus aeglefinus*) from [@eikefjord2023].
+
+### Spawning and recruitment start and end dates for benthos guilds {-}
+
+The annual weight-specific fecundity and recruitment for the benthos guilds are assumed to be uniform between the start and end dates.
+For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected tp obtain timing dates [@bakke2019;@hamed2019;@james2012]. Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of *Desmophyllum pertusum* [@brooke2012;@jarnegren2014].
+
 
 ### Extra-domain stock biomass of migratory, and the proportion invading the domain each year. Start and end dates for the annual invasion, and start and end dates for the emigration. (see description below). {-}
 
-The main migratory fish species undertaking a seasonal transit of the Norwegian Sea are the Atlantic mackerel and the Blue Whiting. Data on the North East Atlantic stock biomass, the proportion entering the Barents Sea and the timing of the migration, were derived from stock assessment literature [@ices2020]. 
-
-## Event timing parameters (fitted) {-} 
-
 Migratory fish in the Barents Sea model are assumed to be Atlantic mackerel and the Blue whiting. 
-The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. [@iversen2002;@iversen2004;@payne2012]. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area [@dossantosschmidt2024].
+The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. [@iversen2004;@bachiller2016]. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area [@dossantosschmidt2024].
 
 For the purposes of the model, we assume that there is no feedback between fishing and environmental conditions in the Norwegian Sea and the biomass and migration patterns of the whole northeast Atlantic mackerel or Blue whiting stock. In this version of StrathE2E2 the timing of immigration and emigration, and the mass influx across the ocean boundary during the annual immigration phase are treated as period-specific external driving data.
 
