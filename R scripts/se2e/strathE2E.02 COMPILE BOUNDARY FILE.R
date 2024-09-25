@@ -45,7 +45,7 @@ My_river_N <- readRDS("./Objects/NE River input.rds") %>%
   ungroup() %>% 
   arrange(Month)                                                                             # Order months ascending
 
-My_atmosphere <- readRDS("./Objects/Atmospheric N deposition.rds") %>% 
+My_atmosphere <- readRDS(stringr::str_glue("./Objects/Atmospheric N deposition {ssp}.rds")) %>% 
   filter(between(Year, 2010, 2019)) %>%                                                      # Limit to reference period
   group_by(Month, Oxidation_state, Shore,  Year) %>%
   summarise(Measured = sum(Measured, na.rm = T)) %>%                                         # Sum across deposition states 

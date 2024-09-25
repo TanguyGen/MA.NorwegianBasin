@@ -11,7 +11,7 @@ rm(list=ls())                                                                   
 packages <- c("tidyverse", "data.table", "ncdf4", "stars", "rayshader", "tictoc")   # List packages
 lapply(packages, library, character.only = TRUE)                                    # Load packages
 
-nc_raw <- nc_open("./Data/gebco_2024_n75.0_s60.0_w-5.0_e15.0.nc")                                   # Access GEBCO bathymetry
+nc_raw <- nc_open("./Implementation doc/R scripts/Data/gebco_2024_n75.0_s60.0_w-5.0_e15.0.nc")                                   # Access GEBCO bathymetry
 nc_lat <- ncvar_get(nc_raw, "lat")                                                  # Extract the latitudes
 nc_lon <- ncvar_get(nc_raw, "lon")                                                  # Extract the longitudes
 nc_close(nc_raw)                                                                    # You must close an open netcdf file when finished to avoid data loss
@@ -22,7 +22,7 @@ rm(nc_raw)                                                                      
 S <- nrow(nc_lat)*(90-39)/180 ; N <- nrow(nc_lat)*(90-28)/180
 W <- length(nc_lon)*(180+12)/360 ; E <- length(nc_lon)*(180+30)/360     # For Mercatore
 
-Bathymetry <- read_ncdf("./Data/gebco_2024_n75.0_s60.0_w-5.0_e15.0.nc", ncsub = cbind(
+Bathymetry <- read_ncdf("./Implementation doc/R scripts/Data/gebco_2024_n75.0_s60.0_w-5.0_e15.0.nc", ncsub = cbind(
   start = c(W, S), count =c((E-W+1), (N-S+1)))) 
 
 plot(Bathymetry)

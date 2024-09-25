@@ -37,7 +37,7 @@ shape <-  matrix %>%
   return(shape)
   
 }           # Convert a matrix of lat-lons to an sf polygon
-Domains <- st_transform(readRDS("./Domains.rds"), crs = 4326) %>%      # reproject to match EU data
+Domains <- st_transform(readRDS("./R scripts/Data/Domains.rds"), crs = 4326) %>%      # reproject to match EU data
   st_union() %>%                                                              # Create whole domain shape 
   st_as_sf() %>% 
   mutate(Keep = T)

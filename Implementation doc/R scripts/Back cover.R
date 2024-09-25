@@ -8,7 +8,7 @@ rm(list=ls())                                                                   
 packages <- c("tidyverse", "sf", "magick")                                          # List packages
 lapply(packages, library, character.only = TRUE)                                    # Load packages
 
-domain <- readRDS("./Implementation doc/Habitats.rds") 
+domain <- readRDS("./Implementation doc/R scripts/Data/Habitats.rds") 
 
 ggplot(data = domain) +
   geom_sf(fill = NA, colour = "white", size = 0.1) +

@@ -15,12 +15,12 @@
 
 <meta name="author" content="Jack H Laverick  Douglas C Spiers  Michael R Heath" />
 
-<meta name="date" content="2024-09-24" />
+<meta name="date" content="2024-09-25" />
 
 <meta name="description" content="Norwegian Basin Implementation">
 
 <script id="pandoc-meta" type="application/json">
-{"author":"Jack H Laverick<br> Douglas C Spiers<br> Michael R Heath","bibliography":"Impl_Strath_NorwSea.bib","date":"24 Sep 2024","knit":"pagedown::chrome_print","main-color":"#000000","main-font":"Quicksand","newpage_html_class":"page-break-after","output":{"pagedreport::paged_hazelnuts":{"back_img":"img/Back.png","front_img":"img/Front.png","img_to_dark":true,"logo":"<a href=\"https://www.r-project.org/logo/Rlogo.svg\" class=\"uri\">https://www.r-project.org/logo/Rlogo.svg</a>","logo_to_white":true,"other_css":"tweaks.css"}},"secondary-color":"#737372","subtitle":"StrathE2E2","title":"Norwegian Basin Implementation"}
+{"author":"Jack H Laverick<br> Douglas C Spiers<br> Michael R Heath","bibliography":"Impl_Strath_NorwSea.bib","date":"25 Sep 2024","knit":"pagedown::chrome_print","main-color":"#000000","main-font":"Quicksand","newpage_html_class":"page-break-after","output":{"pagedreport::paged_hazelnuts":{"back_img":"img/Back.png","front_img":"img/Front.png","img_to_dark":true,"logo":"<a href=\"https://www.r-project.org/logo/Rlogo.svg\" class=\"uri\">https://www.r-project.org/logo/Rlogo.svg</a>","logo_to_white":true,"other_css":"tweaks.css"}},"secondary-color":"#737372","subtitle":"StrathE2E2","title":"Norwegian Basin Implementation"}
 </script>
 
 <title>Norwegian Basin Implementation</title>
@@ -32399,7 +32399,7 @@ max-width: 100%;
 <h1 class="title">Norwegian Basin Implementation</h1>
 <h1 class="subtitle"><span>StrathE2E2</span></h1>
 <h2 class="author">Jack H Laverick<br> Douglas C Spiers<br> Michael R Heath</h2>
-<h2 class="date">24 Sep 2024</h2>
+<h2 class="date">25 Sep 2024</h2>
 </div>
 
 <div class="main-color" style="display: none;">#000000</div>
@@ -32449,12 +32449,12 @@ max-width: 100%;
 <ul>
 <li><a href="#configuration-parameters" id="toc-configuration-parameters">Configuration parameters</a></li>
 <li><a href="#event-timing-parameters-not-fitted" id="toc-event-timing-parameters-not-fitted">Event timing parameters (not fitted)</a></li>
-<li><a href="#event-timing-parameters-fitted" id="toc-event-timing-parameters-fitted">Event timing parameters (fitted)</a></li>
 </ul></li>
 <li><a href="#ecological-drivers" id="toc-ecological-drivers">Ecological drivers</a></li>
 <li><a href="#fishing-fleet" id="toc-fishing-fleet">Fishing fleet</a>
 <ul>
 <li><a href="#background-1" id="toc-background-1">Background</a></li>
+<li><a href="#static-gear-definition-parameters-in-the-fishing-fleet-model" id="toc-static-gear-definition-parameters-in-the-fishing-fleet-model">Static gear-definition parameters in the fishing fleet model</a></li>
 </ul></li>
 <li><a href="#end" id="toc-end">End</a>
 <ul>
@@ -32888,20 +32888,20 @@ p<sub>7</sub> = 0.657, p<sub>8</sub> = -0.800</p>
 <div id="model-area-proportions" class="section level2 unnumbered">
 <h2>Model area proportions</h2>
 <p>Table 1: Area-proportions of the inshore and offshore zones and the thicknesses of the water column layers. The sea surface area of the model domain is an estimated 771393.547989355 km<sup>2</sup>.</p>
-<div id="bpolclirzl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bpolclirzl table {
+<div id="zaorfrrjmo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zaorfrrjmo table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#bpolclirzl thead, #bpolclirzl tbody, #bpolclirzl tfoot, #bpolclirzl tr, #bpolclirzl td, #bpolclirzl th {
+#zaorfrrjmo thead, #zaorfrrjmo tbody, #zaorfrrjmo tfoot, #zaorfrrjmo tr, #zaorfrrjmo td, #zaorfrrjmo th {
 border-style: none;
 }
-#bpolclirzl p {
+#zaorfrrjmo p {
 margin: 0;
 padding: 0;
 }
-#bpolclirzl .gt_table {
+#zaorfrrjmo .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -32926,11 +32926,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#bpolclirzl .gt_caption {
+#zaorfrrjmo .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#bpolclirzl .gt_title {
+#zaorfrrjmo .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -32941,7 +32941,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#bpolclirzl .gt_subtitle {
+#zaorfrrjmo .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -32952,7 +32952,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#bpolclirzl .gt_heading {
+#zaorfrrjmo .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -32963,12 +32963,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#bpolclirzl .gt_bottom_border {
+#zaorfrrjmo .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bpolclirzl .gt_col_headings {
+#zaorfrrjmo .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -32982,7 +32982,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#bpolclirzl .gt_col_heading {
+#zaorfrrjmo .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33001,7 +33001,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#bpolclirzl .gt_column_spanner_outer {
+#zaorfrrjmo .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33012,13 +33012,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#bpolclirzl .gt_column_spanner_outer:first-child {
+#zaorfrrjmo .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#bpolclirzl .gt_column_spanner_outer:last-child {
+#zaorfrrjmo .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#bpolclirzl .gt_column_spanner {
+#zaorfrrjmo .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -33029,10 +33029,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#bpolclirzl .gt_spanner_row {
+#zaorfrrjmo .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#bpolclirzl .gt_group_heading {
+#zaorfrrjmo .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33057,7 +33057,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#bpolclirzl .gt_empty_group_heading {
+#zaorfrrjmo .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -33071,13 +33071,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#bpolclirzl .gt_from_md > :first-child {
+#zaorfrrjmo .gt_from_md > :first-child {
 margin-top: 0;
 }
-#bpolclirzl .gt_from_md > :last-child {
+#zaorfrrjmo .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#bpolclirzl .gt_row {
+#zaorfrrjmo .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33095,7 +33095,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#bpolclirzl .gt_stub {
+#zaorfrrjmo .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33107,7 +33107,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bpolclirzl .gt_stub_row_group {
+#zaorfrrjmo .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33120,13 +33120,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#bpolclirzl .gt_row_group_first td {
+#zaorfrrjmo .gt_row_group_first td {
 border-top-width: 2px;
 }
-#bpolclirzl .gt_row_group_first th {
+#zaorfrrjmo .gt_row_group_first th {
 border-top-width: 2px;
 }
-#bpolclirzl .gt_summary_row {
+#zaorfrrjmo .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -33135,14 +33135,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bpolclirzl .gt_first_summary_row {
+#zaorfrrjmo .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#bpolclirzl .gt_first_summary_row.thick {
+#zaorfrrjmo .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#bpolclirzl .gt_last_summary_row {
+#zaorfrrjmo .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33151,7 +33151,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bpolclirzl .gt_grand_summary_row {
+#zaorfrrjmo .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -33160,7 +33160,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bpolclirzl .gt_first_grand_summary_row {
+#zaorfrrjmo .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33169,7 +33169,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#bpolclirzl .gt_last_grand_summary_row_top {
+#zaorfrrjmo .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33178,10 +33178,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#bpolclirzl .gt_striped {
+#zaorfrrjmo .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#bpolclirzl .gt_table_body {
+#zaorfrrjmo .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -33189,7 +33189,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#bpolclirzl .gt_footnotes {
+#zaorfrrjmo .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -33202,7 +33202,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#bpolclirzl .gt_footnote {
+#zaorfrrjmo .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -33210,7 +33210,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bpolclirzl .gt_sourcenotes {
+#zaorfrrjmo .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -33223,64 +33223,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#bpolclirzl .gt_sourcenote {
+#zaorfrrjmo .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#bpolclirzl .gt_left {
+#zaorfrrjmo .gt_left {
 text-align: left;
 }
-#bpolclirzl .gt_center {
+#zaorfrrjmo .gt_center {
 text-align: center;
 }
-#bpolclirzl .gt_right {
+#zaorfrrjmo .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#bpolclirzl .gt_font_normal {
+#zaorfrrjmo .gt_font_normal {
 font-weight: normal;
 }
-#bpolclirzl .gt_font_bold {
+#zaorfrrjmo .gt_font_bold {
 font-weight: bold;
 }
-#bpolclirzl .gt_font_italic {
+#zaorfrrjmo .gt_font_italic {
 font-style: italic;
 }
-#bpolclirzl .gt_super {
+#zaorfrrjmo .gt_super {
 font-size: 65%;
 }
-#bpolclirzl .gt_footnote_marks {
+#zaorfrrjmo .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#bpolclirzl .gt_asterisk {
+#zaorfrrjmo .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#bpolclirzl .gt_indent_1 {
+#zaorfrrjmo .gt_indent_1 {
 text-indent: 5px;
 }
-#bpolclirzl .gt_indent_2 {
+#zaorfrrjmo .gt_indent_2 {
 text-indent: 10px;
 }
-#bpolclirzl .gt_indent_3 {
+#zaorfrrjmo .gt_indent_3 {
 text-indent: 15px;
 }
-#bpolclirzl .gt_indent_4 {
+#zaorfrrjmo .gt_indent_4 {
 text-indent: 20px;
 }
-#bpolclirzl .gt_indent_5 {
+#zaorfrrjmo .gt_indent_5 {
 text-indent: 25px;
 }
-#bpolclirzl .katex-display {
+#zaorfrrjmo .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#bpolclirzl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zaorfrrjmo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -33309,20 +33309,20 @@ height: 0px !important;
 </div>
 <p>We derived the area-proportions of seabed habitat in the inshore and offshore zones from the atlas of seabed sediment properties from Laverick et al. <span class="citation">(<strong>laverick21?</strong>)</span>. The atlas provides a range of seabed data for 1/100th degree cells over the Barents and Greenland Seas, including the presence of rock, the percentage of mud, sand and gravel fractions in the sediments, the whole–sediment mean grain size, and the natural disturbance rate by currents and waves. These values are derived from habitat classes used by the Norwegian Geological survey in partnership with the Russian Federal State Unitarian Research and Production Company for Geological Sea Survey (NGU-SEVMORGEO). We assigned the NGU-SEVMORGEO sediment classes as fine, medium, coarse, or absence of sediment habitats within each zone (Figure <a href="#fig:habitats">2</a>). The actual area of each habitat was then the sum of the areas of each set of assigned cells (Table 2).</p>
 <p>Table 2: Area proportions and other characteristics of the 8 seabed habitat classes defined in the model by depth, rock or sediment type. The sea surface area of the model domain is an estimated 771393.547989355 km<sup>2</sup>. Grain size is the median in mm, Permeability in units of m<sup>2</sup>, nitrogen content in %dw.</p>
-<div id="tfhlzkcyxr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#tfhlzkcyxr table {
+<div id="ohplrxuqtt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ohplrxuqtt table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#tfhlzkcyxr thead, #tfhlzkcyxr tbody, #tfhlzkcyxr tfoot, #tfhlzkcyxr tr, #tfhlzkcyxr td, #tfhlzkcyxr th {
+#ohplrxuqtt thead, #ohplrxuqtt tbody, #ohplrxuqtt tfoot, #ohplrxuqtt tr, #ohplrxuqtt td, #ohplrxuqtt th {
 border-style: none;
 }
-#tfhlzkcyxr p {
+#ohplrxuqtt p {
 margin: 0;
 padding: 0;
 }
-#tfhlzkcyxr .gt_table {
+#ohplrxuqtt .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -33347,11 +33347,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_caption {
+#ohplrxuqtt .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#tfhlzkcyxr .gt_title {
+#ohplrxuqtt .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -33362,7 +33362,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#tfhlzkcyxr .gt_subtitle {
+#ohplrxuqtt .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -33373,7 +33373,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#tfhlzkcyxr .gt_heading {
+#ohplrxuqtt .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -33384,12 +33384,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_bottom_border {
+#ohplrxuqtt .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_col_headings {
+#ohplrxuqtt .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -33403,7 +33403,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_col_heading {
+#ohplrxuqtt .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33422,7 +33422,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#tfhlzkcyxr .gt_column_spanner_outer {
+#ohplrxuqtt .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33433,13 +33433,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#tfhlzkcyxr .gt_column_spanner_outer:first-child {
+#ohplrxuqtt .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#tfhlzkcyxr .gt_column_spanner_outer:last-child {
+#ohplrxuqtt .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#tfhlzkcyxr .gt_column_spanner {
+#ohplrxuqtt .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -33450,10 +33450,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#tfhlzkcyxr .gt_spanner_row {
+#ohplrxuqtt .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#tfhlzkcyxr .gt_group_heading {
+#ohplrxuqtt .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33478,7 +33478,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#tfhlzkcyxr .gt_empty_group_heading {
+#ohplrxuqtt .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #F5F5F5;
@@ -33492,13 +33492,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#tfhlzkcyxr .gt_from_md > :first-child {
+#ohplrxuqtt .gt_from_md > :first-child {
 margin-top: 0;
 }
-#tfhlzkcyxr .gt_from_md > :last-child {
+#ohplrxuqtt .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#tfhlzkcyxr .gt_row {
+#ohplrxuqtt .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33516,7 +33516,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#tfhlzkcyxr .gt_stub {
+#ohplrxuqtt .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33528,7 +33528,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tfhlzkcyxr .gt_stub_row_group {
+#ohplrxuqtt .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33541,13 +33541,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#tfhlzkcyxr .gt_row_group_first td {
+#ohplrxuqtt .gt_row_group_first td {
 border-top-width: 2px;
 }
-#tfhlzkcyxr .gt_row_group_first th {
+#ohplrxuqtt .gt_row_group_first th {
 border-top-width: 2px;
 }
-#tfhlzkcyxr .gt_summary_row {
+#ohplrxuqtt .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -33556,14 +33556,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tfhlzkcyxr .gt_first_summary_row {
+#ohplrxuqtt .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_first_summary_row.thick {
+#ohplrxuqtt .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#tfhlzkcyxr .gt_last_summary_row {
+#ohplrxuqtt .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33572,7 +33572,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_grand_summary_row {
+#ohplrxuqtt .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -33581,7 +33581,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tfhlzkcyxr .gt_first_grand_summary_row {
+#ohplrxuqtt .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33590,7 +33590,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_last_grand_summary_row_top {
+#ohplrxuqtt .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33599,10 +33599,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_striped {
+#ohplrxuqtt .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#tfhlzkcyxr .gt_table_body {
+#ohplrxuqtt .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -33610,7 +33610,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_footnotes {
+#ohplrxuqtt .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -33623,7 +33623,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_footnote {
+#ohplrxuqtt .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -33631,7 +33631,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tfhlzkcyxr .gt_sourcenotes {
+#ohplrxuqtt .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -33644,64 +33644,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#tfhlzkcyxr .gt_sourcenote {
+#ohplrxuqtt .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#tfhlzkcyxr .gt_left {
+#ohplrxuqtt .gt_left {
 text-align: left;
 }
-#tfhlzkcyxr .gt_center {
+#ohplrxuqtt .gt_center {
 text-align: center;
 }
-#tfhlzkcyxr .gt_right {
+#ohplrxuqtt .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#tfhlzkcyxr .gt_font_normal {
+#ohplrxuqtt .gt_font_normal {
 font-weight: normal;
 }
-#tfhlzkcyxr .gt_font_bold {
+#ohplrxuqtt .gt_font_bold {
 font-weight: bold;
 }
-#tfhlzkcyxr .gt_font_italic {
+#ohplrxuqtt .gt_font_italic {
 font-style: italic;
 }
-#tfhlzkcyxr .gt_super {
+#ohplrxuqtt .gt_super {
 font-size: 65%;
 }
-#tfhlzkcyxr .gt_footnote_marks {
+#ohplrxuqtt .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#tfhlzkcyxr .gt_asterisk {
+#ohplrxuqtt .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#tfhlzkcyxr .gt_indent_1 {
+#ohplrxuqtt .gt_indent_1 {
 text-indent: 5px;
 }
-#tfhlzkcyxr .gt_indent_2 {
+#ohplrxuqtt .gt_indent_2 {
 text-indent: 10px;
 }
-#tfhlzkcyxr .gt_indent_3 {
+#ohplrxuqtt .gt_indent_3 {
 text-indent: 15px;
 }
-#tfhlzkcyxr .gt_indent_4 {
+#ohplrxuqtt .gt_indent_4 {
 text-indent: 20px;
 }
-#tfhlzkcyxr .gt_indent_5 {
+#ohplrxuqtt .gt_indent_5 {
 text-indent: 25px;
 }
-#tfhlzkcyxr .katex-display {
+#ohplrxuqtt .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#tfhlzkcyxr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ohplrxuqtt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -33771,20 +33771,20 @@ height: 0px !important;
 <p><span class="math display">\[log_{10}(porosity) = p_3 + p_4\left(\frac{1}{1+e^{(\frac{-log_{10}(D_{50})-p_1}{p_2})}}\right)\]</span></p>
 <p>We use this relationship to calculate porosity for sea bed sediments in the Norwegian Sea (Table 2), using an alternative parameterisation to Wilson <span class="citation">(<strong>pace21?</strong>)</span>. This alternative set of parameters extends the relationship to fine, muddy sediments (Table 3).</p>
 <p>Table 3: The four parameters for the function relating sediment porosity to median grain size. From Pace et al. (in review)</p>
-<div id="plmotrqlna" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#plmotrqlna table {
+<div id="qznnfevbkc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qznnfevbkc table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#plmotrqlna thead, #plmotrqlna tbody, #plmotrqlna tfoot, #plmotrqlna tr, #plmotrqlna td, #plmotrqlna th {
+#qznnfevbkc thead, #qznnfevbkc tbody, #qznnfevbkc tfoot, #qznnfevbkc tr, #qznnfevbkc td, #qznnfevbkc th {
 border-style: none;
 }
-#plmotrqlna p {
+#qznnfevbkc p {
 margin: 0;
 padding: 0;
 }
-#plmotrqlna .gt_table {
+#qznnfevbkc .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -33809,11 +33809,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#plmotrqlna .gt_caption {
+#qznnfevbkc .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#plmotrqlna .gt_title {
+#qznnfevbkc .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -33824,7 +33824,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#plmotrqlna .gt_subtitle {
+#qznnfevbkc .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -33835,7 +33835,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#plmotrqlna .gt_heading {
+#qznnfevbkc .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -33846,12 +33846,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#plmotrqlna .gt_bottom_border {
+#qznnfevbkc .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#plmotrqlna .gt_col_headings {
+#qznnfevbkc .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -33865,7 +33865,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#plmotrqlna .gt_col_heading {
+#qznnfevbkc .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33884,7 +33884,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#plmotrqlna .gt_column_spanner_outer {
+#qznnfevbkc .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33895,13 +33895,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#plmotrqlna .gt_column_spanner_outer:first-child {
+#qznnfevbkc .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#plmotrqlna .gt_column_spanner_outer:last-child {
+#qznnfevbkc .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#plmotrqlna .gt_column_spanner {
+#qznnfevbkc .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -33912,10 +33912,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#plmotrqlna .gt_spanner_row {
+#qznnfevbkc .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#plmotrqlna .gt_group_heading {
+#qznnfevbkc .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33940,7 +33940,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#plmotrqlna .gt_empty_group_heading {
+#qznnfevbkc .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -33954,13 +33954,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#plmotrqlna .gt_from_md > :first-child {
+#qznnfevbkc .gt_from_md > :first-child {
 margin-top: 0;
 }
-#plmotrqlna .gt_from_md > :last-child {
+#qznnfevbkc .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#plmotrqlna .gt_row {
+#qznnfevbkc .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -33978,7 +33978,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#plmotrqlna .gt_stub {
+#qznnfevbkc .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -33990,7 +33990,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#plmotrqlna .gt_stub_row_group {
+#qznnfevbkc .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34003,13 +34003,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#plmotrqlna .gt_row_group_first td {
+#qznnfevbkc .gt_row_group_first td {
 border-top-width: 2px;
 }
-#plmotrqlna .gt_row_group_first th {
+#qznnfevbkc .gt_row_group_first th {
 border-top-width: 2px;
 }
-#plmotrqlna .gt_summary_row {
+#qznnfevbkc .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34018,14 +34018,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#plmotrqlna .gt_first_summary_row {
+#qznnfevbkc .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#plmotrqlna .gt_first_summary_row.thick {
+#qznnfevbkc .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#plmotrqlna .gt_last_summary_row {
+#qznnfevbkc .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34034,7 +34034,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#plmotrqlna .gt_grand_summary_row {
+#qznnfevbkc .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34043,7 +34043,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#plmotrqlna .gt_first_grand_summary_row {
+#qznnfevbkc .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34052,7 +34052,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#plmotrqlna .gt_last_grand_summary_row_top {
+#qznnfevbkc .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34061,10 +34061,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#plmotrqlna .gt_striped {
+#qznnfevbkc .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#plmotrqlna .gt_table_body {
+#qznnfevbkc .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -34072,7 +34072,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#plmotrqlna .gt_footnotes {
+#qznnfevbkc .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -34085,7 +34085,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#plmotrqlna .gt_footnote {
+#qznnfevbkc .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -34093,7 +34093,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#plmotrqlna .gt_sourcenotes {
+#qznnfevbkc .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -34106,64 +34106,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#plmotrqlna .gt_sourcenote {
+#qznnfevbkc .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#plmotrqlna .gt_left {
+#qznnfevbkc .gt_left {
 text-align: left;
 }
-#plmotrqlna .gt_center {
+#qznnfevbkc .gt_center {
 text-align: center;
 }
-#plmotrqlna .gt_right {
+#qznnfevbkc .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#plmotrqlna .gt_font_normal {
+#qznnfevbkc .gt_font_normal {
 font-weight: normal;
 }
-#plmotrqlna .gt_font_bold {
+#qznnfevbkc .gt_font_bold {
 font-weight: bold;
 }
-#plmotrqlna .gt_font_italic {
+#qznnfevbkc .gt_font_italic {
 font-style: italic;
 }
-#plmotrqlna .gt_super {
+#qznnfevbkc .gt_super {
 font-size: 65%;
 }
-#plmotrqlna .gt_footnote_marks {
+#qznnfevbkc .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#plmotrqlna .gt_asterisk {
+#qznnfevbkc .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#plmotrqlna .gt_indent_1 {
+#qznnfevbkc .gt_indent_1 {
 text-indent: 5px;
 }
-#plmotrqlna .gt_indent_2 {
+#qznnfevbkc .gt_indent_2 {
 text-indent: 10px;
 }
-#plmotrqlna .gt_indent_3 {
+#qznnfevbkc .gt_indent_3 {
 text-indent: 15px;
 }
-#plmotrqlna .gt_indent_4 {
+#qznnfevbkc .gt_indent_4 {
 text-indent: 20px;
 }
-#plmotrqlna .gt_indent_5 {
+#qznnfevbkc .gt_indent_5 {
 text-indent: 25px;
 }
-#plmotrqlna .katex-display {
+#qznnfevbkc .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#plmotrqlna div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qznnfevbkc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -34237,41 +34237,44 @@ Hydraulic conductivity is related to permeability by:</p>
 </div>
 <div id="event-timing-parameters-not-fitted" class="section level2 unnumbered">
 <h2>Event timing parameters (not fitted)</h2>
-<div id="spawning-start-and-end-dates-for-fish-and-benthos" class="section level3 unnumbered">
-<h3>Spawning start and end dates for fish and benthos</h3>
+<div id="spawning-start-and-end-dates-for-fish" class="section level3 unnumbered">
+<h3>Spawning start and end dates for fish</h3>
 <p>For the fish guilds the dates were obtained from literature survey. The annual weight-specific fecundity is assumed to be shed uniformly between the start and end dates of spawning.
-Pelagic planktivorous fish in the model are assumed to be Norwegian Spring-Spawning herring (<em>Clupea harengus</em>)</p>
+Pelagic planktivorous fish in the model are approximated as Norwegian Spring-Spawning herrings (<em>Clupea harengus</em>) as it is the major biomass in the region. The spawning dates were calculated from <span class="citation">(Garcia et al. 2021)</span> to be between February and March.
+Demersal fish spawning dates were approximated by the spawning dates of the cod (<em>Gadus morhua</em>), saithe (<em>Pollachius virens</em>) and haddock (<em>Melanogrammus aeglefinus</em>) from <span class="citation">(Eikefjord 2023)</span>.</p>
 </div>
-<div id="recruitment-start-and-end-dates-for-fish-and-benthos" class="section level3 unnumbered">
-<h3>Recruitment start and end dates for fish and benthos</h3>
-<p>Obtained from literature survey. The annual cohort of larvae/juveniles of each fish and benthos guild is assumed to recruit to the settled stage at a uniform daily rate between the start and end dates.</p>
+<div id="recruitment-start-and-end-dates-for-fish" class="section level3 unnumbered">
+<h3>Recruitment start and end dates for fish</h3>
+<p>Obtained from literature survey. The annual cohort of larvae/juveniles of each fish and benthos guild is assumed to recruit to the settled stage at a uniform daily rate between the start and end dates.
+Again, the guild <strong>pelagic planktivorous fish</strong> in the model is approximated by Norwegian Spring-Spawning herring. The herring in larval stage, leaves the study area for the Barents Sea for 3-4 years and join the adult population at the end of their wintering <span class="citation">(Holst, Røttingen, and Melle 2004)</span>.
+Demersal fish recruitment dates were also approximated by the recruitment dates of the cod (<em>Gadus morhua</em>), saithe (<em>Pollachius virens</em>) and haddock (<em>Melanogrammus aeglefinus</em>) from <span class="citation">(Eikefjord 2023)</span>.</p>
+</div>
+<div id="spawning-and-recruitment-start-and-end-dates-for-benthos-guilds" class="section level3 unnumbered">
+<h3>Spawning and recruitment start and end dates for benthos guilds</h3>
+<p>The annual weight-specific fecundity and recruitment for the benthos guilds are assumed to be uniform between the start and end dates.
+For the <strong>Scavenger and carnivorous benthos</strong> guild, the crab <em>Cancer pagurus</em> and the two sea urchins <em>Echinus esculentus</em> and <em>Strongylocentrotus droebachiensis</em> were elected tp obtain timing dates <span class="citation">(Bakke 2019; <strong>hamed2019?</strong>; James and Siikavuopio 2012)</span>. Finally, for the <strong>Suspension/deposit feeding benthos</strong> guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area <span class="citation">(Buhl-Mortensen, Hodnesdal, and Thorsnes 2015)</span> going from cold water corals like <em>Desmophyllum pertusum</em> (formerly <em>Lophelia pertusa</em> ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of <em>Desmophyllum pertusum</em> <span class="citation">(Brooke and Järnegren 2013; Järnegren and Kutti 2014)</span>.</p>
 </div>
 <div id="extra-domain-stock-biomass-of-migratory-and-the-proportion-invading-the-domain-each-year.-start-and-end-dates-for-the-annual-invasion-and-start-and-end-dates-for-the-emigration.-see-description-below." class="section level3 unnumbered">
 <h3>Extra-domain stock biomass of migratory, and the proportion invading the domain each year. Start and end dates for the annual invasion, and start and end dates for the emigration. (see description below).</h3>
-<p>The main migratory fish species undertaking a seasonal transit of the Norwegian Sea are the Atlantic mackerel and the Blue Whiting. Data on the North East Atlantic stock biomass, the proportion entering the Barents Sea and the timing of the migration, were derived from stock assessment literature <span class="citation">(ICES 2020)</span>.</p>
-</div>
-</div>
-<div id="event-timing-parameters-fitted" class="section level2 unnumbered">
-<h2>Event timing parameters (fitted)</h2>
 <p>Migratory fish in the Barents Sea model are assumed to be Atlantic mackerel and the Blue whiting.
-The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. <span class="citation">(Iversen 2002, 2004; Payne et al. 2012)</span>. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area <span class="citation">(dos Santos Schmidt et al. 2024)</span>.</p>
+The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. <span class="citation">(Iversen 2004; Bachiller et al. 2016)</span>. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area <span class="citation">(dos Santos Schmidt et al. 2024)</span>.</p>
 <p>For the purposes of the model, we assume that there is no feedback between fishing and environmental conditions in the Norwegian Sea and the biomass and migration patterns of the whole northeast Atlantic mackerel or Blue whiting stock. In this version of StrathE2E2 the timing of immigration and emigration, and the mass influx across the ocean boundary during the annual immigration phase are treated as period-specific external driving data.</p>
 <p>Data on the ‘global’ stock of northeast Atlantic mackerel and Blue whiting (wet biomass) are available from stock assessments <span class="citation">(ICES 2020)</span>, and converted to molar nitrogen mass using appropriate conversion ratios <span class="citation">(Pedersen et al. 2021)</span>. The proportion of the migrating stock entering the Norwegian Sea <span class="citation">(Nøttestad et al. 2016; Ekerhovd 2010)</span>, and the timing of the inward and outward migrations <span class="citation">(Iversen 2002; Payne et al. 2012)</span> are estimated from the literature. A residual proportion of the peak abundance in the North Sea remaining as residents (if any) is estimated from summer trawl survey data. The model setup code calculates the parameters which are needed in the ecology model.These are the only fixed (i.e. non-fitted) ecology model parameters which are period-specific.</p>
 <p>Table 4: Biological event timing parameters, constant across the 2011-2070 time period. The data are processed in the model setup to calculate the immigration flux parameters needed in the ecology model.</p>
-<div id="dwotbiyweh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dwotbiyweh table {
+<div id="zkxeynkscu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zkxeynkscu table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#dwotbiyweh thead, #dwotbiyweh tbody, #dwotbiyweh tfoot, #dwotbiyweh tr, #dwotbiyweh td, #dwotbiyweh th {
+#zkxeynkscu thead, #zkxeynkscu tbody, #zkxeynkscu tfoot, #zkxeynkscu tr, #zkxeynkscu td, #zkxeynkscu th {
 border-style: none;
 }
-#dwotbiyweh p {
+#zkxeynkscu p {
 margin: 0;
 padding: 0;
 }
-#dwotbiyweh .gt_table {
+#zkxeynkscu .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -34296,11 +34299,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#dwotbiyweh .gt_caption {
+#zkxeynkscu .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#dwotbiyweh .gt_title {
+#zkxeynkscu .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -34311,7 +34314,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#dwotbiyweh .gt_subtitle {
+#zkxeynkscu .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -34322,7 +34325,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#dwotbiyweh .gt_heading {
+#zkxeynkscu .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -34333,12 +34336,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dwotbiyweh .gt_bottom_border {
+#zkxeynkscu .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dwotbiyweh .gt_col_headings {
+#zkxeynkscu .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -34352,7 +34355,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dwotbiyweh .gt_col_heading {
+#zkxeynkscu .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34371,7 +34374,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#dwotbiyweh .gt_column_spanner_outer {
+#zkxeynkscu .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34382,13 +34385,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#dwotbiyweh .gt_column_spanner_outer:first-child {
+#zkxeynkscu .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#dwotbiyweh .gt_column_spanner_outer:last-child {
+#zkxeynkscu .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#dwotbiyweh .gt_column_spanner {
+#zkxeynkscu .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -34399,10 +34402,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#dwotbiyweh .gt_spanner_row {
+#zkxeynkscu .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#dwotbiyweh .gt_group_heading {
+#zkxeynkscu .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34427,7 +34430,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#dwotbiyweh .gt_empty_group_heading {
+#zkxeynkscu .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -34441,13 +34444,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#dwotbiyweh .gt_from_md > :first-child {
+#zkxeynkscu .gt_from_md > :first-child {
 margin-top: 0;
 }
-#dwotbiyweh .gt_from_md > :last-child {
+#zkxeynkscu .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#dwotbiyweh .gt_row {
+#zkxeynkscu .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34465,7 +34468,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#dwotbiyweh .gt_stub {
+#zkxeynkscu .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34477,7 +34480,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dwotbiyweh .gt_stub_row_group {
+#zkxeynkscu .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34490,13 +34493,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#dwotbiyweh .gt_row_group_first td {
+#zkxeynkscu .gt_row_group_first td {
 border-top-width: 2px;
 }
-#dwotbiyweh .gt_row_group_first th {
+#zkxeynkscu .gt_row_group_first th {
 border-top-width: 2px;
 }
-#dwotbiyweh .gt_summary_row {
+#zkxeynkscu .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34505,14 +34508,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dwotbiyweh .gt_first_summary_row {
+#zkxeynkscu .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#dwotbiyweh .gt_first_summary_row.thick {
+#zkxeynkscu .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#dwotbiyweh .gt_last_summary_row {
+#zkxeynkscu .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34521,7 +34524,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dwotbiyweh .gt_grand_summary_row {
+#zkxeynkscu .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34530,7 +34533,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dwotbiyweh .gt_first_grand_summary_row {
+#zkxeynkscu .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34539,7 +34542,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#dwotbiyweh .gt_last_grand_summary_row_top {
+#zkxeynkscu .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34548,10 +34551,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#dwotbiyweh .gt_striped {
+#zkxeynkscu .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#dwotbiyweh .gt_table_body {
+#zkxeynkscu .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -34559,7 +34562,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dwotbiyweh .gt_footnotes {
+#zkxeynkscu .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -34572,7 +34575,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dwotbiyweh .gt_footnote {
+#zkxeynkscu .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -34580,7 +34583,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dwotbiyweh .gt_sourcenotes {
+#zkxeynkscu .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -34593,64 +34596,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dwotbiyweh .gt_sourcenote {
+#zkxeynkscu .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dwotbiyweh .gt_left {
+#zkxeynkscu .gt_left {
 text-align: left;
 }
-#dwotbiyweh .gt_center {
+#zkxeynkscu .gt_center {
 text-align: center;
 }
-#dwotbiyweh .gt_right {
+#zkxeynkscu .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#dwotbiyweh .gt_font_normal {
+#zkxeynkscu .gt_font_normal {
 font-weight: normal;
 }
-#dwotbiyweh .gt_font_bold {
+#zkxeynkscu .gt_font_bold {
 font-weight: bold;
 }
-#dwotbiyweh .gt_font_italic {
+#zkxeynkscu .gt_font_italic {
 font-style: italic;
 }
-#dwotbiyweh .gt_super {
+#zkxeynkscu .gt_super {
 font-size: 65%;
 }
-#dwotbiyweh .gt_footnote_marks {
+#zkxeynkscu .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#dwotbiyweh .gt_asterisk {
+#zkxeynkscu .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#dwotbiyweh .gt_indent_1 {
+#zkxeynkscu .gt_indent_1 {
 text-indent: 5px;
 }
-#dwotbiyweh .gt_indent_2 {
+#zkxeynkscu .gt_indent_2 {
 text-indent: 10px;
 }
-#dwotbiyweh .gt_indent_3 {
+#zkxeynkscu .gt_indent_3 {
 text-indent: 15px;
 }
-#dwotbiyweh .gt_indent_4 {
+#zkxeynkscu .gt_indent_4 {
 text-indent: 20px;
 }
-#dwotbiyweh .gt_indent_5 {
+#zkxeynkscu .gt_indent_5 {
 text-indent: 25px;
 }
-#dwotbiyweh .katex-display {
+#zkxeynkscu .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#dwotbiyweh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zkxeynkscu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -34695,20 +34698,20 @@ height: 0px !important;
 </div>
 <div class="page-break-after"></div>
 <p>Table 4 Continued.</p>
-<div id="xmjfgwdxhj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xmjfgwdxhj table {
+<div id="njwzzqwlzz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#njwzzqwlzz table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#xmjfgwdxhj thead, #xmjfgwdxhj tbody, #xmjfgwdxhj tfoot, #xmjfgwdxhj tr, #xmjfgwdxhj td, #xmjfgwdxhj th {
+#njwzzqwlzz thead, #njwzzqwlzz tbody, #njwzzqwlzz tfoot, #njwzzqwlzz tr, #njwzzqwlzz td, #njwzzqwlzz th {
 border-style: none;
 }
-#xmjfgwdxhj p {
+#njwzzqwlzz p {
 margin: 0;
 padding: 0;
 }
-#xmjfgwdxhj .gt_table {
+#njwzzqwlzz .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -34733,11 +34736,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_caption {
+#njwzzqwlzz .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#xmjfgwdxhj .gt_title {
+#njwzzqwlzz .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -34748,7 +34751,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#xmjfgwdxhj .gt_subtitle {
+#njwzzqwlzz .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -34759,7 +34762,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#xmjfgwdxhj .gt_heading {
+#njwzzqwlzz .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -34770,12 +34773,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_bottom_border {
+#njwzzqwlzz .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_col_headings {
+#njwzzqwlzz .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -34789,7 +34792,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_col_heading {
+#njwzzqwlzz .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34808,7 +34811,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#xmjfgwdxhj .gt_column_spanner_outer {
+#njwzzqwlzz .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34819,13 +34822,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#xmjfgwdxhj .gt_column_spanner_outer:first-child {
+#njwzzqwlzz .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#xmjfgwdxhj .gt_column_spanner_outer:last-child {
+#njwzzqwlzz .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#xmjfgwdxhj .gt_column_spanner {
+#njwzzqwlzz .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -34836,10 +34839,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#xmjfgwdxhj .gt_spanner_row {
+#njwzzqwlzz .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#xmjfgwdxhj .gt_group_heading {
+#njwzzqwlzz .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34864,7 +34867,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#xmjfgwdxhj .gt_empty_group_heading {
+#njwzzqwlzz .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -34878,13 +34881,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#xmjfgwdxhj .gt_from_md > :first-child {
+#njwzzqwlzz .gt_from_md > :first-child {
 margin-top: 0;
 }
-#xmjfgwdxhj .gt_from_md > :last-child {
+#njwzzqwlzz .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#xmjfgwdxhj .gt_row {
+#njwzzqwlzz .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34902,7 +34905,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#xmjfgwdxhj .gt_stub {
+#njwzzqwlzz .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34914,7 +34917,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#xmjfgwdxhj .gt_stub_row_group {
+#njwzzqwlzz .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -34927,13 +34930,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#xmjfgwdxhj .gt_row_group_first td {
+#njwzzqwlzz .gt_row_group_first td {
 border-top-width: 2px;
 }
-#xmjfgwdxhj .gt_row_group_first th {
+#njwzzqwlzz .gt_row_group_first th {
 border-top-width: 2px;
 }
-#xmjfgwdxhj .gt_summary_row {
+#njwzzqwlzz .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34942,14 +34945,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#xmjfgwdxhj .gt_first_summary_row {
+#njwzzqwlzz .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_first_summary_row.thick {
+#njwzzqwlzz .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#xmjfgwdxhj .gt_last_summary_row {
+#njwzzqwlzz .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34958,7 +34961,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_grand_summary_row {
+#njwzzqwlzz .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -34967,7 +34970,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#xmjfgwdxhj .gt_first_grand_summary_row {
+#njwzzqwlzz .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34976,7 +34979,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_last_grand_summary_row_top {
+#njwzzqwlzz .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -34985,10 +34988,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_striped {
+#njwzzqwlzz .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#xmjfgwdxhj .gt_table_body {
+#njwzzqwlzz .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -34996,7 +34999,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_footnotes {
+#njwzzqwlzz .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -35009,7 +35012,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_footnote {
+#njwzzqwlzz .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -35017,7 +35020,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#xmjfgwdxhj .gt_sourcenotes {
+#njwzzqwlzz .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -35030,64 +35033,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#xmjfgwdxhj .gt_sourcenote {
+#njwzzqwlzz .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#xmjfgwdxhj .gt_left {
+#njwzzqwlzz .gt_left {
 text-align: left;
 }
-#xmjfgwdxhj .gt_center {
+#njwzzqwlzz .gt_center {
 text-align: center;
 }
-#xmjfgwdxhj .gt_right {
+#njwzzqwlzz .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#xmjfgwdxhj .gt_font_normal {
+#njwzzqwlzz .gt_font_normal {
 font-weight: normal;
 }
-#xmjfgwdxhj .gt_font_bold {
+#njwzzqwlzz .gt_font_bold {
 font-weight: bold;
 }
-#xmjfgwdxhj .gt_font_italic {
+#njwzzqwlzz .gt_font_italic {
 font-style: italic;
 }
-#xmjfgwdxhj .gt_super {
+#njwzzqwlzz .gt_super {
 font-size: 65%;
 }
-#xmjfgwdxhj .gt_footnote_marks {
+#njwzzqwlzz .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#xmjfgwdxhj .gt_asterisk {
+#njwzzqwlzz .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#xmjfgwdxhj .gt_indent_1 {
+#njwzzqwlzz .gt_indent_1 {
 text-indent: 5px;
 }
-#xmjfgwdxhj .gt_indent_2 {
+#njwzzqwlzz .gt_indent_2 {
 text-indent: 10px;
 }
-#xmjfgwdxhj .gt_indent_3 {
+#njwzzqwlzz .gt_indent_3 {
 text-indent: 15px;
 }
-#xmjfgwdxhj .gt_indent_4 {
+#njwzzqwlzz .gt_indent_4 {
 text-indent: 20px;
 }
-#xmjfgwdxhj .gt_indent_5 {
+#njwzzqwlzz .gt_indent_5 {
 text-indent: 25px;
 }
-#xmjfgwdxhj .katex-display {
+#njwzzqwlzz .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#xmjfgwdxhj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#njwzzqwlzz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -35132,11 +35135,12 @@ height: 0px !important;
 </div>
 </div>
 </div>
+</div>
 <div id="ecological-drivers" class="section level1 unnumbered">
 <h1>Ecological drivers</h1>
 <p>Monthly resolution time-varying physical and chemical driving parameters for the model were derived from a variety of sources:</p>
 <ul>
-<li>Temperature, vertical mixing coefficients, volume fluxes, and boundary nutrient, detritus and phytoplankton concentrations from outputs of a NEMO-MEDUSA coupled hydro-geochemical model run at RCP85 with a 2005/2006 historical/future split <span class="citation">(<strong>yool13?</strong>)</span>.</li>
+<li>Temperature, vertical mixing coefficients, volume fluxes, and boundary nutrient, detritus and phytoplankton concentrations from outputs of a NEMO-ERSEM coupled hydro-geochemical model run at SSP370 with a 2010-2019 historical/future split <span class="citation">(<strong>yool13?</strong>)</span>.</li>
 <li>Surface shortwave radiation, surface air temperature, and freshwater volume outflows from HadGEM2-ES model output <span class="citation">(<strong>jones11?</strong>)</span> used to force the NEMO-MEDUSA coupled hydro-geochemical model mentioned above <span class="citation">(<strong>yool13?</strong>)</span>.</li>
 <li>River nitrate and ammonia concentrations taken from <strong>TBD</strong> by the <a href="https://arcticgreatrivers.org/">TBD</a> <span class="citation">(<strong>holmes20?</strong>)</span>.</li>
 <li>Atmospheric deposition of nitrate and ammonia from ISIMIP3a (<a href="https://data.isimip.org/10.48364/ISIMIP.759077.2">Inter-Sectoral Impact Model Intercomparison Project</a>; <span class="citation">(<strong>yang22?</strong>)</span>)</li>
@@ -35190,8 +35194,717 @@ height: 0px !important;
 <div id="background-1" class="section level2 unnumbered">
 <h2>Background</h2>
 <p>The key configuration data for the fishing fleet model are the definitions of the gears in terms of their power with respect to each of the harvestable resource guilds, discarding rates, processing-at-sea rates, and their seabed abrasion rates. These can be regarded as static parameters for each gear.</p>
-<div id="final-processing" class="section level3 unnumbered">
-<h3>Final processing</h3>
+<p>An additional class of static parameters is the scaling coefficients between effort (activity x power) and the harvest ratio generated on each model resource guild. These parameters have to be derived by fitting.</p>
+<p>Finally, there are parameters which we can consider as driving data since they would be expected to vary with time. These are the activity rates of each gear, and their spatial distributions across the habitat types.</p>
+<p>Our principal data sources for the Norwegian Sea were were ICES (<a href="https://www.ices.dk/data/dataset-collections/Pages/Fish-catch-and-stock-assessment.aspx" class="uri">https://www.ices.dk/data/dataset-collections/Pages/Fish-catch-and-stock-assessment.aspx</a>), IMR , the Norwegian directorate of fisheries (Fiskeridirektoratet) (<a href="https://www.fiskeridir.no/Tall-og-analyse/AApne-data" class="uri">https://www.fiskeridir.no/Tall-og-analyse/AApne-data</a>), and Global Fishing Watch <span class="citation">(<strong>kroosdama2018?</strong>)</span>. These were supplemented with additional data sources to improve the representation of catch, bycatch, discard, and small recreational and artisanal fisheries.</p>
+</div>
+<div id="static-gear-definition-parameters-in-the-fishing-fleet-model" class="section level2 unnumbered">
+<h2>Static gear-definition parameters in the fishing fleet model</h2>
+<p>Static parameters for the fishing fleet model were taken from the North Sea implementation (Heath et al. 2021), with the new set of gears operating in the Barents Sea reconciled with StrathE2E gear types as detailed below (Table 5). These parameters would be expected to remain constant over time, so any changes invoked would imply a change in the design or operation of a gear type.</p>
+<p>Table 5: The gear labelling systems of the Norwegian, Faroese and Icelandic Directorates of Fisheries, IMR and Global Fishing Watch, were reconciled with StrathE2E gear types. Gears were condensed considering their target species and their likely impact on the sea-bed.</p>
+<div id="monxlgwmvd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#monxlgwmvd table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#monxlgwmvd thead, #monxlgwmvd tbody, #monxlgwmvd tfoot, #monxlgwmvd tr, #monxlgwmvd td, #monxlgwmvd th {
+border-style: none;
+}
+#monxlgwmvd p {
+margin: 0;
+padding: 0;
+}
+#monxlgwmvd .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#monxlgwmvd .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#monxlgwmvd .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#monxlgwmvd .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#monxlgwmvd .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#monxlgwmvd .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#monxlgwmvd .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#monxlgwmvd .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#monxlgwmvd .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#monxlgwmvd .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#monxlgwmvd .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#monxlgwmvd .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#monxlgwmvd .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#monxlgwmvd .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#monxlgwmvd .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#monxlgwmvd .gt_from_md > :first-child {
+margin-top: 0;
+}
+#monxlgwmvd .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#monxlgwmvd .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#monxlgwmvd .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#monxlgwmvd .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#monxlgwmvd .gt_row_group_first td {
+border-top-width: 2px;
+}
+#monxlgwmvd .gt_row_group_first th {
+border-top-width: 2px;
+}
+#monxlgwmvd .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#monxlgwmvd .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#monxlgwmvd .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#monxlgwmvd .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#monxlgwmvd .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#monxlgwmvd .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#monxlgwmvd .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#monxlgwmvd .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#monxlgwmvd .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#monxlgwmvd .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#monxlgwmvd .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#monxlgwmvd .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#monxlgwmvd .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#monxlgwmvd .gt_left {
+text-align: left;
+}
+#monxlgwmvd .gt_center {
+text-align: center;
+}
+#monxlgwmvd .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#monxlgwmvd .gt_font_normal {
+font-weight: normal;
+}
+#monxlgwmvd .gt_font_bold {
+font-weight: bold;
+}
+#monxlgwmvd .gt_font_italic {
+font-style: italic;
+}
+#monxlgwmvd .gt_super {
+font-size: 65%;
+}
+#monxlgwmvd .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#monxlgwmvd .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#monxlgwmvd .gt_indent_1 {
+text-indent: 5px;
+}
+#monxlgwmvd .gt_indent_2 {
+text-indent: 10px;
+}
+#monxlgwmvd .gt_indent_3 {
+text-indent: 15px;
+}
+#monxlgwmvd .gt_indent_4 {
+text-indent: 20px;
+}
+#monxlgwmvd .gt_indent_5 {
+text-indent: 25px;
+}
+#monxlgwmvd .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#monxlgwmvd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="StrathE2E Gear">StrathE2E Gear</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Gear definition">Gear definition</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="GFW gears">GFW gears</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="IMR gear codes">IMR gear codes</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Icelandic directorate gears">Icelandic directorate gears</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Faroese directorate gears">Faroese directorate gears</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="IMR reference fleet gears">IMR reference fleet gears</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Undefined trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">50</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Double trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">58</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Bottom trawl: double trawl</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Triple trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">59</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Beam trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">56</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Bottom trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">51</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Bottom trawl</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Bottom otter trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">OTB</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Bottom pair trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">PTB</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Bottom trawl: pair trawling</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Mid-water pair trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">PTM</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Otter twin trawls</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">OTT</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Bottom trawl: otter trawl</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pelagic Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Mid-water otter trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Pelagic_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">OTM</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Pelagic trawl: otter trawl</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pelagic Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Pelagic trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Pelagic_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">53</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Pelagic trawl</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pelagic Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">Pelagic_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">53</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Pelagic trawl: pair trawl</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left">Purse seine</td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left">11</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Purse seine</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pelagic Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Pelagic trawl (pair)</td>
+<td headers="GFW gears" class="gt_row gt_left">Pelagic_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">54</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Undefined hook gear</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">30</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Other hook and line</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">32</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Long line: hand line</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Floating hooks</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">31</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Handline</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Long line: drifting</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Jigging</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">33</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Jigging line: automatic</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Jigging</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">33</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Jigging line: manual</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left"></td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Bottom longline</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Long line: demersal</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Undefined net</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">20</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">line</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Gillnet (static)</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">22</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Bottom gillnet</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Gill net: demersal</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Longlines and Gillnets</td>
+<td headers="Gear definition" class="gt_row gt_left">Gillnet (drifting)</td>
+<td headers="GFW gears" class="gt_row gt_left">pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets</td>
+<td headers="IMR gear codes" class="gt_row gt_left">21</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Gill net: drifting</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left">Undefined seine net </td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left">10</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left">Danish seine</td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left">61</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Danish seine</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Danish seine</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left"></td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Seine: single ship</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left"></td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Seine: ring net</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Seiners</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">Seiners</td>
+<td headers="IMR gear codes" class="gt_row gt_left"></td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Seine: two ships</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pots</td>
+<td headers="Gear definition" class="gt_row gt_left">Pot</td>
+<td headers="GFW gears" class="gt_row gt_left">pots_and_traps</td>
+<td headers="IMR gear codes" class="gt_row gt_left">42</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pots</td>
+<td headers="Gear definition" class="gt_row gt_left">Pots</td>
+<td headers="GFW gears" class="gt_row gt_left">pots_and_traps</td>
+<td headers="IMR gear codes" class="gt_row gt_left">FPO</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Pots</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">pots_and_traps</td>
+<td headers="IMR gear codes" class="gt_row gt_left">41</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Whelk trap</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Traps</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Dropped</td>
+<td headers="Gear definition" class="gt_row gt_left">Other</td>
+<td headers="GFW gears" class="gt_row gt_left"></td>
+<td headers="IMR gear codes" class="gt_row gt_left">80</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Dropped</td>
+<td headers="Gear definition" class="gt_row gt_left">Unkown</td>
+<td headers="GFW gears" class="gt_row gt_left"></td>
+<td headers="IMR gear codes" class="gt_row gt_left">NK</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Harpoons</td>
+<td headers="Gear definition" class="gt_row gt_left">Harpoon and similar unspecified types</td>
+<td headers="GFW gears" class="gt_row gt_left"></td>
+<td headers="IMR gear codes" class="gt_row gt_left">70</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Kelp harvesting</td>
+<td headers="Gear definition" class="gt_row gt_left">Kelp harvesting</td>
+<td headers="GFW gears" class="gt_row gt_left"></td>
+<td headers="IMR gear codes" class="gt_row gt_left">Seaweed</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Dredging</td>
+<td headers="Gear definition" class="gt_row gt_left">Dredge</td>
+<td headers="GFW gears" class="gt_row gt_left">dredge_fishing</td>
+<td headers="IMR gear codes" class="gt_row gt_left">81</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Dredging</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">dredge_fishing</td>
+<td headers="IMR gear codes" class="gt_row gt_left">81</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Shellfish dredge</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Dredging</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">dredge_fishing</td>
+<td headers="IMR gear codes" class="gt_row gt_left">81</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Scallop dredge</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Scallop dredge</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left">Shrimp trawl</td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left">55</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Shrimp trawl</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left">Bottom trawl: prawn</td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Shelf Trawlers</td>
+<td headers="Gear definition" class="gt_row gt_left"></td>
+<td headers="GFW gears" class="gt_row gt_left">Shelf_trawlers</td>
+<td headers="IMR gear codes" class="gt_row gt_left"></td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left">Neophrops trawl</td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left">trawl</td></tr>
+    <tr><td headers="StrathE2E Gear" class="gt_row gt_left">Recreational</td>
+<td headers="Gear definition" class="gt_row gt_left">Recreational</td>
+<td headers="GFW gears" class="gt_row gt_left"></td>
+<td headers="IMR gear codes" class="gt_row gt_left">DUMMY</td>
+<td headers="Icelandic directorate gears" class="gt_row gt_left"></td>
+<td headers="Faroese directorate gears" class="gt_row gt_left"></td>
+<td headers="IMR reference fleet gears" class="gt_row gt_left"></td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><span class="citation">(Nedreaas, Borge, and Godøy 2006; Clegg and Williams 2020)</span>#discards
+### Final processing {-}</p>
 <ol style="list-style-type: decimal">
 <li><p>Total catch by gear and guild was calculated by inflating landings according to EU discard rates before adding additional known discarded weight (described above for cetaceans, birds, planktivores and demersal fish).</p></li>
 <li><p>Discarded weight was calculated as catch - landings.</p></li>
@@ -35201,12 +35914,11 @@ height: 0px !important;
 </ol>
 </div>
 </div>
-</div>
 <div id="end" class="section level1 unnumbered">
 <h1>End</h1>
 <div id="acknowledgements" class="section level2 unnumbered">
 <h2>Acknowledgements</h2>
-<p>Financial support for the development of the Brazilian Shelf implementation of StrathE2E2 came from the European Union’s Horizon 2020 research and innovation programme (Mission Atlantic - No. 862428). We are grateful to:</p>
+<p>Financial support for the development of the Norwegian Sea implementation of StrathE2E2 came from the European Union’s Horizon 2020 research and innovation programme (Mission Atlantic - No. 862428). We are grateful to:</p>
 <ul>
 <li>Andy Yool and the National Oceanography Centre for making outputs from the NEMO-MEDUSA model available to us, from which we extracted driving data for StrathE2E2.</li>
 </ul>
@@ -35214,14 +35926,38 @@ height: 0px !important;
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-bachiller2016" class="csl-entry">
+Bachiller, Eneko, Georg Skaret, Leif Nøttestad, and Aril Slotte. 2016. <span>“Feeding <span>Ecology</span> of <span>Northeast Atlantic Mackerel</span>, <span>Norwegian Spring-Spawning Herring</span> and <span>Blue Whiting</span> in the <span>Norwegian Sea</span>.”</span> <em>PLOS ONE</em> 11 (February): e0149238. <a href="https://doi.org/10.1371/journal.pone.0149238">https://doi.org/10.1371/journal.pone.0149238</a>.
+</div>
+<div id="ref-bakke2019" class="csl-entry">
+Bakke, Snorre. 2019. <span>“Life History and Distribution of the Edible Crab (<span>Cancer</span> Pagurus) in <span>Norway</span> - <span>Effect</span> of Temperature and Other Environmental Parameters at High Latitudes.”</span> Doctoral Thesis, UiT The Arctic University of Norway.
+</div>
+<div id="ref-brooke2013" class="csl-entry">
+Brooke, Sandra, and Johanna Järnegren. 2013. <span>“Reproductive Periodicity of the Scleractinian Coral <span>Lophelia</span> Pertusa from the <span>Trondheim Fjord</span>, <span>Norway</span>.”</span> <em>Marine Biology</em> 160 (1): 139–53. <a href="https://doi.org/10.1007/s00227-012-2071-x">https://doi.org/10.1007/s00227-012-2071-x</a>.
+</div>
+<div id="ref-buhl-mortensen2015" class="csl-entry">
+Buhl-Mortensen, Lene, Hanne Hodnesdal, and Terje Thorsnes, eds. 2015. <em>The <span>Norwegian Sea</span> Floor: New Knowledge from <span>MAREANO</span> for Ecosystem-Based Management</em>. 1. edition. Norway? MAREANO.
+</div>
+<div id="ref-clegg2020" class="csl-entry">
+Clegg, Tom, and Tom Williams. 2020. <span>“<span class="nocase">Monitoring bycatches in Norwegian fisheries</span>.”</span> 8. Havforskninginstitutet.
+</div>
 <div id="ref-dossantosschmidt2024" class="csl-entry">
 dos Santos Schmidt, T C, A Slotte, A H Olafsdottir, L Nøttestad, T Jansen, J A Jacobsen, S Bjarnason, et al. 2024. <span>“Poleward Spawning of <span>Atlantic</span> Mackerel (<span>Scomber</span> Scombrus) Is Facilitated by Ocean Warming but Triggered by Energetic Constraints.”</span> <em>ICES Journal of Marine Science</em> 81 (3): 600–615. <a href="https://doi.org/10.1093/icesjms/fsad098">https://doi.org/10.1093/icesjms/fsad098</a>.
+</div>
+<div id="ref-eikefjord2023" class="csl-entry">
+Eikefjord, Mathilde Bryn. 2023. <span>“A <span>Comparative Study</span> of the <span>Spawning Phenology</span> of <span>Cod</span> (<span>Gadus</span> Morhua), <span>Saithe</span> (<span>Pollachius</span> Virens), and <span>Haddock</span> (<span>Melanogrammus</span> Aeglefinus): A <span>Geographical Perspective</span> Along the <span>Norwegian Coast</span>.”</span> Master’s thesis, The University of Bergen.
 </div>
 <div id="ref-ekerhovd2010" class="csl-entry">
 Ekerhovd, Nils-Arne. 2010. <span>“The <span>Stability</span> and <span>Resilience</span> of <span>Management Agreements</span> on <span>Climate-Sensitive Straddling Fishery Resources</span>: <span>The Blue Whiting</span> (<span>Micromesistius</span> Poutassou) <span>Coastal State Agreement</span>.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 67 (February): 534–52. <a href="https://doi.org/10.1139/F09-195">https://doi.org/10.1139/F09-195</a>.
 </div>
+<div id="ref-garcia2021" class="csl-entry">
+Garcia, Théo, Benjamin Planque, Per Arneberg, Bjarte Bogstad, Øystein Skagseth, and Maik Tiedemann. 2021. <span>“An Appraisal of the Drivers of <span>Norwegian</span> Spring-Spawning Herring (<span>Clupea</span> Harengus) Recruitment.”</span> <em>Fisheries Oceanography</em> 30 (2): 159–73. <a href="https://doi.org/10.1111/fog.12510">https://doi.org/10.1111/fog.12510</a>.
+</div>
 <div id="ref-heath2021" class="csl-entry">
 Heath, Michael R., Douglas C. Speirs, Ian Thurlbeck, and Robert J. Wilson. 2021. <span>“<span>StrathE2E2</span>: <span>An</span> r Package for Modelling the Dynamics of Marine Food Webs and Fisheries.”</span> <em>Methods in Ecology and Evolution</em> 12 (2): 280–87. <a href="https://doi.org/10.1111/2041-210X.13510">https://doi.org/10.1111/2041-210X.13510</a>.
+</div>
+<div id="ref-holst2004" class="csl-entry">
+Holst, Jens Christian, Ingolf Røttingen, and Webjørn Melle. 2004. <span>“The <span>Herring</span>.”</span> In <em>The <span>Norwegian Sea Ecosystem</span></em>, 203–26. Skjodal.
 </div>
 <div id="ref-ices2020" class="csl-entry">
 ICES. 2020. <span>“Working <span>Group</span> on <span>Widely Distributed Stocks</span> (<span>WGWIDE</span>).”</span> Report. ICES Scientific Reports. <a href="https://doi.org/10.17895/ices.pub.7475">https://doi.org/10.17895/ices.pub.7475</a>.
@@ -35231,6 +35967,15 @@ Iversen, Svein A. 2002. <span>“Changes in the Perception of the Migration Patt
 </div>
 <div id="ref-iversen2004" class="csl-entry">
 ———. 2004. <span>“Mackerel and Horse Mackerel.”</span> In <em>The <span>Norwegian Sea Ecosystem</span></em>, 289–300. Skjodal.
+</div>
+<div id="ref-james2012" class="csl-entry">
+James, Philip, and Sten Siikavuopio. 2012. <span>“Understanding the Reproductive Cycle of the Green Sea Urchin <span>Strongylocentrotus</span> Droebachiensis in <span>Norway</span>: <span>A</span> Guide for Fishermen, Aquaculturalists and Researchers.”</span>
+</div>
+<div id="ref-jarnegren2014" class="csl-entry">
+Järnegren, Johanna, and Tina Kutti. 2014. <span>“Lophelia Pertusa in <span>Norwegian</span> Waters. <span>What</span> Have We Learned Since 2008?”</span> 1028. <em>40 s.</em> Norsk institutt for naturforskning.
+</div>
+<div id="ref-nedreaas2006" class="csl-entry">
+Nedreaas, K. H., A. Borge, and H. Godøy. 2006. <span>“The <span>Norwegian Reference</span> Fleet-Cooperation Between Fishing Crews and Scientists for Multiple Objectives.”</span> ASC 2006 - Theme session N. <a href="https://doi.org/10.17895/ICES.PUB.25259113">https://doi.org/10.17895/ICES.PUB.25259113</a>.
 </div>
 <div id="ref-nottestad2016" class="csl-entry">
 Nøttestad, Leif, Kjell R. Utne, Gumundur J. Óskarsson, Sigurdur . Jónsson, Jan Arge Jacobsen, Øyvind Tangen, Valantine Anthonypillai, et al. 2016. <span>“Quantifying Changes in Abundance, Biomass, and Spatial Distribution of <span>Northeast Atlantic</span> Mackerel ( <span>Scomber</span> Scombrus ) in the <span>Nordic</span> Seas from 2007 to 2014.”</span> <em>ICES Journal of Marine Science</em> 73 (2): 359–73. <a href="https://doi.org/10.1093/icesjms/fsv218">https://doi.org/10.1093/icesjms/fsv218</a>.

@@ -18,6 +18,16 @@ main-font: "Quicksand"
 bibliography: "Impl_Strath_NorwSea.bib"
 
 ---
+<style>
+r { color: Red }
+o { color: Orange }
+g { color: Green }
+</style>
+
+# TODOs:
+
+- <r>TODO:</r> Things for Tanguy to complete
+- <o>TODO:</o> Things for Jack/Mike to adapt
 
 ```{r setup, include=FALSE}                
 
@@ -42,10 +52,9 @@ Area <- read.csv(str_glue("Files/{implementation}/{Period}/Param/event_timing_{t
 
 ```
 
-
 # Introduction {-}                         
 
-This document describes the configuration of StrathE2E2 for the Norwegian basin and its parameterisation to enable stationary state fitting for 2010-2070. These represent contrasting periods of environmental conditions. 
+This document describes the configuration of StrathE2E2 for the Norwegian basin and its parameterisation to enable stationary state fitting for 2010-2070. These represent contrasting periods of environmental conditions.
 
 Volumetric and seabed habitat data define the physical configuration of the system. We regard these as being fixed in time. Similarly, we regard the physiological parameters of the ecology model as being fixed in time. Some of these are set from external data. The remainder are fitted, as detailed here. Changes in the model performance between the different time periods therefore stem from the hydrodynamic, hydro-chemical and fishery driving data. These are detailed in the ecological drivers and fishing fleet sections.
 
@@ -71,9 +80,10 @@ The model splits the domain into three zones, inshore/shallow, offshore/shallow,
 
 The seafloor of the model domain is represented by 5 habitat types. There are three sediment classes for the inshore zone – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). The fourth class (rock, 0) represents an absence of soft sediment. The rock class has different geochemical properties and supports the kelp forests in the model food web. In the offshore zone, the seafloor being too deep to correctly be represented within StrathE2E, a imaginary floating layer of sediment called "overhang" will be added to the model to represent deepsea interactions (Figure \@ref(fig:habitats)). 
 
-The perimeter of the model domain is defined by a `r Perimeter` m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.
+*The perimeter of the model domain is defined by a m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.*
 
-![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are a composite of ___ and ____ [-@laverick21].](img/habitats.png)
+![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are a composite of ___ and ____ [-@laverick2023].](img/habitats.png)
+
 
 # Fixed Physical {-}                       
 
@@ -81,7 +91,7 @@ The perimeter of the model domain is defined by a `r Perimeter` m depth contour 
 
 #### Water column inshore/shallow and offshore/deep zone area proportions and layer thicknesses; seabed habitat area proportions and sediment properties: {-}
 
-Area proportions of depth zones and seabed habitats derived from 1/100th degree resolution atlas of seabed sediment properties [@laverick21]. The atlas provides gridded data sets of bathymetry, mean grain size, mud, sand and gravel content, porosity, permeability, organic nitrogen and carbon content, and natural disturbance by waves and bed shear stress.
+Area proportions of depth zones and seabed habitats derived from 1/100th degree resolution atlas of seabed sediment properties [@laverick2023]. The atlas provides gridded data sets of bathymetry, mean grain size, mud, sand and gravel content, porosity, permeability, organic nitrogen and carbon content, and natural disturbance by waves and bed shear stress.
 
 #### Parameters for relationship between median grain size, sediment porosity and permeability. Permeability is used as the basis for estimating hydraulic conductivity which is a parameter in the representation of sediment processes in the model: {-}
 
@@ -137,7 +147,7 @@ data_frame(Property = c("Sea-surface area proportion",
 
 ```
 
-We derived the area-proportions of seabed habitat in the inshore and offshore zones from the atlas of seabed sediment properties from Laverick et al. [-@laverick21]. The atlas provides a range of seabed data for 1/100th degree cells over the Barents and Greenland Seas, including the presence of rock, the percentage of mud, sand and gravel fractions in the sediments, the whole–sediment mean grain size, and the natural disturbance rate by currents and waves. These values are derived from habitat classes used by the Norwegian Geological survey in partnership with the Russian Federal State Unitarian Research and Production Company for Geological Sea Survey (NGU-SEVMORGEO). We assigned the NGU-SEVMORGEO sediment classes as fine, medium, coarse, or absence of sediment habitats within each zone (Figure \@ref(fig:habitats)). The actual area of each habitat was then the sum of the areas of each set of assigned cells (`r table.ref("tab_habitat_proportions")`).
+We derived the area-proportions of seabed habitat in the inshore and offshore zones from the atlas of seabed sediment properties from Laverick et al. [-@laverick2022]. The atlas provides a range of seabed data for 1/100th degree cells over the Barents and Greenland Seas, including the presence of rock, the percentage of mud, sand and gravel fractions in the sediments, the whole–sediment mean grain size, and the natural disturbance rate by currents and waves. These values are derived from habitat classes used by the Norwegian Geological survey in partnership with the Russian Federal State Unitarian Research and Production Company for Geological Sea Survey (NGU-SEVMORGEO). We assigned the NGU-SEVMORGEO sediment classes as fine, medium, coarse, or absence of sediment habitats within each zone (Figure \@ref(fig:habitats)). The actual area of each habitat was then the sum of the areas of each set of assigned cells (`r table.ref("tab_habitat_proportions")`).
 
 ```{r habitat_proportions_cap}
 
@@ -211,13 +221,13 @@ where: seawater density = 1027 kg.m^-3^ at salinity 35 and temperature 10°C; se
 
 Hence, $H = Permeability · 6.8004·10^6$ (m.s^-1^ at salinity 35 and temperature 10°C)
 
-Whole sediment permeability can be related to the proportion of sediment classed as mud (D~50~ < 62 μm) [@pace21]. This relationship was used in the production of the Barents Sea sediment atlas [@laverick21], which provides the values used in this model implementation (`r table.ref("tab_habitat_proportions")`).
+Whole sediment permeability can be related to the proportion of sediment classed as mud (D~50~ < 62 μm) [@pace21]. This relationship was used in the production of the Barents Sea sediment atlas [@laverick2022], which provides the values used in this model implementation (`r table.ref("tab_habitat_proportions")`).
 
 ## Sediment organic nitrogen content {-}   
 
 The magnitude of the static (refactory) organic nitrogen detritus pool in each sediment type is a required input to the model. The code includes an option to impute values from empirical relationships between total organic nitrogen (TON) and mud content, and between mud content and median grain size. This relationship has been documented in the North Sea implementation of the temperate StrathE2E2 package [@heath2021], and is based on sediment data off northeast Scotland.
 
-To supplement the relationship within the package, predictions of sediment organic nitrogen content for the Norwegian Sea have been sourced from the sediment atlas [@laverick21] to parameterise StrathE2E directly (`r table.ref("tab_habitat_proportions")`).
+To supplement the relationship within the package, predictions of sediment organic nitrogen content for the Norwegian Sea have been sourced from the sediment atlas [@laverick2022] to parameterise StrathE2E directly (`r table.ref("tab_habitat_proportions")`).
 
 # Fixed biological {-}                     
 
@@ -225,7 +235,7 @@ To supplement the relationship within the package, predictions of sediment organ
 
 ### Assimilation efficiencies for each living guild in the model. {-}
 
-Fixed parameters defining the proportion of ingested mass of food that contributes to new body tissue, after subtracting defecation and the metabolic costs of digestion and synthesis [@heath12].
+Fixed parameters defining the proportion of ingested mass of food that contributes to new body tissue, after subtracting defecation and the metabolic costs of digestion and synthesis [@heath2012].
 
 ### Biomass loss rates due to temperature-dependent metabolism for each living resource guild. {-}
 
@@ -251,6 +261,7 @@ The living resource guilds in the model represent a mixture of harvestable and n
 
 The carnivorous zooplankton guild is a key component of the food web, predated on by all the fish and top-predators. However it represents an extremely diverse range of fauna many of which are not edible in significant quantities by the guild predators, e.g. scyphomedusae. A minimum edible threshold is set to ensure that the guild as a whole cannot be extirpated by predation. The value is a rough estimate of scyphomedusae biomass.
 
+
 ## Event timing parameters (not fitted) {-}  
 
 ### Spawning start and end dates for fish {-}
@@ -268,12 +279,12 @@ Demersal fish recruitment dates were also approximated by the recruitment dates 
 ### Spawning and recruitment start and end dates for benthos guilds {-}
 
 The annual weight-specific fecundity and recruitment for the benthos guilds are assumed to be uniform between the start and end dates.
-For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected tp obtain timing dates [@bakke2019;@hamed2019;@james2012]. Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of *Desmophyllum pertusum* [@brooke2012;@jarnegren2014].
+For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected tp obtain timing dates [@bakke2019;@hamed2019;@james2012]. Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of *Desmophyllum pertusum* [@brooke2013;@jarnegren2014].
 
 
 ### Extra-domain stock biomass of migratory, and the proportion invading the domain each year. Start and end dates for the annual invasion, and start and end dates for the emigration. (see description below). {-}
 
-Migratory fish in the Barents Sea model are assumed to be Atlantic mackerel and the Blue whiting. 
+Migratory fish in the Norwegian Sea model are assumed to be Atlantic mackerel and the Blue whiting. 
 The spawning for Atlantic mackerel takes place off southwest Ireland in April and between February and April on the West of the British Isles for the Blue whiting. After spawning, both species rapidly migrate to summer feeding zones thousands of kilometers northwards along the continental shelf edge to the Norwegian and Barents Seas. [@iversen2004;@bachiller2016]. Some spawning of Atlantic mackerel have been observed in the Norwegian Sea feeding area [@dossantosschmidt2024].
 
 For the purposes of the model, we assume that there is no feedback between fishing and environmental conditions in the Norwegian Sea and the biomass and migration patterns of the whole northeast Atlantic mackerel or Blue whiting stock. In this version of StrathE2E2 the timing of immigration and emigration, and the mass influx across the ocean boundary during the annual immigration phase are treated as period-specific external driving data.
@@ -309,17 +320,17 @@ data_frame(Parameter = model[["data"]][["biological.events"]][["Description"]] %
 ```
 
 
-# Ecological drivers {-}                   
+# Ecological drivers {-}           
 
 Monthly resolution time-varying physical and chemical driving parameters for the model were derived from a variety of sources:
 
-- Temperature, vertical mixing coefficients, volume fluxes, and boundary nutrient, detritus and phytoplankton concentrations from outputs of a NEMO-MEDUSA coupled hydro-geochemical model run at RCP85 with a 2005/2006 historical/future split [@yool13].
+- Temperature, vertical mixing coefficients, volume fluxes, and boundary nutrient, detritus and phytoplankton concentrations from outputs of a NEMO-ERSEM coupled hydro-geochemical model run at SSP370 with a 2010-2019 historical/future split [@yool13].
 - Surface shortwave radiation, surface air temperature, and freshwater volume outflows from HadGEM2-ES model output [@jones11] used to force the NEMO-MEDUSA coupled hydro-geochemical model mentioned above [@yool13].
 - River nitrate and ammonia concentrations taken from **TBD** by the [TBD](https://arcticgreatrivers.org/) [@holmes20].
 - Atmospheric deposition of nitrate and ammonia from ISIMIP3a ([Inter-Sectoral Impact Model Intercomparison Project](https://data.isimip.org/10.48364/ISIMIP.759077.2); [@yang22])
 - Oceanic Nitrate and ammonia data from **TBD**, published by **TBD** [@brand20; @brand20b; @brand20c; @brand20d].
 - Remote sensing data products on Suspended Particulate Matter (Globcolour L3b; ftp://ftp.hermes.acri.fr/GLOB/merged/month/).
-- Habitat disturbance due to tidal currents and waves from **TBD** [@laverick21].
+- Habitat disturbance due to tidal currents and waves from **TBD** [@laverick2022].
 - Wave height, period, and direction from the ERA-5 reanalysis monthly means accessed through [CDS](https://cds.climate.copernicus.eu/cdsapp#!/dataset/10.24381/cds.f17050d7?tab=overview) for 1980-2021 [@Hersbach19].
 
 Details of how these data were processed are given below, supported by the [nemomedusR](https://jack-h-laverick.github.io/nemomedusR/) and [MiMeMo.tools](https://jack-h-laverick.github.io/MiMeMo.tools/) packages.
@@ -370,6 +381,40 @@ DIN was decomposed into nitrate and ammonia concentrations using a ratio of ammo
 
 The key configuration data for the fishing fleet model are the definitions of the gears in terms of their power with respect to each of the harvestable resource guilds, discarding rates, processing-at-sea rates, and their seabed abrasion rates. These can be regarded as static parameters for each gear.
 
+An additional class of static parameters is the scaling coefficients between effort (activity x power) and the harvest ratio generated on each model resource guild. These parameters have to be derived by fitting.
+
+Finally, there are parameters which we can consider as driving data since they would be expected to vary with time. These are the activity rates of each gear, and their spatial distributions across the habitat types. 
+
+Our principal data sources for the Norwegian Sea were were ICES (https://www.ices.dk/data/dataset-collections/Pages/Fish-catch-and-stock-assessment.aspx), IMR , the Norwegian directorate of fisheries (Fiskeridirektoratet) (https://www.fiskeridir.no/Tall-og-analyse/AApne-data), and Global Fishing Watch [@kroosdama2018]. These were supplemented with additional data sources to improve the representation of catch, bycatch, discard, and small recreational and artisanal fisheries.
+
+## Static gear-definition parameters in the fishing fleet model {-}
+
+Static parameters for the fishing fleet model were taken from the North Sea implementation (Heath et al. 2021), with the new set of gears operating in the Barents Sea reconciled with StrathE2E gear types as detailed below (`r table.ref("tab_gears_def")`). These parameters would be expected to remain constant over time, so any changes invoked would imply a change in the design or operation of a gear type.
+
+```{r gears_def}
+tab_gears_def <- table_nums(name = "tab_gears_def", 
+    caption = "The gear labelling systems of the Norwegian, Faroese and Icelandic Directorates of Fisheries, IMR and Global Fishing Watch, were reconciled with StrathE2E gear types. Gears were condensed considering their target species and their likely impact on the sea-bed.")
+```
+`r table_nums("tab_gears_def")`
+```{r gears_defb, fig.cap = tab_gears_def}
+
+gears<-read.csv("./R scripts/Data/MiMeMo_gears.csv")
+data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>% 
+                        str_replace_all("_", " "),
+           `Gear definition` = gears$Gear_name,
+           `GFW gears`=gears$Gear_type,
+           `IMR gear codes`=gears$Gear_code,
+           `Icelandic directorate gears`=gears$Gear_ISL,
+           `Faroese directorate gears`=gears$Gear_FRO,
+           `IMR reference fleet gears`=gears$Gear_group
+)%>% 
+  gt()
+
+
+
+```
+
+[@nedreaas2006;@clegg2020]#discards
 ### Final processing {-}
 
 1. Total catch by gear and guild was calculated by inflating landings according to EU discard rates before adding additional known discarded weight (described above for cetaceans, birds, planktivores and demersal fish).
@@ -385,7 +430,7 @@ The key configuration data for the fishing fleet model are the definitions of th
 # End {-}                                  
 ## Acknowledgements {-} 
 
-Financial support for the development of the Brazilian Shelf implementation of StrathE2E2 came from the European Union's Horizon 2020 research and innovation programme (Mission Atlantic - No. 862428). We are grateful to:
+Financial support for the development of the Norwegian Sea implementation of StrathE2E2 came from the European Union's Horizon 2020 research and innovation programme (Mission Atlantic - No. 862428). We are grateful to:
 
 - Andy Yool and the National Oceanography Centre for making outputs from the NEMO-MEDUSA model available to us, from which we extracted driving data for StrathE2E2.
 
