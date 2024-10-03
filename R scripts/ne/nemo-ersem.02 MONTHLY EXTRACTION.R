@@ -12,10 +12,15 @@ source("./R scripts/@_Region file.R")                                       # De
 
 plan(multisession)                                                          # Choose the method to parallelise by with furrr
 
-all_files <- rbind(categorise_files("I:/Science/MS/Shared/MA/CNRM_ssp370", recursive = FALSE),      # For historical and projection runs
-                   categorise_files("I:/Science/MS/Shared/MA/CNRM_hist/", recursive = FALSE)) %>%   # Build metadata for each file
+all_files <- rbind(categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp370", recursive = TRUE),      # For projection runs
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_ssp126", recursive = TRUE),      # From multiple SSPs
+                   categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp370", recursive = TRUE),     
+                   categorise_files("I:/Science/MS-Marine/MA/GFDL_ssp126", recursive = TRUE),     
+                   categorise_files("I:/Science/MS-Marine/MA/CNRM_hist", recursive = TRUE),        # and forcings from historical runs too
+                   categorise_files("I:/Science/MS-Marine/MA/GFDL_hist", recursive = TRUE)) %>%   # Build metadata for each file
   drop_na() %>% 
-  select(-Name)
+  select(-Name) %>% 
+  filter(Year > 2009)
 
 domains <- readRDS("./Objects/Domains.rds") %>%                             # Load SF polygons of the MiMeMo model domains
   select(-c(Elevation, area))                                               # Drop unneeded data which would get included in new NM files
@@ -31,36 +36,15 @@ Bathymetry <- readRDS("./Objects/NE_grid.rds") %>%                          # Im
 
 #### Build summary scheme ####
 
-scheme <- scheme_strathE2E(get_spatial(paste0(all_files$Path[1], all_files$File[1]), depthvar = "depth"),
+example <- filter(all_files, Type == "thetao_con") %>% 
+  slice(1) 
+
+scheme <- scheme_strathE2E(get_spatial(paste0(example$Path, example$File), depthdim = "deptht"),
                            Bathymetry, SDepth, DDepth, crop) %>% 
   select(x, y, layer, group, weight, slab_layer, longitude, latitude, Bathymetry) %>%   # Get a scheme to summarise for StrathE2E
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326, remove = F) %>% # Convert to sf object
   st_join(st_transform(domains, crs = 4326)) %>%                            # Attach model zone information
   st_drop_geometry()                                                        # Drop sf formatting
-
-#### !!!! Get Yuri's temporary mask fix. ####
-
-raw <- nc_open("I:/Science/MS/Shared/MA/STRATH_GS1p0_reg025_mesh_mask.nc")
-mask <- ncvar_get(raw, varid = "Tmask")                                          # 3D array where 1 is ocean
-nav_lat <- ncvar_get(raw, varid = "lat")                                        # We need lat lon to join the grid to our different crop
-nav_lon <- ncvar_get(raw, varid = "lon")                                        
-nc_close(raw)
-
-image(mask[,,1])
-image(mask[,,53])
-
-fix <- reshape2::melt(mask, varname = c("x", "y", "layer"), value.name = "ocean_mask") %>% 
-  filter(ocean_mask == 1) 
-
-scheme <- scheme %>% 
-  left_join(fix) %>% 
-  drop_na(ocean_mask) %>% 
-  select(-ocean_mask) %>% 
-  group_by(slab_layer, x, y) %>%                                                # Rebuild grouping in case any pixels are dropped, ruining the order
-  mutate(group = cur_group_id()) %>%                                            
-  ungroup()
-
-#### end fix ####
 
 start <- scheme_to_start()                                                  # Get netcdf vectors which define the minimum
 count <- scheme_to_count()                                                  # amount of data to import
@@ -82,23 +66,26 @@ ggplot(look) +
 
 #### extract ####
 
+skip <- list.files("./Objects/NE_Months/")                                      # Already processed files
+
 tictoc::tic()
 all_files %>%
-#  filter(!Type %in% thetao_conc( "difvho", "wo")) %>% 
   filter(Type == "thetao_con") %>%                                             # The only monthly volumes the compiler actually needs are temperatures. Others are boundary (5-daily) extractions
-  split(., f = list(.$Month, .$Year)) %>%                                   # Specify the timestep to average files over.
+  #skip?
+  #filter(str_detect(paste0("NE.",Forcing,".",SSP,".",Month,".",Year,".rds"), paste(skip, collapse = "|"), negate = TRUE)) %>% # Remove files that already have summaries in the cache
+  split(., f = list(paste(.$Month, .$Year, .$Forcing, .$SSP))) %>%                                   # Specify the timestep to average files over.
 #  .[1:12] %>%
   future_map(NEMO_ERSEM, analysis = "slabR", summary = scheme_result,
              scheme = scheme, start = start, count = count,
              out_dir = "./Objects/NE_Months", 
              collapse_days = TRUE, .progress = T)                # Perform the extraction and save an object for each month (in parallel)
-tictoc::toc() # 31 minutes to extract for all files.
+tictoc::toc() # 42 minutes to extract for all files.
 
 #### check ####
 
-# NE.01.2015 <- readRDS("./Objects/NE_Months/NE.01.2015.rds") %>%
-#   mutate(day = rep(1:6, each = nrow(scheme_result)))
+# NE.01.2017 <- readRDS("./Objects/NE_Months/NE.01.2017.rds") 
 # 
-# ggplot(NE.01.2015) +
+# ggplot(NE.01.2016) +
 #   geom_raster(aes(x = x, y = y, fill = Temperature)) +
-#   facet_grid(rows = vars(slab_layer), cols = vars(day))
+#   facet_grid(rows = vars(slab_layer))
+  

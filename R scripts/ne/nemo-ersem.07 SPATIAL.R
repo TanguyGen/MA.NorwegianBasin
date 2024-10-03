@@ -19,18 +19,19 @@ Months <- list.files("./Objects/NE_Months/", full.names = T) %>%            # Ge
   future_map(decadal, .progress = TRUE) %>%                                 # Read in data, remove unnecessary columns and create a decade column
   data.table::rbindlist() %>%                                               # Combine dataframes
   mutate(Decade = as.factor(Decade)) %>%                                    # Change decade to factor     
-  split(., f = list(.$Decade, .$slab_layer)) %>%                            # Split into a large dataframe per decade (and depth to help plotting)
-  lapply(NE_decadal_summary, dt = T)                                        # Average the variables per decade, dt method is faster
+  split(., f = list(paste(.$Decade, .$slab_layer, .$Forcing, .$SSP))) %>%          # Split into a large dataframe per decade (and depth to help plotting)
+  lapply(NE_decadal_summary, dt = T) %>%                                    # Average the variables per decade, dt method is faster
+  lapply(select, c("x", "y", "Month", "Temperature"))     # Make life easier for the eventual left_join (some imperfect matching in lat/lon)
   
 Days <- list.files("./Objects/NE_Days/", full.names = T) %>%                # Get list of NE files
   future_map(decadal, .progress = TRUE) %>%                                 # Read in data, remove unnecessary columns and create a decade column
   data.table::rbindlist() %>% 
   mutate(Decade = as.factor(Decade),                                        # Change decade to factor
        Speed = vectors_2_direction(Zonal, Meridional)[,"uvSpeed"]) %>%      # Convert currents to speed     
-  split(., f = list(.$Decade, .$slab_layer)) %>%                            # Split into a large dataframe per decade (and depth to help plotting)
+  split(., f = list(paste(.$Decade, .$slab_layer, .$Forcing, .$SSP))) %>%          # Split into a large dataframe per decade (and depth to help plotting)
   lapply(NE_decadal_summary, dt = T)                                        # Average the variables per decade, dt method is faster
   
-SP <- future_map2(Months, Days, left_join) 
+SP <- future_map2(Months, Days, left_join, by = c("x", "y", "Month")) 
   
-saveRDS(SP, "./Objects/SPATIAL.rds")                                          # Save out spatial file in the folder above WD
+saveRDS(SP, "./Objects/SPATIAL.rds")                                          # Save out spatial file
 

@@ -1,12 +1,13 @@
 
 #### Setup                                            ####
-
+rm(list=ls())
 library(tidyverse)
 library(stringr)
 source("./R scripts/@_Region file.R")
 
-discard_rate <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/EU discard rates.rds") %>%   # Import data
-.[,-1]
+discard_rate <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Discard rates.rds")  # Import data
+
+bycatch<-readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Bycatch weight.rds")
 
 landings_raw <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds")  # Units tonnes/m2/year
 
@@ -18,10 +19,6 @@ lookup <- read.csv("./Data/lookup_gear.csv") %>% select(-X) %>% arrange(neworder
 hablookup <- read.csv("./Data/lookup_habitat.csv") %>% select(-X) %>% arrange(hneworder)
 glookup <- read.csv("./Data/lookup_guild.csv") %>% select(-X) %>% arrange(gneworder)
 
-domain_size <- readRDS("./Objects/Domains.rds") %>%                         # We need landings as tonnes per m^2
-  sf::st_union() %>% 
-  sf::st_area() %>% 
-  as.numeric()
 
 #### quickly copy over Tanguy's fish processing and fleet files ####
 
@@ -43,20 +40,27 @@ mults <- read.csv("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Param/fi
 
 blank_fleetxguild <- matrix(0, 12, 12)
 
-colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1:4))
+colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1:3))
 rownames(blank_fleetxguild) <- colnames(landings_raw)
 
-blank_fleetxguild[1, 1:8] <- effort[1,]
+blank_fleetxguild[1, 1:9] <- effort[1,]
 effort <- blank_fleetxguild[1, ] 
+
 
 blank_fleetxguild[] <- 0
 blank_fleetxguild <- t(blank_fleetxguild)
-blank_fleetxguild[1:8, 1:12] <- discard_rate
+blank_fleetxguild[1:9, 1:12] <- discard_rate
 
 discard_rate <- blank_fleetxguild
 
+
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:8, 1:12] <- landings_raw
+blank_fleetxguild[1:9, 1:12] <- bycatch
+
+bycatch <- blank_fleetxguild
+
+blank_fleetxguild[] <- 0
+blank_fleetxguild[1:9, 1:12] <- landings_raw
 
 landings_raw <- blank_fleetxguild
 
@@ -67,9 +71,9 @@ colnames(missing_habs) <- str_replace(colnames(missing_habs), "In", "Off")
 
 distribution <- cbind(distribution, missing_habs)
 
-missing_gears <- distribution[1:4,]
+missing_gears <- distribution[1:3,]
 missing_gears[] <-0
-rownames(missing_gears) <- paste0("blank", 1:4)  
+rownames(missing_gears) <- paste0("blank", 1:3)  
 
 distribution <- rbind(distribution, missing_gears)
 
@@ -80,6 +84,8 @@ landings <- landings_raw * 1e6 / 360                                        # Co
 catch <- landings / (1-discard_rate)                                        # Inflate landings with discards to total catch.
 
 catch[!is.finite(catch)] <- landings[!is.finite(catch)]                     # 0s and infinities mean no discard, so are overwritten with landings
+
+catch<-catch+bycatch
 
 #catch["Gillnets", "Cetacean"] <- catch["Gillnets", "Cetacean"] + (15.8 * 1e6 / 360 / domain_size) # Add extra discards following Mike's stories (see Notes)
 #catch["Gillnets", "Birds"] <- catch["Gillnets", "Birds"] +(2.015 * 1e6 / 360/ domain_size)        # Converting the units as for landings

@@ -10,6 +10,22 @@ packages <- c("tidyverse", "nemoRsem", "furrr", "tictoc")                       
 lapply(packages, library, character.only = TRUE)                                # Load packages
 plan(multisession)                                                              # Instructions for parallel processing
 
+# # fix
+# 
+# cbind(list.files("./Objects/NE_Months/", full.names = T),
+#               list.files("./Objects/NE_Days/", full.names = T),
+#               list.files("./Objects/overhang/", full.names = T),
+#               list.files("./Objects/vertical boundary/", full.names = T))%>% 
+#   future_map(~{
+#     
+#     readRDS(.x) %>% 
+#       mutate(SSP = str_split_i(.x, "\\.", 4),
+#              Forcing = str_split_i(.x, "\\.", 3)) %>% 
+#       saveRDS(.x)
+#   }, .progress = TRUE)
+# 
+
+
 #### Extract time series ####
 
 tic("Creating time series by compartment")                                      # Time the data extraction
@@ -18,14 +34,15 @@ Months <- list.files("./Objects/NE_Months/", full.names = T) %>%                
   future_map(NE_volume_summary,                                                 # Read in the months and calculate mean compartments
              ice = FALSE,
              .progress = T) %>%      
-  data.table::rbindlist()                                                       # Combine timesteps into series
+  data.table::rbindlist() %>%                                                   # Combine timesteps into series
+  select(-c(x_avg, y_avg, longitude_avg, latitude_avg, Bathymetry_avg, weights_avg))                                                                  # Drop uneccessary columns
   
 TS <- list.files("./Objects/NE_Days/", full.names = T) %>%                      # Get list of NEMO-MEDUSA files
   future_map(NE_volume_summary,                                                 # Read in the months and calculate mean compartments
              ice = FALSE,
              .progress = T) %>%      
   data.table::rbindlist() %>%                                                   # Combine timesteps into series
-  left_join(Months) %>%                                                         # Add in separately extracted temperature data
+  left_join(Months, by = c("Month", "Year", "Forcing", "SSP", "slab_layer", "Shore")) %>%  # Add in separately extracted temperature data
   select(-c(x_avg, y_avg, longitude_avg, latitude_avg, Bathymetry_avg, weights_avg)) %>%                                                                  # Drop uneccessary columns
   mutate(date = as.Date(paste("15", Month, Year, sep = "/"), format = "%d/%m/%Y"), # Create a single date column for plotting
          Compartment = paste(Shore, slab_layer, sep = " ")) %>%                 # Build a single compartment column for plotting by

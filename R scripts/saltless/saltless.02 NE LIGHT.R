@@ -11,7 +11,7 @@ source("./R scripts/@_Region file.R")                                           
 
 # A weakness of terra is that you can't use furrr to parallelise operations, something about the C code fights with the threading. 
 
-forecast <- list.files(str_glue("I:/Science/MS/Shared/MA/CNRM_{ssp}/irradiance/"), recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
+forecast <- list.files(str_glue("I:/Science/MS-Marine/MA/CNRM_{ssp}/irradiance/"), recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
   as.data.frame() %>%                                                           # Turn the vector into a dataframe/tibble
   rename(value = 1) %>% 
   separate(value, into = c(NA, "Year"), 
@@ -19,7 +19,7 @@ forecast <- list.files(str_glue("I:/Science/MS/Shared/MA/CNRM_{ssp}/irradiance/"
   mutate(Year = str_sub(Year, end = -4)) %>%                                    # Drop file extension to get number
   rename(File = "value")
 
-all_files <- list.files("I:/Science/MS/Shared/MA/CNRM_hist/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
+all_files <- list.files("I:/Science/MS-Marine/MA/CNRM_hist/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
   as.data.frame() %>%                                                           # Turn the vector into a dataframe/tibble
   rename(value = 1) %>% 
   separate(value, into = c(NA, "Year"), 
