@@ -67,7 +67,7 @@ ggplot(data = filter(Deposition_lab, Year > 2000)) +
   theme(legend.position = "top") +
   NULL
 
-ggsave("./Figures/saltless/Atmospheric N Deposition.png", last_plot(), dpi = 500, width = 18, height = 10 , units = "cm")
+ggsave("./Figures/saltless/Atmospheric N Deposition.png", last_plot(), dpi = 500, width = 18, height = 10 , units = "cm", bg = "white")
 
 #### Save ####
 Deposition_ssp %>% 
