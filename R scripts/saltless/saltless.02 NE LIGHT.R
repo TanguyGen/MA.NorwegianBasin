@@ -86,4 +86,4 @@ ggplot(data = extract) +
   facet_grid(rows = vars(Forcing)) +
   NULL
 
-#ggsave("./Figures/saltless/Light.png", last_plot(), dpi = 500, width = 12, height = 18 , units = "cm")
+ggsave("./Figures/saltless/Light.png", last_plot(), dpi = 500, width = 12, height = 18 , units = "cm", bg = "white")
