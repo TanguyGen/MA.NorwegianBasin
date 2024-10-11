@@ -87,6 +87,8 @@ catch[!is.finite(catch)] <- landings[!is.finite(catch)]                     # 0s
 
 catch<-catch+bycatch
 
+
+
 #catch["Gillnets", "Cetacean"] <- catch["Gillnets", "Cetacean"] + (15.8 * 1e6 / 360 / domain_size) # Add extra discards following Mike's stories (see Notes)
 #catch["Gillnets", "Birds"] <- catch["Gillnets", "Birds"] +(2.015 * 1e6 / 360/ domain_size)        # Converting the units as for landings
 #catch["Gillnets", "Pinnipeds"] <- catch["Gillnets", "Pinnipeds"] + (6.2 * 1e6 / 360 / domain_size) 

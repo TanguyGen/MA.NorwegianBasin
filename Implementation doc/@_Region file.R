@@ -2,8 +2,7 @@
 ## Set repeated commands specific to the project region
 ## This version is parameterised for the Norwegian Basin
 implementation <- "Norwegian_Basin"
-ssp <- "ssp370"
-  
+
 library(sf)
 
 #EPSG <- rgdal::make_EPSG()
@@ -23,6 +22,7 @@ pre <- list(scale = 1, width = 12, height = 10, units = "cm", dpi = 500) # The s
 SDepth <- 60                  # Shallow deep boundary
 DDepth <- 600                 # Maximum depth
 
+
 #### bathymetry.5 MODEL DOMAIN ####
 
 shape <- function(matrix) {
@@ -36,24 +36,32 @@ shape <-  matrix %>%
   shape <- st_transform(shape, crs = crs)
   return(shape)
   
-}                      # Convert a matrix of lat-lons to an sf polygon
+}           # Convert a matrix of lat-lons to an sf polygon
+Domains <- st_transform(readRDS("./R scripts/Data/Domains.rds"), crs = 4326) %>%      # reproject to match EU data
+  st_union() %>%                                                              # Create whole domain shape 
+  st_as_sf() %>% 
+  mutate(Keep = T)
 
-Region_mask <- matrix(c(16.23, 70,
-                        20.25, 68.5,
-                        10, 60,
-                        6, 58.5,
-                        4.5, 59,
-                        4.25, 60.5,
-                        2.5, 63,
-                        10, 70,
-                        16.23, 70),
-                       ncol = 2, byrow = T) %>% 
+Perimeter<-Domains%>%
+  st_perimeter()
+
+bbox<-st_bbox(Domains)
+bbox_coords <- matrix(c(bbox["xmin"], bbox["ymin"],
+                        bbox["xmax"], bbox["ymin"],
+                        bbox["xmax"], bbox["ymax"],
+                        bbox["xmin"], bbox["ymax"],
+                        bbox["xmin"], bbox["ymin"]), 
+                      ncol = 2, byrow = TRUE)
+
+# Create an sf polygon object from the matrix
+Region_mask <- bbox_coords%>% 
   list() %>% 
   st_polygon() %>% 
   st_sfc() %>% 
   st_sf(Region = implementation,.)
 st_crs(Region_mask) <- st_crs(4326)                                        
 Region_mask <- st_transform(Region_mask, crs = crs)
+
 
 ## Fix straggly bit of the offshore zone
 
