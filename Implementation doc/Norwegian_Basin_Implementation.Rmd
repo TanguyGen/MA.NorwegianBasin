@@ -279,7 +279,7 @@ Demersal fish recruitment dates were also approximated by the recruitment dates 
 ### Spawning and recruitment start and end dates for benthos guilds {-}
 
 The annual weight-specific fecundity and recruitment for the benthos guilds are assumed to be uniform between the start and end dates.
-For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected tp obtain timing dates [@bakke2019;@hamed2019;@james2012]. Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of *Desmophyllum pertusum* [@brooke2013;@jarnegren2014].
+For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected to obtain timing dates [@bakke2019;@hamed2019;@james2012]. Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates. A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells. However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model. The Continuous Plankton Recorder (CPR) had only at this time, data from fish larvae survey so was not usable. We therefore decided to fix the spawning and recruitment dates to the dates of *Desmophyllum pertusum* [@brooke2013;@jarnegren2014].
 
 
 ### Extra-domain stock biomass of migratory, and the proportion invading the domain each year. Start and end dates for the annual invasion, and start and end dates for the emigration. (see description below). {-}
@@ -407,7 +407,8 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
            `Icelandic directorate gears`=gears$Gear_ISL,
            `Faroese directorate gears`=gears$Gear_FRO,
            `IMR reference fleet gears`=gears$Gear_group
-)%>% 
+)%>%
+  arrange(`StrathE2E Gear`)%>%
   gt()
 
 
