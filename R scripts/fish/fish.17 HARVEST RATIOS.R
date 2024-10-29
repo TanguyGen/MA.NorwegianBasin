@@ -37,7 +37,6 @@ stock<-2010:2019%>%
   rbindlist()
   
 
-test<-getSAG(stock=stock$FishStock[1],year = 2010:2019)
 
 Fish<-1:nrow(stock)%>%
   future_map(~{
