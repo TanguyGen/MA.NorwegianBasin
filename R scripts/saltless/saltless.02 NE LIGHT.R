@@ -5,29 +5,39 @@
 
 rm(list=ls())                                                                   # Wipe the brain
 
-packages <- c("tidyverse", "terra", "exactextractr", "tictoc", "ncdf4")         # List packages
+packages <- c("tidyverse", "terra", "exactextractr", "tictoc", "ncdf4", "sf")         # List packages
 lapply(packages, library, character.only = TRUE)                                # Load packages
-source("./R scripts/@_Region file.R")                                           # Define project region 
+#source("./R scripts/@_Region file.R")                                           # Define project region 
 
 # A weakness of terra is that you can't use furrr to parallelise operations, something about the C code fights with the threading. 
 
-forecast <- list.files(str_glue("I:/Science/MS-Marine/MA/CNRM_{ssp}/irradiance/"), recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
-  as.data.frame() %>%                                                           # Turn the vector into a dataframe/tibble
-  rename(value = 1) %>% 
-  separate(value, into = c(NA, "Year"), 
-           remove = FALSE, sep = "_y") %>%                                      # Extract the year from the file name
-  mutate(Year = str_sub(Year, end = -4)) %>%                                    # Drop file extension to get number
-  rename(File = "value")
+# forecast <- list.files(str_glue("I:/Science/MS-Marine/MA/CNRM_{ssp}/irradiance/"), recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
+#   as.data.frame() %>%                                                           # Turn the vector into a dataframe/tibble
+#   rename(value = 1) %>% 
+#   separate(value, into = c(NA, "Year"), 
+#            remove = FALSE, sep = "_y") %>%                                      # Extract the year from the file name
+#   mutate(Year = str_sub(Year, end = -4)) %>%                                    # Drop file extension to get number
+#   rename(File = "value")
 
-all_files <- list.files("I:/Science/MS-Marine/MA/CNRM_hist/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc") %>%
+all_files <- c(list.files("I:/Science/MS-Marine/MA/CNRM_hist/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc"),
+              list.files("I:/Science/MS-Marine/MA/GFDL_hist/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc"),
+              list.files("I:/Science/MS-Marine/MA/CNRM_ssp126/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc"),
+              list.files("I:/Science/MS-Marine/MA/CNRM_ssp370/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc"),
+              list.files("I:/Science/MS-Marine/MA/GFDL_ssp126/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc"),
+              list.files("I:/Science/MS-Marine/MA/GFDL_ssp370/irradiance/", recursive = TRUE, full.names = TRUE, pattern = ".nc")) %>%
   as.data.frame() %>%                                                           # Turn the vector into a dataframe/tibble
   rename(value = 1) %>% 
   separate(value, into = c(NA, "Year"), 
            remove = FALSE, sep = "_y") %>%                                      # Extract the year from the file name
-  mutate(Year = str_sub(Year, end = -4)) %>%                                    # Drop file extension to get number
   rename(File = "value") %>% 
-  filter(Year < 2015) %>% 
-  rbind(forecast)
+  mutate(Year = str_sub(Year, end = -4),                                        # Drop file extension to get number
+         Forcing = case_when(str_detect(File, "CNRM") ~ "CNRM",
+                             str_detect(File, "GFDL") ~ "GFDL",
+                             T ~ NA),
+         SSP = case_when(str_detect(File, "hist") ~ "hist",
+                         str_detect(File, "ssp126") ~ "ssp126",
+                         str_detect(File, "ssp370") ~ "ssp370",
+                         T ~ NA))
 
 domains <- readRDS("./Objects/Domains.rds") %>%                                 # Load SF polygons of the model domain
   st_transform(crs = 4326) %>% 
@@ -37,9 +47,9 @@ domains <- readRDS("./Objects/Domains.rds") %>%                                 
 
 tic()
 
-extract <- map2(all_files$File, all_files$Year, ~{
+extract <- pmap(all_files, function(File, Year, Forcing, SSP){
 
-Watts <- rast(.x) %>%                                                           # Load the data for a year
+Watts <- rast(File) %>%                                                           # Load the data for a year
   rotate() %>%                                                                  # change 0:360 to -180:180
   exact_extract(domains, "mean", progress = TRUE) %>%                           # Get the average value across the model domain
   as.matrix() %>% 
@@ -48,31 +58,32 @@ Watts <- rast(.x) %>%                                                           
 if(length(Watts)%%365 == 0) Days <- 365                                         # Catch leap years
 if(length(Watts)%%366 == 0) Days <- 366
  
-light <- data.frame(Watts = Watts, Day = rep(1:Days, each = 8), Year = .y) %>% # 3 hour time step means 8 steps per day
-  group_by(Day, Year) %>% 
-    summarise(Watts = mean(Watts, na.rm = TRUE)) %>%                            # Average power(Watts) per day 
-    mutate(Light = nemoRsem::shortwave_to_einstein(Watts),                                # Convert to Einstens for Strath E2E
+light <- data.frame(Watts = Watts, Day = rep(1:Days, each = 8), Year = Year, SSP = SSP, Forcing = Forcing) %>% # 3 hour time step means 8 steps per day
+  group_by(Day, Year, SSP, Forcing) %>% 
+    summarise(Watts = mean(Watts, na.rm = TRUE), .groups="drop") %>%            # Average power(Watts) per day 
+    mutate(Light = nemoRsem::shortwave_to_einstein(Watts),                      # Convert to Einstens for Strath E2E
            Date = as.Date(Day-1, origin = str_glue("{Year}-01-01")),               
            Month = lubridate::month(Date)) %>% 
-  group_by(Month) %>% 
+  group_by(Month, Year, SSP, Forcing) %>% 
   summarise(Light = mean(Light, na.rm = TRUE),                                  # average per month
-            Date = mean(Date)) 
+            Date = mean(Date), .groups="drop") 
 
-}) %>% 
+}, .progress = TRUE) %>% 
   data.table::rbindlist()
 
 toc()
 
-#saveRDS(extract, "./Objects/light.rds")
+saveRDS(extract, "./Objects/light.rds")
 
 #### Plot ####
 
 ggplot(data = extract) +
-  geom_line(aes(x = Date, y = Light), linewidth = 0.25) +
+  geom_line(aes(x = Date, y = Light, colour = paste0(Forcing,SSP)), linewidth = 0.25) +
   theme_minimal() +
   labs(y = NULL, caption = "NEMO-ERSEM driving data") +
   theme(legend.position = "top") +
   ylab(expression("Light (Em"^{-2}*"d"^{-1}*" )")) +
+  facet_grid(rows = vars(Forcing)) +
   NULL
 
-#ggsave("./Figures/saltless/Light.png", last_plot(), dpi = 500, width = 12, height = 10 , units = "cm")
+#ggsave("./Figures/saltless/Light.png", last_plot(), dpi = 500, width = 12, height = 18 , units = "cm")
