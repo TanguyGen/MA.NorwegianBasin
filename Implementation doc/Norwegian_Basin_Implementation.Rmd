@@ -410,10 +410,22 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
   gt()
 
 
-
 ```
 
 [@nedreaas2006;@clegg2020]#discards
+
+## Potentially time-varying parameters of the fishing fleet model
+
+The following briefly describes the potentially time-varying driving data for the fishing fleet model.
+
+## Catching power and discard rates of each resource guild by each gear.
+
+An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet (Norwegian Directorate of Fisheries), the EU fleet (STECF), the Icelandic Fishing fleet (Icelandic Directorate of Fisheries) and the Faroese fishing fleet (Statistics Faroe Islands). Values were summed and inflated for estimates of total international activity using ICES data to infer the missing International (not Norway, Iceland, Faroe or EU countries) catch in the Norwegian Sea. This assumes the International fishing fleet operates a similar gear distribution to the EU, Norwegian, Icelandic and Faroese fleets when combined.
+
+## Regional activity rates, of each gear type.
+An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet(IMR) and the EU fleet (STECF). Values were summed and inflated for
+estimates of total international activity using Global fishing watch (GFW) data to infer the missing International (not Norway or EU countries) activity in the Norwegian Sea for the GFW gears. This assumes the International fishing fleet operates a similar gear distribution (within static and mobile gear types) to the EU and Norwegian fleets when combined.
+
 ### Final processing {-}
 
 1. Total catch by gear and guild was calculated by inflating landings according to EU discard rates before adding additional known discarded weight (described above for cetaceans, birds, planktivores and demersal fish).
