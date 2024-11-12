@@ -418,13 +418,25 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
 
 The following briefly describes the potentially time-varying driving data for the fishing fleet model.
 
-## Catching power and discard rates of each resource guild by each gear.
+### Catching power and discard rates of each resource guild by each gear.
 
 An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet (Norwegian Directorate of Fisheries), the EU fleet (STECF), the Icelandic Fishing fleet (Icelandic Directorate of Fisheries) and the Faroese fishing fleet (Statistics Faroe Islands). Values were summed and inflated for estimates of total international activity using ICES data to infer the missing International (not Norway, Iceland, Faroe or EU countries) catch in the Norwegian Sea. This assumes the International fishing fleet operates a similar gear distribution to the EU, Norwegian, Icelandic and Faroese fleets when combined.
 
-## Regional activity rates, of each gear type.
+### Regional activity rates, of each gear type.
 An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet(IMR) and the EU fleet (STECF). Values were summed and inflated for
 estimates of total international activity using Global fishing watch (GFW) data to infer the missing International (not Norway or EU countries) activity in the Norwegian Sea for the GFW gears. This assumes the International fishing fleet operates a similar gear distribution (within static and mobile gear types) to the EU and Norwegian fleets when combined.
+
+### Spatial proportional distribution of activity by each gear.
+Proportion of domain-wide annual average activity rate over each seabed habitat type, derived by overlaying spatial distributions of activity from IMR (Norwegian), STECF (EU), and Global Fishing Watch (International), onto spatial distributions of seabed sediment types derived from the atlas of sediment properties [@laverick2023].
+
+## Data processing to derive timevarying parameters of the fishing fleet model Norwegian fishing catch and activity in the Norwegian Sea
+
+### Norwegian fishing catch and activity in the Norwegian Sea
+
+IMR provided us with daily catch and activity data for the Norwegian fishing fleet on request. This data was broken down by species caught and gear used in fishing areas. We limited the data to 2010-2019, from the first year of the electronic reporting system to the last complete year of data. Cetacean records appeared to start from 2013, so averages were calculated for cetaceans from 2013-2019.
+1. We aggregated gears and species to StrathE2E gear types and guilds. Data was totaled within years, then averaged across the target time period. Effort and landings were summed by gear and guild within years and IMR area codes.
+2. IMR areas do not perfectly align with the StrathE2E model domain, we therefore applied a correction factor to landings and effort to account for IMR data falling outside the model domain. We summarised the data available from global fishing watch from 2012-2016 into average annual 0.01° grids of total yearly fishing activity for mobile and static gears. We intersected the polygons representing IMR area codes, and the StathE2E model domain, and calculated the total mobile and static gear activity within each polygon according to GFW. We then calculated the proportion of mobile and static gear activity for each IMR area code which fell within the StrathE2E model domain.
+3. We used the same approach to calculate the proportion
 
 ### Final processing {-}
 
