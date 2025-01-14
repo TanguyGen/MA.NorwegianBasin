@@ -40,42 +40,44 @@ mults <- read.csv("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Param/fi
 
 blank_fleetxguild <- matrix(0, 12, 12)
 
-colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1:3))
+colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1))
 rownames(blank_fleetxguild) <- colnames(landings_raw)
 
-blank_fleetxguild[1, 1:9] <- effort[1,]
+blank_fleetxguild[1, 1:11] <- effort[1,]
 effort <- blank_fleetxguild[1, ] 
 
 
 blank_fleetxguild[] <- 0
 blank_fleetxguild <- t(blank_fleetxguild)
-blank_fleetxguild[1:9, 1:12] <- discard_rate
+blank_fleetxguild[1:11, 1:12] <- discard_rate
 
 discard_rate <- blank_fleetxguild
 
 
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:9, 1:12] <- bycatch
+blank_fleetxguild[1:12, 1:11] <- bycatch
 
 bycatch <- blank_fleetxguild
 
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:9, 1:12] <- landings_raw
+blank_fleetxguild[1:11, 1:12] <- landings_raw
 
 landings_raw <- blank_fleetxguild
 
 
-missing_habs <- distribution[,1:4]
+missing_habs <- distribution[,2]
 missing_habs[] <-0
-colnames(missing_habs) <- str_replace(colnames(missing_habs), "In", "Off")  
 
 distribution <- cbind(distribution, missing_habs)
 
-missing_gears <- distribution[1:3,]
-missing_gears[] <-0
-rownames(missing_gears) <- paste0("blank", 1:3)  
+colnames(distribution)[ncol(distribution)] <- "Offshore Rock"  
 
+missing_gears <- distribution[1,]
+missing_gears[] <-0
 distribution <- rbind(distribution, missing_gears)
+rownames(distribution)[nrow(distribution)] <- "Blank 1"  
+
+
 
 #### Calculate catch and discards                     ####
 
