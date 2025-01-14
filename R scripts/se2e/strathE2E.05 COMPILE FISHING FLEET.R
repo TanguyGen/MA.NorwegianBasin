@@ -104,12 +104,12 @@ all.equal(landings + discard_weight, catch)                                 # Qu
 
 #### Rearrange the distribution data                  ####
 
-new_distribution <- distribution[lookup$oldorder, hablookup$holdorder]
-colnames(new_distribution) <- hablookup$newhabs
+new_distribution <- distribution[lookup$oldorder,hablookup$holdorder]
+colnames(distribution) <- hablookup$newhabs
 
 gear_hab <- data.frame(Gear_name = lookup$newgears,
                        Gear_code = lookup$gearcodes,
-                       new_distribution)
+                       distribution)
 
 write.csv(gear_hab, str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/fishing_distribution_{toupper(implementation)}_2010-2019.csv"),
           row.names=FALSE)
@@ -133,9 +133,6 @@ landings_new <- rearranged[[1]] ; catch_new <- rearranged[[2]] ; discards_new <-
 
 all.equal((landings_new + discards_new), catch_new)            # Check everything still balances
 
-landings_new$Demersal[7]
-discards_new$Demersal[7]
-catch_new$Demersal[7]
 
 #### Recalculate the discard_rate data                ####
 
@@ -219,14 +216,14 @@ write.csv(discard_weight_target, str_glue("./StrathE2E/{implementation}/2010-201
 
 #### Reality check                                    ####
 
-BSarea <-domain_size                                             # Barents Sea total area in m2
-landings_tonnes <- (colSums(landings_new)) * 360 * BSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
+NSarea <-domain_size                                             # Norwegian Sea total area in m2
+landings_tonnes <- (colSums(landings_new)) * 360 * NSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
 
 test <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds") %>%     # Re-import international landings in tonnes
   colSums() %>%                                                 # Total over gears
   as.data.frame() %>% 
   rename("start_weight" = '.') %>%                              
-  mutate(start_weight = start_weight * BSarea) %>%              # Scale to Barents Sea
+  mutate(start_weight = start_weight * NSarea) %>%              # Scale to Barents Sea
   rownames_to_column("Guild") %>%                               
   full_join(landings_tonnes %>%                                 # Match to the new landings which have been converted to tonnes
               as.data.frame() %>%                               # Process as above to allow a join
