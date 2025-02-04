@@ -8,7 +8,7 @@ rm(list=ls())                                                               # Wi
 library(MiMeMo.tools)
 source("./R scripts/@_Region file.R")
 
-Physics_template <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/physics_CELTIC_SEA_2003-2013.csv"))  # Read in example Physical drivers
+Physics_template <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/physics_NORWEGIAN_BASIN_2010-2019-ssp370.csv"))  # Read in example Physical drivers
 
 My_scale <- readRDS("./Objects/Domains.rds") %>%                            # Calculate the volume of the three zones
   sf::st_drop_geometry() %>% 
@@ -25,13 +25,13 @@ My_scale <- readRDS("./Objects/Domains.rds") %>%                            # Ca
 
 ## Iterate over different time periods ##
 
-decades <- data.frame(Start = seq(2010, 2060, by = 10),                     # Which time periods are we building driving data for?
+decades <- data.frame(Start = seq(2010, 2060, by = 10),                         # Which time periods are we buiding driving data for?
                       Stop = seq(2019, 2069, by = 10)) %>% 
   rowid_to_column()
 
 runs <- expand.grid(Force = c("GFDL", "CNRM"), S = c("ssp370", "ssp126"),   # Get a combination of forcings and SSPs
-                    rowid = decades$"rowid") %>%                            # For each decade we are extracting
-  left_join(decades) %>%                                                    # Add the beginning and end for each time period 
+                    rowid = decades$"rowid") %>%                                # For each decade we are extracting
+  left_join(decades) %>%                                                        # Add the beginning and end for each time period 
   select(-rowid) %>% 
   data.frame()
 
@@ -43,15 +43,15 @@ pmap(runs, safely(function(Force, S, Start, Stop, Boundary_template){
 
 My_light <- readRDS("./Objects/light.rds") %>% 
   mutate(Year = lubridate::year(Date)) %>% 
-  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%        # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
   group_by(Month) %>%                                                       # Average across months
   summarise(Light = mean(Light, na.rm = T)) %>% 
   ungroup() %>% 
   arrange(Month)                                                            # Order to match template
 
 My_H_Flows <- readRDS("./Objects/H-Flows.rds") %>% 
-  filter(between(Year, Start, Stop), Forcing == Force, SSP !=S) %>%         # Limit to outputs from a specific run and time
-  group_by(across(-c(Year, Forcing, SSP,Flow))) %>%                         # Group over everything except year, run, and variable of interest
+  filter(between(Year, Start, Stop), Forcing == Force, SSP !=S) %>%             # Limit to outputs from a specific run and time
+  group_by(across(-c(Year, Forcing, SSP,Flow))) %>%                                      # Group over everything except year, run, and variable of interest
   summarise(Flow = mean(Flow, na.rm = T)) %>%                               # Average flows by month over years
   ungroup() %>% 
   group_by(Shore, slab_layer, Neighbour) %>%                                # Add in missing months
@@ -63,14 +63,14 @@ My_H_Flows <- readRDS("./Objects/H-Flows.rds") %>%
   arrange(Month)                                                            # Order by month to match template
 
 My_V_Diff <- readRDS("./Objects/vertical diffusivity.rds") %>%
-  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%        # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
   group_by(Month) %>% 
   summarise(V_diff = mean(Vertical_diffusivity, na.rm = T)) %>% 
   ungroup() %>% 
   arrange(Month)                                                            # Order by month to match template
 
 My_V_Flows <- readRDS("./Objects/SO_DO exchanges.rds") %>%
-  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%        # Limit to outputs from a specific run and time
+filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
   group_by(Month) %>%
   summarise(Upwelling = mean(Upwelling, na.rm = T),
             Downwelling = mean(Downwelling, na.rm = T)) %>%
@@ -82,9 +82,9 @@ My_V_Flows <- readRDS("./Objects/SO_DO exchanges.rds") %>%
   arrange(Month)                                                            # Order by month to match template
 
 My_volumes <- readRDS("./Objects/TS.rds") %>% 
-  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%        # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
   group_by(Compartment, Month) %>%                                          # By compartment and month
-  summarise(Temperature_avg = mean(Temperature_avg, na.rm = T)) %>%         # Average across years for multiple columns
+  summarise(Temperature_avg = mean(Temperature_avg, na.rm = T)) %>%            # Average across years for multiple columns
   ungroup() %>% 
   arrange(Month)                                                            # Order by month to match template
 
@@ -100,7 +100,7 @@ My_volumes <- readRDS("./Objects/TS.rds") %>%
 
 
 My_overhang_diffusivity <- readRDS("./Objects/overhang diffusivity.rds") %>%
-filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
   group_by(Month) %>%
   summarise(V_diff = mean(Vertical_diffusivity, na.rm = T)) %>%
   ungroup() %>%
@@ -116,26 +116,26 @@ filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             #
   mutate(Flow = Flow/Volume) %>%                                            # Scale flows by compartment volume
   mutate(Flow = Flow * 86400) %>%                                           # Multiply for total daily from per second
   arrange(Month)                                                            # Order by month to match template
- 
+
 My_SPM <- readRDS("./Objects/Suspended particulate matter.rds") %>%
   filter(between(Year, 2010, 2019)) %>%                                     # Limit to reference period
   group_by(Shore, Month) %>%
   summarise(SPM = mean(SPM, na.rm = T)) %>%                                 # Average by month across years
   ungroup() %>%
   arrange(Month)                                                            # Order by month to match template
-
-My_Rivers <- readRDS("./Objects/NE River input.rds") %>% 
+ 
+My_Rivers <- readRDS("./Objects/NE River input.rds") %>%
   filter(between(Year, Start, Stop), Forcing == Force, SSP != S) %>%             # Limit to outputs from a specific run and time
-  mutate(Month = lubridate::month(Date)) %>% 
-  group_by(Month) %>% 
+  mutate(Month = lubridate::month(Date)) %>%
+  group_by(Month) %>%
   summarise(Runoff = mean(Runoff, na.rm = T)) %>%                           # Average by month across years
-  ungroup() %>% 
+  ungroup() %>%
   arrange(as.numeric(Month))                                                # Order by month to match template
-
-# My_Stress <- readRDS("./Objects/Habitat disturbance.rds") %>%
-#   mutate(Month = factor(Month, levels = month.name)) %>%                    # Set month as a factor for non-alphabetical ordering
-#   arrange(Month)                                                            # Arrange to match template
-
+ 
+My_Stress <- readRDS("./Objects/Habitat disturbance.rds") %>%
+  mutate(Month = factor(Month, levels = month.name)) %>%                    # Set month as a factor for non-alphabetical ordering
+  arrange(Month)                                                            # Arrange to match template
+ 
 My_Waves <- readRDS("./Objects/Significant wave height.rds") %>%
   mutate(Month = month(Date),
          Year = year(Date)) %>%
@@ -154,8 +154,8 @@ Physics_new <- mutate(Physics_template, SLight = My_light$Light,
                      SI_OceanIN = filter(My_H_Flows, slab_layer == "S", Shore == "Inshore", Neighbour == "Ocean", Direction == "In")$Flow,
                      SI_OceanOUT = filter(My_H_Flows, slab_layer == "S", Shore == "Inshore", Neighbour == "Ocean", Direction == "Out")$Flow,
                      SO_SI_flow = filter(My_H_Flows, slab_layer == "S", Shore == "Offshore", Neighbour == "Inshore", Direction == "Out")$Flow,
-                     ## log e transformed suspended particulate matter concentration in zones
-                     SO_LogeSPM = log(filter(My_SPM, Shore == "Offshore")$SPM),  
+                     # ## log e transformed suspended particulate matter concentration in zones
+                     SO_LogeSPM = log(filter(My_SPM, Shore == "Offshore")$SPM),
                      SI_LogeSPM = log(filter(My_SPM, Shore == "Inshore")$SPM),
                      ## Temperatures in volumes for each zone
                      SO_temp = filter(My_volumes, Compartment == "Offshore S")$Temperature_avg,
@@ -166,12 +166,12 @@ Physics_new <- mutate(Physics_template, SLight = My_light$Light,
                      ## Vertical diffusivity
                      log10Kvert = log10(My_V_Diff$V_diff),
                      ## Daily proportion disturbed by natural bed shear stress
-                     # habS1_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Silt")$Disturbance,
-                     # habS2_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Sand")$Disturbance,
-                     # habS3_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Gravel")$Disturbance,
-                     # habD1_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Silt")$Disturbance,
-                     # habD2_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Sand")$Disturbance,
-                     # habD3_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Gravel")$Disturbance,
+                     habS1_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Silt")$Disturbance,
+                     habS2_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Sand")$Disturbance,
+                     habS3_pdist = filter(My_Stress, Shore == "Inshore", Habitat == "Gravel")$Disturbance,
+                     habD1_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Silt")$Disturbance,
+                     habD2_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Sand")$Disturbance,
+                     habD3_pdist = filter(My_Stress, Shore == "Offshore", Habitat == "Gravel")$Disturbance,
                      # ## Monthly mean significant wave height inshore
                      Inshore_waveheight = My_Waves$Waves,
                      # ## Overhang variables

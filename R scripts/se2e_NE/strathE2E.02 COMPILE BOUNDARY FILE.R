@@ -8,7 +8,7 @@ rm(list=ls())                                                               # Wi
 library(MiMeMo.tools)
 source("./R scripts/@_Region file.R")
 
-Boundary_template <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/chemistry_CELTIC_SEA_2003-2013.csv"))  # Read in example boundary drivers
+Boundary_template <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/chemistry_NORWEGIAN_BASIN_2010-2019-ssp370.csv"))  # Read in example boundary drivers
 
 
 ##!! data fix
@@ -44,7 +44,7 @@ pmap(runs, safely(function(Force, S, Start, Stop, Boundary_template){
 My_boundary_data<- readRDS("./Objects/Boundary measurements.rds") %>% # Import data
   filter(between(Year, Start, Stop), Forcing == Force, SSP !=S) %>%   # Limit to outputs from a specific run and time
   group_by(Month) %>%                                                 # Average across years
-  summarise(across(D_NO3:D_phyt, ~ mean(.x, na.rm = T))) %>% 
+  summarise(across(SO_NO3:D_phyt, ~ mean(.x, na.rm = T))) %>% 
   ungroup() %>% 
   arrange(Month)                                                                           # Order months ascending
 
@@ -53,21 +53,21 @@ My_boundary_data<- readRDS("./Objects/Boundary measurements.rds") %>% # Import d
 #   group_by(Year, Month, Forcing, SSP) %>%                                                 # Average across days
 #   summarise(across(D_NO3:D_phyt, ~ mean(.x, na.rm = T))) %>%
 #   ungroup() %>%
-#   arrange(Month) %>%                                                                           # Order months ascending
+#   arrange(Month) %>%                                                                        # Order months ascending
 #   saveRDS(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Driving/chemistry_transient.rds"))
 
 
 My_overhang <- readRDS("./Objects/overhang exchanges.rds") %>%
-  filter(between(Year, Start, Stop), Forcing == Force, SSP %in% c("hist", S), Direction == "Upwelling") %>%                            # Limit to reference period
-  group_by(Month) %>%                                                                        # Average across years
+  filter(between(Year, Start, Stop), Forcing == Force, SSP !=S, Direction == "Upwelling") %>%                            # Limit to reference period
+  group_by(Month) %>%                                                                      # Average across years
   summarise(NO3 = mean(NO3, na.rm = T),
             NH4 = mean(NH4, na.rm = T),
             Detritus = mean(Detritus, na.rm = T)) %>%
   ungroup() %>%
-  arrange(Month)                                                                             # Order months ascending
+  arrange(Month)                                                                           # Order months ascending
 
 My_river_N <- readRDS("./Objects/NE River input.rds") %>%   
-  filter(between(Year, Start, Stop), Forcing == Force, SSP %in% c("hist", S)) %>%             # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), Forcing == Force, SSP !=S) %>%                          # Limit to outputs from a specific run and time
   mutate(Month = lubridate::month(Date)) %>% 
   group_by(Month) %>%                                                                        # Average across years
   summarise(NO3 = mean(NO3, na.rm = T),
@@ -75,9 +75,8 @@ My_river_N <- readRDS("./Objects/NE River input.rds") %>%
   ungroup() %>% 
   arrange(Month)                                                                             # Order months ascending
 
-## Atmosphere has SSP projections, but isn't subject to CNRM/GFDL choice
 My_atmosphere <- readRDS("./Objects/Atmospheric N deposition.rds") %>% 
-  filter(between(Year, Start, Stop), SSP %in% c("hist", S)) %>%                              # Limit to outputs from a specific run and time
+  filter(between(Year, Start, Stop), SSP !=S) %>%                                            # Limit to outputs from a specific run and time
   group_by(Month, Oxidation_state, Shore,  Year) %>%
   summarise(Measured = sum(Measured, na.rm = T)) %>%                                         # Sum across deposition states 
   summarise(Measured = mean(Measured, na.rm = T)) %>%                                        # Average over years
@@ -87,8 +86,8 @@ My_atmosphere <- readRDS("./Objects/Atmospheric N deposition.rds") %>%
 
 #### Create new file ####
 
-Boundary_new <- rename(Boundary_template, SO_ammonia = SO_ammona, D_nitrate = D_intrate) %>% # Fix Mike's typos
-                mutate(SO_nitrate = My_boundary_data$SO_NO3,
+Boundary_new <- mutate(Boundary_template,
+                       SO_nitrate = My_boundary_data$SO_NO3,
                        SO_ammonia = My_boundary_data$SO_NH4,
                        SO_phyt = My_boundary_data$SO_phyt,
                        SO_detritus = My_boundary_data$SO_Detritus,
@@ -114,9 +113,9 @@ Boundary_new <- rename(Boundary_template, SO_ammonia = SO_ammona, D_nitrate = D_
                        SO_other_nitrate_flux = 0,   # Can be used for scenarios
                        SO_other_ammonia_flux = 0,
                        # ## Overhang
-                       DO_nitrate = My_overhang$NO3,
-                       DO_ammonia	= My_overhang$NH4,
-                       DO_detritus = My_overhang$Detritus
+                        DO_nitrate = My_overhang$NO3,
+                        DO_ammonia	= My_overhang$NH4,
+                        DO_detritus = My_overhang$Detritus
                        ) 
  
 # For the filters above it is easier to do != to an ssp, so you keep the historical run. This means we need to flip the label when saving the file

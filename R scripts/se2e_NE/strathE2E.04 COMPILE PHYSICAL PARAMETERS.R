@@ -7,7 +7,7 @@ rm(list=ls())                                                               # Wi
 library(tidyverse)
 source("./R scripts/@_Region file.R")
 
-Physical_parameters <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/physical_parameters_CELTIC_SEA.csv")) # Read in example Physical drivers
+Physical_parameters <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Param/physical_parameters_NORWEGIAN_BASIN.csv")) # Read in example Physical drivers
         
 #### Last minute data manipulation ####
 
@@ -84,6 +84,6 @@ Physical_parameters[48,"Value"] <- 0                     # 1 to use the followin
 # Physical_parameters[54,"Value"] <- filter(My_sediment, Habitat == "Offshore Gravel")$Nitrogen    # Defined_total_N%_of_offshore_sediment_d3_(%DW)
 
 write.csv(Physical_parameters,
-          file = stringr::str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/physical_parameters_{toupper(implementation)}.csv"), 
+          file = stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Param/physical_parameters_{toupper(implementation)}.csv"), 
           row.names = F)
 

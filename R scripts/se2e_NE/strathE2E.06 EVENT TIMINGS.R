@@ -8,11 +8,12 @@ library(tidyverse)
 library(sf)
 source("./R scripts/@_Region file.R")
 
-Events <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/event_timing_CELTIC_SEA_2003-2013.csv")) # Read in example Physical drivers
+Events <- read.csv(stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Param/event_timing_NORWEGIAN_BASIN_2010-2019.csv")) # Read in example Physical drivers
 
 #### Last minute data manipulation ####
 
 area <- readRDS("./Objects/Domains.rds") %>%                            # Calculate surface area
+  st_transform(crs= 4326) %>% 
   st_area() %>% 
   as.numeric(.)/1e6                                                     # Convert m^2 to km^2 
 
@@ -50,5 +51,5 @@ area <- readRDS("./Objects/Domains.rds") %>%                            # Calcul
 # Events[26,"Value"] <- 0 # Emigration_end_day_(must_be_later_than_start_day_even_if_migration_disabled)
 
 write.csv(Events,
-          file = stringr::str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/event_timing_{toupper(implementation)}_2010-2019.csv"), 
+          file = stringr::str_glue("./StrathE2E/{implementation}/2010-2019/Param/event_timing_{toupper(implementation)}_2010-2019.csv"), 
           row.names = F)
