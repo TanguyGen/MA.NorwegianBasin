@@ -1,9 +1,8 @@
 
 ## Set repeated commands specific to the project region
 ## This version is parameterised for the Norwegian Basin
-implementation <- "Norwegian_Basin"
-ssp <- "ssp370"
-  
+implementation <- "Norwegian_Basin_MA"
+
 library(sf)
 
 #EPSG <- rgdal::make_EPSG()
@@ -22,6 +21,7 @@ pre <- list(scale = 1, width = 12, height = 10, units = "cm", dpi = 500) # The s
 
 SDepth <- 60                  # Shallow deep boundary
 DDepth <- 600                 # Maximum depth
+ODepth <- 700
 
 #### bathymetry.5 MODEL DOMAIN ####
 
@@ -66,8 +66,8 @@ trim  <- matrix(c(8.2, 16, 16, 8.2, 8.2,    # Longitudes
 
 ## Polygons to mark which transects are along the open ocean-inshore boundary
 
-Inshore_ocean_boundaries  <- matrix(c(1.7, 5.2, 5.2, 1.7, 1.7,    # Longitudes
-                                      61.95, 61.95, 62.05, 62.05, 61.95), ncol = 2, byrow = F) %>% 
+Inshore_ocean_boundaries  <- matrix(c(0, 5.2, 5.2, 0, 0,    # Longitudes
+                                      61.95, 61.95, 62.05, 62.5, 61.95), ncol = 2, byrow = F) %>% 
   shape()
 
 #### expand polygon for sampling rivers ####
