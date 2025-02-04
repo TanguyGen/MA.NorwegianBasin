@@ -8,9 +8,12 @@ rm(list=ls())                                                               # Wi
 packages <- c("tidyverse")                                                  # List packages
 lapply(packages, library, character.only = TRUE)                            # Load packages
 
-guild <- read.csv2("./Data/MiMeMo fish guilds.csv",check.names = FALSE) %>% 
+guild <- read.csv("./Data/MiMeMo fish guilds.csv",check.names = FALSE) %>% 
   dplyr::select(Guild, Category, Subcategory) %>% 
   distinct
+
+countries <- read.csv("./Data/country_code.csv")
+EU <- countries$Alpha.3.code[countries$EU == "YES"]
 
 #### Get an inflation factor for each guild to get from Non-Russian to International landings ####
 
@@ -20,6 +23,7 @@ guild <- read.csv2("./Data/MiMeMo fish guilds.csv",check.names = FALSE) %>%
 ICES <-read.csv("./Data/ICES_fish/ICES_1903-2017.csv", header=T) %>%        # Import combined ICES landings  
        filter(str_detect(area, "27.2.a.1|27.2.a.2") # Limit to areas of interest
               & area != "27.14.a") %>% 
+       filter(ccode3 != "ISL")%>%                         #Remove Island data as we already have reliable data for it
        mutate(Russia = str_detect(cname, "Russia")) %>%                     # Identify Russian activity
        left_join(guild) %>%                                                 # Attach guilds
       ## Add weighting here then keep weights column 

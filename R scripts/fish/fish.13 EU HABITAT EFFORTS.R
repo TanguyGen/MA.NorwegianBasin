@@ -32,21 +32,18 @@ GFW_pots <- brick("./Objects/GFW_pots.nc", varname = "EU+UK-pots_and_traps") %>%
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
-GFW_seiners <- brick("./Objects/GFW_seiners.nc", varname = "EU+UK-Seiners") %>%      # For each class of gear
+GFW_seiners <- brick("./Objects/GFW_seiners.nc", varname = "EU+UK-seiners") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
-GFW_strawlers <- brick("./Objects/GFW_strawlers.nc", varname = "EU+UK-Shelf_trawlers") %>%      # For each class of gear
-  calc(mean, na.rm = T)%>%
-  projectRaster(crs = crs(Domains))
-
-GFW_ptrawlers <- brick("./Objects/GFW_ptrawlers.nc", varname = "EU+UK-Pelagic_trawlers") %>%      # For each class of gear
+GFW_trawlers <- brick("./Objects/GFW_trawlers.nc", varname = "EU+UK-trawlers") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
 
 GFW_dredge <- brick("./Objects/GFW_dredge.nc", varname = "EU+UK-dredge_fishing") %>%      # For each class of gear
   calc(mean, na.rm = T)%>%
   projectRaster(crs = crs(Domains))
+
 EU <- read_sf(dsn="./Data/EU_fish/spatial_effort_2015-2018/") %>%      # Import EU effort shapefile
   st_as_sf() %>%                                                              # Convert to SF
   dplyr::select(year, quarter, ger_typ, rctngl_, ttfshdy) %>%                 # Drop some columns, ttfshdy is "total fishing days"
@@ -66,9 +63,8 @@ on.exit(options(oopts))
 habitat_weights <- rownames_to_column(EU_Arctic, var = "EU_polygon") %>%      # Create a column to track each IMR region and gear combination
   split(f = as.factor(as.numeric(.$EU_polygon))) %>%                                                     # Isolate each shape for fast paralel processing
   future_map( ~ { st_intersection(.x, habitats) %>%                           # Crop the IMR region polygons to habitat types
-      mutate(GFW = case_when(Gear_type == "Shelf_trawlers" ~ exact_extract(GFW_strawlers, .x, fun = "sum"), # Depending on gear type
-                             Gear_type == "Pelagic_trawlers" ~ exact_extract(GFW_ptrawlers, .x, fun = "sum"),
-                             Gear_type == "Seiners" ~ exact_extract(GFW_seiners, .x, fun = "sum"),
+      mutate(GFW = case_when(Gear_type == "trawlers" ~ exact_extract(GFW_trawlers, .x, fun = "sum"), # Depending on gear type
+                             Gear_type == "seiners" ~ exact_extract(GFW_seiners, .x, fun = "sum"),
                              Gear_type == "pole_and_line+set_longlines+squid_jigger+drifting_longlines+set_gillnets" ~ exact_extract(GFW_longlines, .x, fun = "sum"),
                              Gear_type == "pots_and_traps" ~ exact_extract(GFW_pots, .x, fun = "sum"),
                              Gear_type == "dredge_fishing" ~ exact_extract(GFW_dredge, .x, fun = "sum")),
@@ -105,6 +101,18 @@ Absolute_effort_habitats <- left_join(habitat_weights, EU_effort) %>%         # 
   column_to_rownames('Habitat') %>%                                           # Remove character column
   as.matrix() %>%                                                             # Convert to matrix
   .[order(row.names(.)), order(colnames(.))]                                  # Alphabetise rows and columns
+
+colnames(Absolute_effort_habitats) <- ifelse(
+  colnames(Absolute_effort_habitats) == "Pelagic_Trawlers", "Pelagic_Trawlers_ALIEN",
+  ifelse(colnames(Absolute_effort_habitats) == "Pelagic_Seiners", "Pelagic_Seiners_ALIEN", colnames(Absolute_effort_habitats))
+)
+empty_matrix<-matrix(rep(0,16), ncol = 2, byrow = TRUE)
+Absolute_effort_habitats<-cbind(Absolute_effort_habitats,empty_matrix)
+
+colnames(Absolute_effort_habitats)[(ncol(Absolute_effort_habitats) - 1):ncol(Absolute_effort_habitats)] <- c("Pelagic_Trawlers_NORW","Pelagic_Seiners_NORW")
+Absolute_effort_habitats<-Absolute_effort_habitats[,order(colnames(Absolute_effort_habitats))]
+
+
 saveRDS(Absolute_effort_habitats, "./Objects/EU absolute habitat effort.rds") # Save
 
 heatmap(Absolute_effort_habitats)
