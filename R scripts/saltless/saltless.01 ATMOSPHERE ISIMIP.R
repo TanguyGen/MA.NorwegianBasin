@@ -12,8 +12,8 @@ source("./R scripts/@_Region file.R")
 domains <- readRDS("./Objects/Domains.rds") %>%                             # Import inshore polygon
   st_transform(crs = 4326)
 
-Reduced <- brick("../Shared data/ISIMIP Atmosphere/ndep-nhx_histsoc_monthly_1850_2014.nc") # import reduced nitrogen deposition
-Oxidised <- brick("../Shared data/ISIMIP Atmosphere/ndep-noy_histsoc_monthly_1850_2014.nc")# import oxidised nitrogen deposition
+Reduced <- brick("../Shared data/ISIMIP Atmosphere/ndep-nhx_histsoc_monthly_1901_2021.nc") # import reduced nitrogen deposition
+Oxidised <- brick("../Shared data/ISIMIP Atmosphere/ndep-noy_histsoc_monthly_1901_2021.nc")# import oxidised nitrogen deposition
 
 ReducedSSP370<-brick("../Shared data/ISIMIP Atmosphere/ndep-nhx_ssp370soc_monthly_2015_2100.nc")
 OxidisedSSP370<-brick("../Shared data/ISIMIP Atmosphere/ndep-noy_ssp370soc_monthly_2015_2100.nc")
@@ -36,7 +36,8 @@ exact_extract(.x, domains, "mean") %>%                                      # Ex
   mutate(Month = month(Date), 
          Year = year(Date),
          Measured = full_to_milli((Measured/14)/days_in_month(Date)),           # Convert to daily rate, and from grams to mmol
-         SSP = "hist")        
+         SSP = "hist") %>% 
+  filter(Year<2015)                                                             # Trim to seam with SSPs
 
 Deposition_ssp<- map(list(ReducedSSP370, ReducedSSP126, OxidisedSSP370, OxidisedSSP126), ~{
   
@@ -45,13 +46,13 @@ Deposition_ssp<- map(list(ReducedSSP370, ReducedSSP126, OxidisedSSP370, Oxidised
     pivot_longer(-Shore, names_to = "Date", values_to = "Measured")           # Move time steps into a single column
   
 }) %>%
-  map2_dfr(c("R", "R", "O", "O"), ~{ mutate(.x, Oxidation_state = .y)}) %>%   # Add label for each variable
+  map2(c("R", "R", "O", "O"), ~{ mutate(.x, Oxidation_state = .y)}) %>%         # Add label for each variable
   map2_dfr(c("ssp370", "ssp126", "ssp370", "ssp126"), ~{ mutate(.x, SSP = .y)}) %>%   # Add label for each SSP
   mutate(Date = str_remove(Date, "mean.X")) %>%                               # Fix date string
   mutate(Date = ymd("2015-01-01") %m+% months(as.numeric(Date)-4248)) %>%     # Format as date
   mutate(Month = month(Date), 
          Year = year(Date),
-         Measured = full_to_milli((Measured/14)/days_in_month(Date)))%>%       # Convert to daily rate, and from grams to mmol
+         Measured = full_to_milli((Measured/14)/days_in_month(Date))) %>%       # Convert to daily rate, and from grams to mmol
   rbind(Deposition_hist)
 
 #### Plot ####
