@@ -2,20 +2,55 @@ rm(list=ls())                                                                # W
 packages <- c("tidyverse","data.table","sf")                  # List packages
 lapply(packages, library, character.only = TRUE)                              # Load packages
 
-guild<-read.csv2("./Data/MiMeMo fish guilds.csv")[-1]
+guild<-read.csv("./Data/MiMeMo fish guilds.csv")[-1]
 
 gear<-read.csv("./Data/MiMeMo_gears.csv")
-target <- expand.grid(Guild = unique(read.csv2("./Data/MiMeMo fish guilds.csv")$Guild), # Create our target matrix to fill
+target <- expand.grid(Guild = unique(read.csv("./Data/MiMeMo fish guilds.csv")$Guild), # Create our target matrix to fill
                       Aggregated_gear = unique(read.csv("./Data/MiMeMo_gears.csv")$Aggregated_gear))
 
+
+process_matrix <- function(matrix, country) {
+  # Check if the matrix name ends with "EU" or "NO"
+  if (country=="NO") {
+    # Rename rows
+    rownames(matrix)[rownames(matrix) == "Pelagic_Seiners"] <- "Pelagic_Seiners_NORW"
+    rownames(matrix)[rownames(matrix) == "Pelagic_Trawlers"] <- "Pelagic_Trawlers_NORW"
+    
+    # Create "_ALIEN" rows full of zeros
+    new_rows <- matrix(0, nrow = 2, ncol = ncol(matrix))
+    rownames(new_rows) <- c("Pelagic_Seiners_ALIEN", "Pelagic_Trawlers_ALIEN")
+    
+    # Append new rows to the matrix
+    matrix <- rbind(matrix, new_rows)
+  } else {
+    # Rename rows
+    rownames(matrix)[rownames(matrix) == "Pelagic_Seiners"] <- "Pelagic_Seiners_ALIEN"
+    rownames(matrix)[rownames(matrix) == "Pelagic_Trawlers"] <- "Pelagic_Trawlers_ALIEN"
+    
+    # Create "_NORW" rows full of zeros
+    new_rows <- matrix(0, nrow = 2, ncol = ncol(matrix))
+    rownames(new_rows) <- c("Pelagic_Seiners_NORW", "Pelagic_Trawlers_NORW")
+    
+    # Append new rows to the matrix
+    matrix <- rbind(matrix, new_rows)
+    
+  }
+  matrix <- matrix[order(rownames(matrix)), , drop = FALSE]
+  return(matrix)
+}
+
 IMR_landings <- readRDS("./Objects/IMR landings by gear and guild.rds") # Import corrected IMR landings
+
 
 domain_IMR <- readRDS("./Objects/Domains.rds") %>%                         # We need landings as tonnes per m^2
   sf::st_union() %>% 
   sf::st_area() %>% 
   as.numeric()
+Dredge<-readRDS("./Objects/Mollusc dredge landings.rds")
 
-IMR<-t(IMR_landings/domain_IMR)
+IMR<-t((IMR_landings+Dredge )/domain_IMR)
+
+IMR <- process_matrix(IMR,"NO")
 #----------------------------------------------
 #Pelagic discards
 
@@ -23,7 +58,8 @@ IMR<-t(IMR_landings/domain_IMR)
 pelagic_discards<-read.table("./Data/IMR/Discards/Discards.txt",sep=";",dec=".",header = TRUE)%>% #from reference fleet Tom Clegg unpublished data
   filter(estimator=="cluster unit")%>%       #Keep only estimates of catch summarised by fishing operation
   rename(Scientific.name = sciname, #to align to Guild dataset
-         Discards=est)%>%     #For clarification
+         Discards=est,
+         Gear_group=geargroup)%>%     #For clarification
   filter(area %in% c("ICES2aS","ICES2aN"))%>% #Only keep ICES area 27.2.a which corresponds to Norwegian Sea
   left_join(guild)%>%
   left_join(gear)%>%
@@ -123,7 +159,7 @@ gillnets_fish<-gillnets_fish/area_size
 
 Discards<-gillnets_fish+pelagic_discards #Create a matrix with all discards
 
-Discards<-Discards*1e-3#let's convert to tonnes
+Discards<- process_matrix(Discards,"NO")*1e-3#let's convert to tonnes
 
 
 
@@ -135,7 +171,7 @@ library(tidyverse)
 gear <- read.csv("./Data/MiMeMo_gears.csv") %>%                                   # Import gear names
   dplyr::select(Aggregated_gear, `gear type` = Gear_code)                         # Limit to FAO system
 
-guild <- read.csv2("./Data/MiMeMo fish guilds.csv") %>%                            # Import guild names
+guild <- read.csv("./Data/MiMeMo fish guilds.csv") %>%                            # Import guild names
   dplyr::select(Guild, species = FAO) %>%                                         # Limit to FAO system
   drop_na() %>%                                                                   # Drop those without a code
   distinct() %>%                                                                  # Drop duplicated rows which hang around after ditching other systems
@@ -143,7 +179,7 @@ guild <- read.csv2("./Data/MiMeMo fish guilds.csv") %>%                         
   slice_head() %>%                                                                # So only take the first instance of each code
   ungroup()
 
-target <- expand.grid(Guild = unique(read.csv2("./Data/MiMeMo fish guilds.csv")$Guild), # Create our target matrix to fill
+target <- expand.grid(Guild = unique(read.csv("./Data/MiMeMo fish guilds.csv")$Guild), # Create our target matrix to fill
                       Aggregated_gear = unique(read.csv("./Data/MiMeMo_gears.csv")$Aggregated_gear))
 
 #### Import data ####
@@ -193,8 +229,9 @@ landings_EU <- filter(data, !`total discards (tonnes)` %in% c("NK", "C")) %>%   
   .[order(row.names(.)), order(colnames(.))] %>%                                 # Alphabetise rows and columns
   t()
 
-discards_EU<-discards_EU/ICES_area_size
-landings_EU<-discards_EU/ICES_area_size
+discards_EU<-process_matrix(discards_EU/ICES_area_size,"EU") 
+landings_EU<-process_matrix(landings_EU/ICES_area_size,"EU")
+
 
 rate<-(Discards+discards_EU)/(landings_EU+IMR+Discards+discards_EU)
 rate[is.na(rate)]<-0
@@ -212,7 +249,7 @@ saveRDS(rate, "./Objects/Discard rates.rds")
 Bycatch<-matrix(0, nrow = 10, ncol = 12,
                         dimnames = list(
                           sort(unique(read.csv("./Data/MiMeMo_gears.csv")$Aggregated_gear)),
-                          sort(unique(read.csv2("./Data/MiMeMo fish guilds.csv")$Guild))
+                          sort(unique(read.csv("./Data/MiMeMo fish guilds.csv")$Guild))
                           )
                 )
 Bycatch<-Bycatch[rownames(Bycatch)!="Dropped",]
@@ -327,5 +364,18 @@ Bycatch<-Bycatch* 1e3 / 360 #convert to g/d
 
 Bycatch<-t(Bycatch)
 
+colnames(Bycatch) <- ifelse(
+  colnames(Bycatch) == "Pelagic_Trawlers", "Pelagic_Trawlers_NORW",
+  ifelse(colnames(Bycatch) == "Pelagic_Seiners", "Pelagic_Seiners_NORW", colnames(Bycatch))
+)
+
+empty_matrix<-matrix(rep(0,24), ncol = 2, byrow = TRUE)
+Bycatch<-cbind(Bycatch,empty_matrix)
+
+colnames(Bycatch)[(ncol(Bycatch) - 1):ncol(Bycatch)] <- c("Pelagic_Trawlers_ALIEN","Pelagic_Seiners_ALIEN")
+Bycatch<-Bycatch[,order(colnames(Bycatch))]
+
+
 saveRDS(Bycatch, "./Objects/Bycatch weight.rds")
+#Bycatch <- readRDS("./Objects/Bycatch weight.rds")
 

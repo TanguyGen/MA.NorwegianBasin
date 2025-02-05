@@ -6,13 +6,13 @@
 # Wipe environment and load required data
 rm(list = ls())
 
-packages <- c("data.table","tidyr","purrr", "furrr", "future", "tictoc", "raster", "sf","progressr","tictoc","dplyr","tibble","exactextractr")
+packages <- c("data.table","tidyr","purrr", "furrr", "future", "tictoc", "raster", "sf","progressr","dplyr","tibble","exactextractr")
 lapply(packages, library, character.only = TRUE)
 
 
 gear <- read.csv("./Data/MiMeMo_gears.csv")                     # Limit to FAO system
   
-guild <- read.csv2("./Data/MiMeMo fish guilds.csv")
+guild <- read.csv("./Data/MiMeMo fish guilds.csv")
 
 Domains <- st_transform(readRDS("./Objects/Domains.rds"), crs = 4326) %>%
   st_as_sf() %>%
@@ -140,5 +140,16 @@ habitat_effort<-Effort_dredge%>%
   .[order(row.names(.)), order(colnames(.))]
 
 saveRDS(total_effort, "./Objects/Mollusc dredge effort.rds")
-saveRDS(habitat_effort, "./Objects/Mollusc dredge habitat effort.rds")
 
+colnames(habitat_effort) <- ifelse(
+  colnames(habitat_effort) == "Pelagic_Trawlers", "Pelagic_Trawlers_NORW",
+  ifelse(colnames(habitat_effort) == "Pelagic_Seiners", "Pelagic_Seiners_NORW", colnames(habitat_effort))
+)
+empty_matrix<-matrix(rep(0,16), ncol = 2, byrow = TRUE)
+habitat_effort<-cbind(habitat_effort,empty_matrix)
+
+colnames(habitat_effort)[(ncol(habitat_effort) - 1):ncol(habitat_effort)] <- c("Pelagic_Trawlers_ALIEN","Pelagic_Seiners_ALIEN")
+habitat_effort<-habitat_effort[,order(colnames(habitat_effort))]
+
+saveRDS(habitat_effort, "./Objects/Mollusc dredge habitat effort.rds")
+#habitat_effort <- readRDS( "./Objects/Mollusc dredge habitat effort.rds")

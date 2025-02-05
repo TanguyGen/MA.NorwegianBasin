@@ -40,42 +40,44 @@ mults <- read.csv("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Param/fi
 
 blank_fleetxguild <- matrix(0, 12, 12)
 
-colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1:3))
+colnames(blank_fleetxguild) <- c(colnames(effort), paste0("blank", 1))
 rownames(blank_fleetxguild) <- colnames(landings_raw)
 
-blank_fleetxguild[1, 1:9] <- effort[1,]
+blank_fleetxguild[1, 1:11] <- effort[1,]
 effort <- blank_fleetxguild[1, ] 
 
 
 blank_fleetxguild[] <- 0
 blank_fleetxguild <- t(blank_fleetxguild)
-blank_fleetxguild[1:9, 1:12] <- discard_rate
+blank_fleetxguild[1:11, 1:12] <- discard_rate
 
 discard_rate <- blank_fleetxguild
 
 
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:9, 1:12] <- bycatch
+blank_fleetxguild[1:12, 1:11] <- bycatch
 
 bycatch <- blank_fleetxguild
 
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:9, 1:12] <- landings_raw
+blank_fleetxguild[1:11, 1:12] <- landings_raw
 
 landings_raw <- blank_fleetxguild
 
 
-missing_habs <- distribution[,1:4]
+missing_habs <- distribution[,2]
 missing_habs[] <-0
-colnames(missing_habs) <- str_replace(colnames(missing_habs), "In", "Off")  
 
 distribution <- cbind(distribution, missing_habs)
 
-missing_gears <- distribution[1:3,]
-missing_gears[] <-0
-rownames(missing_gears) <- paste0("blank", 1:3)  
+colnames(distribution)[ncol(distribution)] <- "Offshore Rock"  
 
+missing_gears <- distribution[1,]
+missing_gears[] <-0
 distribution <- rbind(distribution, missing_gears)
+rownames(distribution)[nrow(distribution)] <- "Blank 1"  
+
+
 
 #### Calculate catch and discards                     ####
 
@@ -102,12 +104,12 @@ all.equal(landings + discard_weight, catch)                                 # Qu
 
 #### Rearrange the distribution data                  ####
 
-new_distribution <- distribution[lookup$oldorder, hablookup$holdorder]
-colnames(new_distribution) <- hablookup$newhabs
+new_distribution <- distribution[lookup$oldorder,hablookup$holdorder]
+colnames(distribution) <- hablookup$newhabs
 
 gear_hab <- data.frame(Gear_name = lookup$newgears,
                        Gear_code = lookup$gearcodes,
-                       new_distribution)
+                       distribution)
 
 write.csv(gear_hab, str_glue("./StrathE2E/{implementation}/2010-2019-{ssp}/Param/fishing_distribution_{toupper(implementation)}_2010-2019.csv"),
           row.names=FALSE)
@@ -131,9 +133,6 @@ landings_new <- rearranged[[1]] ; catch_new <- rearranged[[2]] ; discards_new <-
 
 all.equal((landings_new + discards_new), catch_new)            # Check everything still balances
 
-landings_new$Demersal[7]
-discards_new$Demersal[7]
-catch_new$Demersal[7]
 
 #### Recalculate the discard_rate data                ####
 
@@ -217,14 +216,14 @@ write.csv(discard_weight_target, str_glue("./StrathE2E/{implementation}/2010-201
 
 #### Reality check                                    ####
 
-BSarea <-domain_size                                             # Barents Sea total area in m2
-landings_tonnes <- (colSums(landings_new)) * 360 * BSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
+NSarea <-domain_size                                             # Norwegian Sea total area in m2
+landings_tonnes <- (colSums(landings_new)) * 360 * NSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
 
 test <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds") %>%     # Re-import international landings in tonnes
   colSums() %>%                                                 # Total over gears
   as.data.frame() %>% 
   rename("start_weight" = '.') %>%                              
-  mutate(start_weight = start_weight * BSarea) %>%              # Scale to Barents Sea
+  mutate(start_weight = start_weight * NSarea) %>%              # Scale to Barents Sea
   rownames_to_column("Guild") %>%                               
   full_join(landings_tonnes %>%                                 # Match to the new landings which have been converted to tonnes
               as.data.frame() %>%                               # Process as above to allow a join
