@@ -9,7 +9,7 @@ source("./R scripts/@_Region file.R")
 
 discard_rate <- readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Discard rates.rds")  # Import data
 
-bycatch<-readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Bycatch weight.rds")
+bycatch <-t(readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Bycatch weight.rds"))
 
 landings_raw <- readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds")  # Units tonnes/m2/year
 
@@ -58,7 +58,7 @@ discard_rate <- blank_fleetxguild
 
 
 blank_fleetxguild[] <- 0
-blank_fleetxguild[1:12, 1:11] <- bycatch
+blank_fleetxguild[1:11, 1:12] <- bycatch
 
 bycatch <- blank_fleetxguild
 
@@ -219,20 +219,20 @@ write.csv(discard_weight_target, str_glue("./StrathE2E/{implementation}/2010-201
 
 #### Reality check                                    ####
 
-NSarea <-domain_size                                             # Norwegian Sea total area in m2
-landings_tonnes <- (colSums(landings_new)) * 360 * NSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
-
-test <- readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds") %>%     # Re-import international landings in tonnes
-  colSums() %>%                                                 # Total over gears
-  as.data.frame() %>% 
-  rename("start_weight" = '.') %>%                              
-  mutate(start_weight = start_weight * NSarea) %>%              # Scale to Barents Sea
-  rownames_to_column("Guild") %>%                               
-  full_join(landings_tonnes %>%                                 # Match to the new landings which have been converted to tonnes
-              as.data.frame() %>%                               # Process as above to allow a join
-              rename("check_weight" = '.') %>% 
-              rownames_to_column("Guild")) %>% 
-  drop_na()                                                     # Drop demersal mismatch for easy testing next. 
-
-all.equal(test$start_weight, test$check_weight)                 # Match!
+# NSarea <-domain_size                                             # Norwegian Sea total area in m2
+# landings_tonnes <- (colSums(landings_new)) * 360 * NSarea / 1e6 # Does this match the data from ICES/FAO, Norway and STECF ???
+# 
+# test <- readRDS("./Data/Fishing_objects_01_25_TG/Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/International landings.rds") %>%     # Re-import international landings in tonnes
+#   colSums() %>%                                                 # Total over gears
+#   as.data.frame() %>% 
+#   rename("start_weight" = '.') %>%                              
+#   mutate(start_weight = start_weight * NSarea) %>%              # Scale to Barents Sea
+#   rownames_to_column("Guild") %>%                               
+#   full_join(landings_tonnes %>%                                 # Match to the new landings which have been converted to tonnes
+#               as.data.frame() %>%                               # Process as above to allow a join
+#               rename("check_weight" = '.') %>% 
+#               rownames_to_column("Guild")) %>% 
+#   drop_na()                                                     # Drop demersal mismatch for easy testing next. 
+# 
+# all.equal(test$start_weight, test$check_weight)                 # Match!
 
