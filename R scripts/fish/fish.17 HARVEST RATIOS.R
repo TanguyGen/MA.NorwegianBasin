@@ -14,7 +14,7 @@ lapply(packages, library, character.only = TRUE)
 
 #Fish harvest ratios
 
-guild <- read.csv("./Data/MiMeMo fish guilds.csv",check.names = FALSE) %>%                        # Import guild names
+guild <- read.csv("./Data/MiMeMo fish guilds.csv",check.names = FALSE, sep = ";") %>%                        # Import guild names
   dplyr::select(Guild, Scientific.name) %>%
   setNames(c("Guild","SpeciesName"))
 
