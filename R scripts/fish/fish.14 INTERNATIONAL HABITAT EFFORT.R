@@ -107,7 +107,7 @@ Habitat_weights_dredge <- c("RUS-dredge_fishing",
 Habitat_weights<- data.table::rbindlist(list(Habitat_weights_longlines,Habitat_weights_pots,Habitat_weights_seiners,Habitat_weights_trawlers,Habitat_weights_dredge))%>% 
   separate(Variable, into = c(NA, "Gear_type", NA), sep = "-") %>%          # Split variable name into flag and gear type
   group_by(Gear_type) %>% 
-  transmute(Proportion = ifelse(sum(`.`) == 0, 0, `.`/sum(`.`)),                                      # Calculate the proportion of fishing effort in each row
+  transmute(Proportion = `.`/sum(`.`),                                      # Calculate the proportion of fishing effort in each row
             Habitat = paste0(Shore, " ", Habitat)) %>%                     # Capitalise to allow a join     
   ungroup() %>%
   left_join(distinct(dplyr::select(gear, Aggregated_gear, Gear_type))) %>%  # Join gear type to aggregated gears
@@ -138,6 +138,8 @@ Rest<-cbind(Rest,empty_matrix)
 
 colnames(Rest)[(ncol(Rest) - 1):ncol(Rest)] <- c("Pelagic_Trawlers_NORW","Pelagic_Seiners_NORW")
 Rest<-Rest[,order(colnames(Rest))]
+
+Dredge<-readRDS( "./Objects/Mollusc dredge habitat effort.rds")
 
 Non_Rest_habitat <- (readRDS("./Objects/IMR absolute habitat effort.rds") + Dredge + # Add Norwegian fishing effort        
                        readRDS("./Objects/EU absolute habitat effort.rds"))  /    # to EU fishing effort

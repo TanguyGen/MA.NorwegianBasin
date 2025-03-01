@@ -51,7 +51,7 @@ Fish<-1:nrow(stock)%>%
   })%>%
   rbindlist()%>%
   group_by(Guild)%>%
-  summarise(Biomass=mean(SSB))
+  summarise(Biomass=mean(SSB),catches=mean(catches))
 
 
 #----------------------
@@ -110,7 +110,7 @@ Biomass_benthos<- Biomass_beamtrawl%>%
   ungroup()%>%
   left_join(guild)%>%
   group_by(Guild)%>%
-  summarise(Biomass=mean(measurementValue/100,na.rm=T))%>%
+  summarise(Biomass=mean(measurementValue/100,na.rm=T))%>% #
   mutate(total_known_biomass = sum(Biomass[!is.na(Guild)]),      # Total biomass of known species
          Inflation=(total_known_biomass + Biomass[is.na(Guild)]) / total_known_biomass,
          Biomass=Biomass*Inflation)%>%
@@ -135,7 +135,7 @@ Abundance_benthos<- Abundance_beamtrawl%>%
   ungroup()%>%
   left_join(guild)%>%
   group_by(Guild)%>%
-  summarise(Abundance=mean(measurementValue/100,na.rm=T))%>%
+  summarise(Abundance=mean(measurementValue*100,na.rm=T))%>%
   mutate(total_known_abundance = sum(Abundance[!is.na(Guild)]),      # Total biomass of known species
          Inflation=(total_known_abundance + Abundance[is.na(Guild)]) / total_known_abundance,
          Abundance=Abundance*Inflation)%>%
@@ -173,10 +173,24 @@ Total_biomass_benthos <- Biomass_benthos %>%
 
 target <- expand.grid(Guild = unique(guild$Guild)) 
 
-Total_biomass<-Fish%>% 
+Harvest_ratios<-Fish%>%
   right_join(target)%>%
+  mutate(Guild = ifelse(grepl("Demersal", Guild), "Demersal", Guild)) %>%  # Rename both Demersal categories
+  group_by(Guild) %>%
+  summarise(across(where(is.numeric), sum, na.rm = TRUE)) %>%
+  ungroup()%>%
+  group_by(Guild)%>%
+  summarise(HR=catches/Biomass)%>%
+  ungroup()%>%
   left_join(Total_biomass_benthos,by="Guild")%>%
-  mutate(Biomass=ifelse(is.na(Biomass.x), Biomass.y, Biomass.x))%>%
+  select(Guild,HR)%>%
+  remove_rownames() %>% 
+  column_to_rownames('Guild') %>%                                   # Remove character column
+  as.matrix() %>%                                                             # Convert to matrix
+  .[order(row.names(.)),] 
+
+Total_biomass<-Total_biomass_benthos%>% 
+  right_join(target)%>%
   select(Guild,Biomass)%>%
   remove_rownames() %>% 
   column_to_rownames('Guild') %>%                                   # Remove character column
@@ -200,13 +214,16 @@ catch <- landings / (1-discard_rate)                                        # In
 
 catch[!is.finite(catch)] <- landings[!is.finite(catch)]                     # 0s and infinities mean no discard, so are overwritten with landings
 
-catch<-catch+bycatch
+catch["Longlines_and_Gillnets",]<-catch["Longlines_and_Gillnets",]+t(bycatch)["Longlines_and_Gillnets",]
 
 guild_catch<-colSums(catch)
 
-Total_biomass["Demersal"]<-Total_biomass["Demersal (quota limited)"]+Total_biomass["Demersal (non quota)"]
-guild_catch["Demersal"]<-guild_catch["Demersal (quota limited)"]+guild_catch["Demersal (non quota)"]
 
-Harvest_ratios<-guild_catch/Total_biomass
+Harvest_ratios[is.na(Harvest_ratios)] <- guild_catch/Total_biomass[is.na(Harvest_ratios)]
+
+saveRDS(Harvest_ratios,"./Objects/Harvest_ratios.rds")
+
+
+
 
 

@@ -21,8 +21,7 @@ EU <- countries$Alpha.3.code[countries$EU == "YES"]
 ##**## Could also use GFW
 
 ICES <-read.csv("./Data/ICES_fish/ICES_1903-2017.csv", header=T) %>%        # Import combined ICES landings  
-       filter(str_detect(area, "27.2.a.1|27.2.a.2") # Limit to areas of interest
-              & area != "27.14.a") %>% 
+       filter(str_detect(area, "27.2.a.1|27.2.a.2")) %>%   # Limit to areas of interest 
        filter(ccode3 != "ISL")%>%                         #Remove Island data as we already have reliable data for it
        mutate(Russia = str_detect(cname, "Russia")) %>%                     # Identify Russian activity
        left_join(guild) %>%                                                 # Attach guilds
@@ -37,6 +36,7 @@ ICES <-read.csv("./Data/ICES_fish/ICES_1903-2017.csv", header=T) %>%        # Im
        filter(Russia == FALSE) %>%                                          # Don't need Russian data anymore
        mutate(Inflation = total_guild_tonnage/tonnage) %>%                  # How do we get from non-Russian landings per guild to our known total?
        dplyr::select(Guild, Inflation)
+
 
 saveRDS(ICES, "./Objects/ICES landings inflation.rds")
 

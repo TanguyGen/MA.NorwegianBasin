@@ -127,6 +127,7 @@ landings <- st_drop_geometry(corrected_IMR) %>%
   .[order(row.names(.)), order(colnames(.))]                                # Alphabetise rows and columns
 
 saveRDS(landings, "./Objects/IMR landings by gear and guild.rds")
+#landings<-readRDS("./Objects/IMR landings by gear and guild.rds")
 
 heatmap(landings)
 
