@@ -233,3 +233,4 @@ test <- readRDS("./Data/Norwegian_sea_Tanguy2/Norwegian_sea/2010-2019/Object/Int
 
 all.equal(test$start_weight, test$check_weight)                 # Match!
 
+
