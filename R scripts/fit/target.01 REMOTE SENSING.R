@@ -39,7 +39,7 @@ Mike <- mutate(series,
                Year = lubridate::year((Date)), 
                Days = lubridate::days_in_month(Date),
                PP = PP * Days) %>%                                              # scale to the total per month
-  mutate(Annual_measure = PP *(16/106) / 14.01) %>%                             # Convert Carbon to Nitrogen using Redfield, and mg to mmol
+  mutate(Annual_measure = PP *(16/106) / 12.001) %>%                             # Convert Carbon to Nitrogen using Redfield, and mg to mmol
   group_by(Year) %>% 
   summarise(Annual_measure = sum(Annual_measure, na.rm = TRUE)) %>%             # Total to the year
   summarise(SD_of_measure = sd(Annual_measure),

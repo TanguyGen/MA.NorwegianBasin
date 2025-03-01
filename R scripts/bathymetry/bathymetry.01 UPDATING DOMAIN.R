@@ -30,30 +30,30 @@ plot(basin)
 
 #### Plot ####
 
-GEBCO <- read_stars("../Shared data/GEBCO_2020.nc", proxy = TRUE)
-st_crs(GEBCO) <- 4326
-
-GEBCO <- GEBCO[st_transform(st_buffer(st_union(polygons), 50000), 4326)] %>%
-  st_as_stars(downsample = 6)
-
-land <- units::set_units(0, "m")
-
-GEBCO[[1]][GEBCO[[1]] >= land] <- NA
-
-ggplot() +
-  geom_stars(data = GEBCO) +
-  viridis::scale_fill_viridis(name = "Elevation", option = "turbo", na.value = NA) +
-  geom_sf(data = domains %>% st_transform(4326), fill = "grey", colour = "grey") +
-  geom_sf(data = st_transform(polygons, crs = 4326) %>% filter(navn_en == "The Norwegian Sea"), 
-          colour = "black", fill = NA) +
-  theme_minimal() +
-  geom_sf(data = basin, colour = "black", fill = NA) +
-  labs(x =  "Longitude (E)", y = "Latitude (N)", 
-       caption = "Proposed Norwegian Sea divide into North (discarded) 
-       and South (modelled) in black. Current shelf model in grey") +
-  NULL
-
-ggsave("./Figures/bathymetry/Norwegian Basin.png")
+# GEBCO <- read_stars("../Shared data/GEBCO_2020.nc", proxy = TRUE)
+# st_crs(GEBCO) <- 4326
+# 
+# GEBCO <- GEBCO[st_transform(st_buffer(st_union(polygons), 50000), 4326)] %>%
+#   st_as_stars(downsample = 6)
+# 
+# land <- units::set_units(0, "m")
+# 
+# GEBCO[[1]][GEBCO[[1]] >= land] <- NA
+# 
+# ggplot() +
+#   geom_stars(data = GEBCO) +
+#   viridis::scale_fill_viridis(name = "Elevation", option = "turbo", na.value = NA) +
+#   geom_sf(data = domains %>% st_transform(4326), fill = "grey", colour = "grey") +
+#   geom_sf(data = st_transform(polygons, crs = 4326) %>% filter(navn_en == "The Norwegian Sea"), 
+#           colour = "black", fill = NA) +
+#   theme_minimal() +
+#   geom_sf(data = basin, colour = "black", fill = NA) +
+#   labs(x =  "Longitude (E)", y = "Latitude (N)", 
+#        caption = "Proposed Norwegian Sea divide into North (discarded) 
+#        and South (modelled) in black. Current shelf model in grey") +
+#   NULL
+# 
+# ggsave("./Figures/bathymetry/Norwegian Basin.png")
 
 #### Build domains object ####
 

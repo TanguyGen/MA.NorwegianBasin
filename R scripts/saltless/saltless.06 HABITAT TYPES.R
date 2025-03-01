@@ -23,6 +23,55 @@ overhang <- readRDS("./Objects/Overhang.rds") %>%                # Import overha
   mutate(Habitat = "Overhang") %>% 
   st_make_valid()
 
+#### Fill in gaps following addition of offshore sand ####
+
+shape <- function(matrix) {
+  
+  shape <-  matrix %>% 
+    list() %>% 
+    st_polygon() %>% 
+    st_sfc() %>% 
+    st_sf(Region = implementation, geometry = .)
+  st_crs(shape) <- st_crs(4326)                                        
+  shape <- st_transform(shape, crs = crs)
+  return(shape)
+  
+}                      # Convert a matrix of lat-lons to an sf polygon
+
+habitat_mask <- matrix(c(16.23, 63.5,
+                        20.25, 63.5,
+                        10, 60,
+                        0, 58.5,
+                        0, 59,
+                        0, 60.5,
+                        0, 63,
+                        10, 63.5,
+                        16.23, 63.5),
+                      ncol = 2, byrow = T) %>% 
+  list() %>% 
+  st_polygon() %>% 
+  st_sfc() %>% 
+  st_sf(Region = implementation,.)
+st_crs(habitat_mask) <- st_crs(4326)                                        
+
+sf_use_s2(FALSE)
+
+NGU <- Sediment <- st_read("../Norwegian Shelf/Data/NGU oversikt", layer = "KornstorrelseFlate_oversikt") %>%                # Import NGU shapefile
+  st_as_sf(crs = 4326) %>%                                                    # Assign CRS                                   
+  dplyr::select(Sed_class = SEDKORNSTR) %>%                                   # Sample polygons by bathymetric grid
+  st_intersection(habitat_mask)
+
+ D2 <- readRDS("./Objects/D2.rds") %>% 
+   transmute(Habitat = "Silt",
+             Shore = "Offshore")
+# 
+# look <- st_cast(D2, "POLYGON") %>% 
+#   mutate(area = as.numeric(st_area(.))) %>% 
+#   filter(area > 1e8)
+# 
+# ggplot(look) +
+#   geom_sf(aes(fill = area)) # limit is 1 degree east
+
 #### Define geographic extent of each habitat type ####
 
 sf_use_s2(F)
@@ -65,8 +114,16 @@ polygons <- st_difference(polygons, overhang) %>%                # Cut overhang 
   group_by(Habitat, Shore, area) %>%                             # Cheat way to return to "MULTIPOLYGON", and drop redundant columns
   summarise(Elevation = mean(Elevation)) %>%                     # Clean
   bind_rows(overhang) %>%                                        # Add overhang polygon
-  mutate(Habitat = str_remove(Habitat, "_strath"))               # Clean Habitat labels
+  mutate(Habitat = str_remove(Habitat, "_strath")) %>%           # Clean Habitat labels
+  bind_rows(D2)
 #sf_use_s2(T)
+
+mask <- st_union(polygons)
+
+look <- st_intersection(domains, NGU) %>% 
+  mutate(Sed_class = as.factor(Sed_class)) %>% 
+  left_join(translate) %>%                  # Attach habitat labels to predicted NGU classes
+  st_difference(mask)
 
 G_Y2 <- c(`Inshore Rock` = "#40333C", `Inshore Silt` = "#284481", `Inshore Sand` = "#9097CC", `Inshore Gravel` = "#4A8FA1",
           `Offshore Rock` = "#d7c288", `Offshore Silt` = "#ffb700", `Offshore Sand` = "#FFD25F", `Offshore Gravel` = "#ffedbd", `Offshore Overhang` = '#b01313')
@@ -74,15 +131,40 @@ G_Y2 <- c(`Inshore Rock` = "#40333C", `Inshore Silt` = "#284481", `Inshore Sand`
 ggplot() +                                                       # Check for overhang overlap with sediment data
   geom_sf(data = polygons, aes(fill = paste(Shore, Habitat))) +
   scale_fill_manual(values = (G_Y2)) +
+  geom_sf(data = look, aes(fill = paste(Shore, Habitat))) +
   theme_minimal()
 
+#### Finish filling gaps ####
+
+final <- bind_rows (polygons, look) %>% 
+  group_by(Shore, Habitat) %>% 
+  summarise(area = mean(area)) %>% 
+  st_make_valid()
+
+s2 <- filter(domains, Shore == "Inshore") %>% 
+  st_difference(st_union(final)) %>% 
+  st_cast("POLYGON") %>% 
+  mutate(area = as.numeric(st_area(.))) %>% 
+  filter(area == max(area)) %>%
+  transmute(Shore = "Inshore",
+            Habitat = "Sand")
+
+final <- bind_rows(final, s2) %>% 
+  group_by(Shore, Habitat) %>% 
+  summarise(area = mean(area)) %>% 
+  ungroup() %>% 
+  st_make_valid() %>% 
+  mutate(area = as.numeric(st_area(.)))
+  
 ggsave("./Figures/saltless/habitats dominant.png", bg = "white")
 
-saveRDS(polygons, "./Objects/Habitats.rds")
+saveRDS(final, "./Objects/Habitats.rds")
 
 #### Calculate proportion of model zones in each habitat ####
 
-proportions <- polygons %>% 
+#polygons <- readRDS("./Objects/Habitats.rds")
+
+proportions <- final %>% 
   mutate(Cover = as.numeric(st_area(.))) %>%                     # Measure the area of each habitat type
   st_drop_geometry() %>%                                         # Drop SF formatting
   mutate(Cover = Cover/sum(Cover)) %>%                           # Calculate the proportion of the model zone in each sediment polygon 

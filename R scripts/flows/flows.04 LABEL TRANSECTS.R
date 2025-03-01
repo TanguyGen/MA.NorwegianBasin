@@ -14,7 +14,7 @@ Edges <- readRDS("./Objects/Split_boundary.rds") %>%                        # Lo
 
 #### Create a NEMO-ERSEM grid to intersect with transects ####
 
-points <- readRDS("./Objects/NE_Days/NE.01.2015.rds") %>%                   # Import an NM summary object
+points <- readRDS("./Objects/NE_Days/NE.CNRM.ssp370.01.2016.rds") %>%                   # Import an NM summary object
   filter(slab_layer == "S") %>%                                             # Limit to the shallow layer to avoid duplication (and it's bigger)
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326)  %>%            # Set as sf object
   st_transform(crs = crs)
@@ -47,7 +47,8 @@ labelled <- st_intersection(st_make_valid(Edges), st_make_valid(grid)) %>%
   mutate(split_length = as.numeric(st_length(.))) %>% 
   select(x, y, slab_layer, Shore, split_length, Bathymetry) %>% 
   filter(split_length > 0.001) %>%                                              # Drop 6 tiny transects which are breaking the algorithm
-  slice(-2095) %>%                                                              # Problem small transect introduced whre I trimmed the offshore polygon (both straddling points were outside the polygon)
+#  slice(-2095) %>%                                                              # Problem small transect introduced whre I trimmed the offshore polygon (both straddling points were outside the polygon)
+  slice(-c(446, 447)) %>%                                                              # Problem small transect introduced whre I trimmed the offshore polygon (both straddling points were outside the polygon)
   characterise_flows(domains, precision = 10000) %>%                            # In which direction? (in or out of box and with which neighbour)
   filter(Neighbour != "Offshore")                                               # Offshore as a neighbour is a rare artefact from resolution.
 

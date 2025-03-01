@@ -1,0 +1,13 @@
+Gear_id,Gear_name,Gear_to_which_linked,Linkage_coefficient,Comments
+1,Mollusc_dredge,NA,NA,Independent_of_other_gears
+2,Harpoons,1,1.5,Based_on_ICES_ecosystem_review
+3,Kelp_harvester,1,1,Guess
+4,Longlines+Gillnets,NA,NA,Independent_of_other_gears
+5,Pelagic_trawl+seine,6,1,Based_on_ICES_ecosystem_review
+6,Creels,NA,NA,Independent_of_other_gears
+7,Recreational,6,1,Guess
+8,Shelf_Trawlers,NA,NA,Independent_of_other_gears
+9,NA,8,0.645,Based_on_ICES_ecosystem_review
+10,NA,8,0.606,Based_on_ICES_ecosystem_review
+11,NA,NA,NA,Independent_of_other_gears
+12,NA,NA,NA,Independent_of_other_gears

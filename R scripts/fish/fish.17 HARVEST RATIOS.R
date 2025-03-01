@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 rm(list=ls())   
 packages<-c(
   "icesSAG",
@@ -222,7 +223,6 @@ guild_catch<-colSums(catch)
 Harvest_ratios[is.na(Harvest_ratios)] <- guild_catch/Total_biomass[is.na(Harvest_ratios)]
 
 saveRDS(Harvest_ratios,"./Objects/Harvest_ratios.rds")
-
 
 
 
