@@ -5,6 +5,7 @@ implementation <- "Norwegian_Basin"
 ssp <- "ssp370"
   
 library(sf)
+library(tidyr)
 
 #EPSG <- rgdal::make_EPSG()
 #EPSG2 <- filter(EPSG, str_detect(note, "Cape"))
@@ -22,6 +23,10 @@ pre <- list(scale = 1, width = 12, height = 10, units = "cm", dpi = 500) # The s
 
 SDepth <- 60                  # Shallow deep boundary
 DDepth <- 600                 # Maximum depth
+
+domain_size<-readRDS("./Data//Domains.rds")%>%
+  st_union()%>%
+  st_area()
 
 #### bathymetry.5 MODEL DOMAIN ####
 
