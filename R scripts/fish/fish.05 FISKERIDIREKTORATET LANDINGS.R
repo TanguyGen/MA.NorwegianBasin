@@ -8,7 +8,7 @@ library(tidyverse)
 
 gears <- unique(read.csv("./Data/MiMeMo_gears.csv")$Aggregated_gear)          # Load fishing gear classifications
 
-guild <- unique(read.csv2("./Data/MiMeMo fish guilds.csv",check.names = FALSE)$Guild)              # Get guilds
+guild <- unique(read.csv("./Data/MiMeMo fish guilds.csv",check.names = FALSE)$Guild)              # Get guilds
 
 landings_target <- expand.grid(Guild = guild, 
                                Aggregated_gear = gears) %>%                   # Get combinations of gear and guild
@@ -32,7 +32,10 @@ macroalgae <- macroalgae %>%
     
 
 summary <- macroalgae %>%
-  summarise(Tonnes = mean(Tonnes,na.rm=T)) 
+  group_by(Year)%>%
+  summarise(Tonnes = sum(Tonnes,na.rm=T))%>%
+  ungroup()%>%
+  summarise(Tonnes = mean(Tonnes,na.rm=T))
 landings_target["Macrophyte", "Kelp harvesting"] <- summary$Tonnes
 saveRDS(landings_target, "./Objects/fiskeridirektoratet landings by gear and guild.rds")
 

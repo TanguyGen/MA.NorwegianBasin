@@ -5,7 +5,7 @@
 
 rm(list=ls())                                                                 # Wipe the brain
 
-packages <- c("tidyverse", "exactextractr", "raster", "sf", "furrr")          # List handy packages
+packages <- c("tidyverse", "exactextractr", "raster", "sf", "furrr","tictoc")          # List handy packages
 lapply(c(packages), library, character.only = TRUE)                           # Load packages
 
 source("./R_scripts/@_Region file.R")                                         # Get region mask
@@ -68,7 +68,7 @@ EU_landings <- str_glue("./Data/EU_fish/spatial_landings_{2015:2018}/") %>%   # 
             .progress = T) %>%                                                # ttvllnd is "total value landed"
   bind_rows() %>% 
   rename(Gear_code = ger_typ)
-tic()
+      tic()
 EU_Arctic <- st_contains(Region_mask, EU_landings, sparse = F)  %>% # Which EU polygons are in the model mask? 
   t() %>%                                                                     # Transpose to indicate row not columns
   EU_landings[.,] %>%                                                         # Subset the Eu data spatially
@@ -126,5 +126,7 @@ corrected_landings <- st_drop_geometry(EU_Arctic) %>%
   .[order(row.names(.)), order(colnames(.))]                                  # Alphabetise rows and columns
 
 saveRDS(corrected_landings, "./Objects/EU landings by gear and guild.rds")
+#corrected_landings<-readRDS( "./Objects/EU landings by gear and guild.rds")
+
 heatmap(corrected_landings)
 

@@ -63,7 +63,7 @@ pelagic_discards<-read.table("./Data/IMR/Discards/Discards.txt",sep=";",dec=".",
   filter(area %in% c("ICES2aS","ICES2aN"))%>% #Only keep ICES area 27.2.a which corresponds to Norwegian Sea
   left_join(guild)%>%
   left_join(gear)%>%
-  select(Aggregated_gear,Guild,year,Discards,area)%>%
+  dplyr::select(Aggregated_gear,Guild,year,Discards,area)%>%
   drop_na()%>%
   group_by(Aggregated_gear,Guild,year)%>%
   summarise(Discards=sum(Discards,na.rn=TRUE))%>% #sum the discarded biomass of the 2 areas
@@ -129,7 +129,7 @@ area07<-read.csv2("./Data/IMR/Discards/Discards_fish_gillnets07.csv")
 
 gillnets_fish<-rbindlist(list(area00,area06,area07),use.names=FALSE)%>%
   mutate(Fiskeridir=Art,  #adjust to guild
-         Discards=Estimert.total.vekt.utkast..tonn.*10^6)%>% #Change name and change unit to kg
+         Discards=Estimert.total.vekt.utkast..tonn.*10^3)%>% #Change name and change unit to kg
   group_by(Fiskeridir,Discards)%>%
   summarise(Discards=sum(Discards,na.rm=TRUE))%>%
   ungroup()%>%
@@ -241,7 +241,7 @@ rate["Kelp harvesting", "Macrophyte"] <- 0
 
 saveRDS(rate, "./Objects/Discard rates.rds")
 
-
+#Discard<-readRDS( "./Objects/Discard rates.rds")
 
 
 #Bycatch weight
@@ -264,13 +264,11 @@ area_size <- read_sf(dsn="./Data/IMR/Fdir_hovedomraader_shp") %>% #get the fiske
 #Using the average of 4 methods of estimation
 
 
-## Estimate the annual discard rates for the EU fishing fleet in the Barents Sea from (Moan et al., 2020) for regions 2 and 3 estimation 2014 to 2018
 
 porpoise_abundance<-((292+228)+(219+347)+(628+368)+(554+219))/4
-porpoise<-porpoise_abundance*53 /#mean mass
+porpoise<-porpoise_abundance*57.5 /#mean mass
   area_size
 
-#Values from (Hilde Sofie Fantoft and Nedreaas, 2021)
 
 area_size_5 <- read_sf(dsn="./Data/IMR/Fdir_hovedomraader_shp") %>% #get the fiskeridir areas
   filter(havomr=="05")%>%
@@ -278,11 +276,8 @@ area_size_5 <- read_sf(dsn="./Data/IMR/Fdir_hovedomraader_shp") %>% #get the fis
   sf::st_area() %>% 
   as.numeric()
 
-white_sided<-307* #abundance
-  110/#mean mass
-  area_size_5
 
-Bycatch["Longlines_and_Gillnets","Cetacean"]<-porpoise+white_sided
+Bycatch["Longlines_and_Gillnets","Cetacean"]<-porpoise
 
 #----------------------------------------------
 #Gillnets pinnipeds (Moan 2021)
