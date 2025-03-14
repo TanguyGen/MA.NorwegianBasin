@@ -14,7 +14,7 @@ output:
 knit: (function(inputFile, encoding) {
       pagedown::chrome_print(inputFile, 
                         encoding = encoding, 
-                        timeout = 50)})
+                        timeout = 150)})
 main-color: "#000000"
 secondary-color: "#737372"
 main-font: "Quicksand"
@@ -102,7 +102,7 @@ In the offshore zone, the seafloor being too deep to correctly be represented wi
 
 *The perimeter of the model domain is defined by a `r DDepth`m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.*
 
-![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are derived from the Norwegian Geological Survey and extended by the Random Forest model already deployed for the Barents Sea and North East Greenland [-@laverick2023].](img/habitats.png)
+![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are derived from the Norwegian Geological Survey and extended by the Random Forest model already deployed for the Barents Sea and North East Greenland [-@laverick2022].](img/habitats.png)
 
 # Fixed Physical {.unnumbered}
 
@@ -114,7 +114,7 @@ In 2023 a Random Forest model was trained on a Norwegian Geological Survey sedim
 This model was repurposed to predict for the Norwegian shelf to return area proportions of depth zones and seabed habitats for StrathE2E.
 The model provides gridded data sets of bathymetry, mean grain size, mud, sand and gravel content.
 
-#### Parameters for relationship between median grain size, sediment porosity and permeability. Permeability is used as the basis for estimating hydraulic conductivity which is a parameter in the representation of sediment processes in the model: {.unnumbered}*
+#### Parameters for relationship between median grain size, sediment porosity and permeability. Permeability is used as the basis for estimating hydraulic conductivity which is a parameter in the representation of sediment processes in the model: {.unnumbered}
 
 Porosity (proportion by volume of interstitial water) and permeability of each sediment habitat were derived from median grain sizes using empirically-based relationships.
 
@@ -122,7 +122,7 @@ $$log_{10}(porosity) = p_3 + p_4\left(\frac{1}{1+e^{(\frac{-log_{10}(D_{50})-p_1
 
 $$permeability = 10^{p_5}∙D_{50}^{*p_6}$$
 
-where D~50~\* = 0.11 ≤ D~50~ ≤ 0.50 p~5~ = -9.213, p~6~ = 4.615 [@heath15].
+where D~50~\* = 0.11 ≤ D~50~ ≤ 0.50 p~5~ = -9.213, p~6~ = 4.615 [@heath20'15].
 
 These relationships are coded into the StrathE2E2 R-package with the parameters in the csv setup file for the North Sea model.
 The parameters are probably a reasonable starting point for any future model of a new region.
@@ -502,29 +502,29 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
 
 [@nedreaas2006; @clegg2020]#discards
 
-## Potentially time-varying parameters of the fishing fleet model
+## Potentially time-varying parameters of the fishing fleet model {.unnumbered}
 
 The following briefly describes the potentially time-varying driving data for the fishing fleet model.
 
-### Catching power and discard rates of each resource guild by each gear.
+### Catching power and discard rates of each resource guild by each gear: {.unnumbered}
 
 An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet (Norwegian Directorate of Fisheries), the EU fleet (STECF), the Icelandic Fishing fleet (Icelandic Directorate of Fisheries) and the Faroese fishing fleet (Statistics Faroe Islands).
 Values were summed and inflated for estimates of total international activity using ICES data to infer the missing International (not Norway, Iceland, Faroe or EU countries) catch in the Norwegian Sea.
 This assumes the International fishing fleet operates a similar gear distribution to the EU, Norwegian, Icelandic and Faroese fleets when combined.
 
-### Regional activity rates, of each gear type.
+### Regional activity rates, of each gear type {.unnumbered}
 
 An annual average was calculated for the 2010-2019 period using the data available within this time period for the Norwegian fishing fleet(IMR) and the EU fleet (STECF).
 Values were summed and inflated for estimates of total international activity using Global fishing watch (GFW) data to infer the missing International (not Norway or EU countries) activity in the Norwegian Sea for the GFW gears.
 This assumes the International fishing fleet operates a similar gear distribution (within static and mobile gear types) to the EU and Norwegian fleets when combined.
 
-### Spatial proportional distribution of activity by each gear.
+### Spatial proportional distribution of activity by each gear {.unnumbered}
 
 Proportion of domain-wide annual average activity rate over each seabed habitat type, derived by overlaying spatial distributions of activity from IMR (Norwegian), STECF (EU), and Global Fishing Watch (International), onto spatial distributions of seabed sediment types derived from the atlas of sediment properties [@laverick2023].
 
-## Data processing to derive timevarying parameters of the fishing fleet model Norwegian fishing catch and activity in the Norwegian Sea
+## Data processing to derive timevarying parameters of the fishing fleet model Norwegian fishing catch and activity in the Norwegian Sea {.unnumbered}
 
-### Norwegian fishing catch and activity in the Norwegian Sea
+### Norwegian fishing catch and activity in the Norwegian Sea {.unnumbered}
 
 IMR provided us with daily catch and activity data for the Norwegian fishing fleet on request.
 This data was broken down by species caught and gear used in fishing areas.
@@ -542,9 +542,9 @@ Cetacean records appeared to start from 2013, so averages were calculated for ce
 
 3.  We used the same approach to calculate the proportion
 
-### Demersal and migratory catch by tourist and recreational fishing activity
+### Demersal and migratory catch by tourist and recreational fishing activity {.unnumbered}
 
-#### Introduction
+#### Introduction {.unnumbered}
 
 Arctic Fisheries Working Group (AFWG) reports since 2010 include catches of cod by non-commercial fishing activity in assessments for the coastal cod stock which inhabits the inshore waters of western and northern Norway.
 Coastal cod are considered to be distinct from the more abundant Northeast Arctic cod which are mostly found offshore but migrate inshore to breed in the spring.
@@ -559,7 +559,7 @@ Fish which are released are assumed to survive and are not included in assessmen
 Likewise, some recreational fishers offer a proportion their catches for sale.
 ICES assessments assume that these sales are already included in the catch statistics compiled by the Norwegian Directorate for Fisheries, and hence not classified as part of the recreational catch.
 
-#### Estimation of Norwegian tourism and recreation catches
+#### Estimation of Norwegian tourism and recreation catches {.unnumbered}
 
 Subject to the above limitations, the 2010 AFWG prepared a record of both recreational and tourist catches of coastal cod between 1984 and 2009, based on studies by [@hallenstvedt2004; @anon2005], and annual surveys on the number of Norwegian residents who said they had been fishing in the sea.
 These strands of evidence indicated the total recreational and tourist catch of cod to be 13,400 tonnes in 2004 and the tourist catch 1,100 tonnes.
@@ -587,7 +587,7 @@ However, the breakdown of catches in 2009 at finer resolution than that reported
 Hence we crudely estimated the proportion of annual catches from north of 62N that might have been taken in our model area based on the proportion of sea fishing tourism businesses participating in the 2009 study which were located in the Troms and Finmark areas (Figure 3; 11 out of 52 businesses north of 62N; 21.57%).
 The results are estimates, albeit obviously crude, of the catch of demersal fish and migratory fish (mackerel) guilds in our Barents Sea model domain (Table 8).
 
-\pagebreak
+\newpage
 
 ```{r touristcatch}
 tab_touristcatch <- table_nums(name = "tab_touristcatch", 
@@ -597,10 +597,16 @@ tab_touristcatch <- table_nums(name = "tab_touristcatch",
 `r table_nums("tab_touristcatch")`
 
 ```{r touristcatchb, fig.cap = tab_touristcatch}
-read_xlsx("Mikes_stories.xlsx", sheet = "Tourist1")%>%
+
+tourist_catch<-read_xlsx("Mikes_stories.xlsx", sheet = "Tourist1")%>%
+  filter(Year>=2010&Year<2020)
+tourist_catch%>%
+  summarise(across(everything(), mean)) %>% # Compute column means
+  mutate(Year = "Mean") %>%             # Add a new column for identification
+  bind_rows(tourist_catch, .) %>%                       # Bind the means row to the original data frame
   gt()
 ```
-
+\newpage
 ```{r speciestourism}
 tab_speciestourism <- table_nums(name = "tab_speciestourism", 
     caption = "Data for the 2009 national survey of tourist recreational fishing in Norway from (Vølstad et al. 2011), Table 2. The data were presented for two regions, North and South of 62N. The additional column shown here for the Finmark and Troms area is a 21.57% subset of the data for “North of 62N” based the proportion (11 out of 52) of the tourist businesses in “North of 62N” which were located in these administrative areas. Values are the annual catch weight in tonnes.")
@@ -612,7 +618,7 @@ tab_speciestourism <- table_nums(name = "tab_speciestourism",
 read_xlsx("Mikes_stories.xlsx", sheet = "Tourist2")%>%
   gt()
 ```
-
+\newpage
 ```{r totalcatch}
 tab_totalcatch <- table_nums(name = "tab_totalcatch", 
     caption = "Data for the 2009 national survey of tourist recreational fishing in Norway from (Vølstad et al. 2011), Table 2. The data were presented for two regions, North and South of 62N. The additional column shown here for the Finmark and Troms area is a 21.57% subset of the data for “North of 62N” based the proportion (11 out of 52) of the tourist businesses in “North of 62N” which were located in these administrative areas. Values are the annual catch weight in tonnes.")
@@ -624,8 +630,8 @@ tab_totalcatch <- table_nums(name = "tab_totalcatch",
 read_xlsx("Mikes_stories.xlsx", sheet = "Tourist3")%>%
   gt()
 ```
-
-### EU (including UK) fishing catch and activity in the Norwegian Sea
+\newpage
+### EU (including UK) fishing catch and activity in the Norwegian Sea {.unnumbered}
 
 The European commission’s Scientific, Technical, and Economic Committee for Fisheries (STECF) provide spatially explicit datasets on annual fish catch (<https://stecf.jrc.ec.europa.eu/dd/fdi/spatial-landmap>) and fishing effort (<https://stecf.jrc.ec.europa.eu/dd/fdi/spatialeff-> map) by the fishing fleets of member states around the world.
 Data is available for the years 2015-2018 by fishing gear. The landings dataset is further resolved by species caught. The data processing steps were similar to those described above for the Norwegian fishing fleet. 
@@ -634,29 +640,29 @@ Data is available for the years 2015-2018 by fishing gear. The landings dataset 
 3. We used the same approach to calculate the proportion of fishing effort across the 8 StrathE2E habitat types. Instead of the intersection between the StrathE2E model domain and the STECF reporting regions, we intersected the Norwegian Sea habitats with STECF reporting regions (Figure \@ref(fig:habitats)). We then calculated the proportion of Global Fishing Watch gear activity for each reporting region which fell within the StrathE2E habitats. 
 4. Corrected landings were summed spatially and saved as a matrix by gear and guild. Corrected effort was totaled across area codes and saved by StrathE2E gear types. Corrected effort was also totaled across area codes and saved as a matrix by gears and habitats. 
 
-### International fishing catch and activity in the Norwegian Sea 
+### International fishing catch and activity in the Norwegian Sea {.unnumbered}
 
 Though we have spatially explicit data of fisheries landings and effort for the Norwegian and EU fishing fleet in Norwegian Sea, a sizable portion of activity is missing. 
 The Russian, Icelandic and Faroese and other international fishing fleet that we will call "International fishing fleet" have a notable presence in the Norwegian Sea according to ICES [@ices2022]. Unfortunately the ICES data does not resolve landings by gear used, and the spatial resolution of landings is coarse. 
 
-#### International Catch by gear and guild
+#### International Catch by gear and guild {.unnumbered}
 To approximate international catch we use the ICES data on fisheries landings from our internal database to calculate an inflation factor. 
 1. We divide the total weight landed per guild in area 27.2.a by the total international catch in the same area. 
 2. We sum the Norwegian and EU matrices described above, and multiply by the ICES correction factor per guild. This assumes the International fishing fleet has a distribution of fishing gears similar to the combined EU and Norwegian fishing fleet. 
 3. Kelp harvesting, Dredge fishing, and the tourist and recreational catch was added to the international matrix after the application of the inflation factor.
 
-#### International effort by gear
+#### International effort by gear {.unnumbered}
 To approximate international catch we use the GFW data [@kroosdama2018] to calculate an inflation factor.
 1. We divide the total effort by mobile and static gears by the total international effort represented by flags other than Russia. The appropriate correction factors were matched to StrathE2E gear types based on wthe GFW gears. The following gears were not inflated as they are unique to the Norwegian fleet: Harpoons, Dredge, Kelp harvesting, Recreational.
 2. We sum the Norwegian and EU effort vectors described above, and multiply by the GFW correction factor per gear.
 3. The tourist, recreational (described above), harpoons, dredge, kelp harvesting effort were added to the international effort after the application of the inflation factor.
 4. Annual hours of fishing effort were then converted into to daily effort in s/m2.
 
-### Discard rates
+### Discard rates {.unnumbered}
 
 Discard rates were calculated as the ratio of discarded weight to caught weight for each gear and guild.
 
-#### Norwegian fleet discards
+#### Norwegian fleet discards {.unnumbered}
 
 In Norway, a discard ban was introduced in 1987 for some species and was gradually expanded to include all species by 2009. However, we believe the discard rate is not 0 for the Norwegian fleet. 
 No data is available on the discards of the Norwegian fleet for every species and gears so we worked only with the available data from various sources. We got estimations of weight discarded by guilds and gear from the longlines and trawls fisheries of vessels >28m using unpublished data from IMR [@huitfeldtaspelund2024] in the ICES subregion 27.2.a (# ADD FIGURE), calculated using the method described in [@clegg2023].
@@ -665,37 +671,46 @@ We then calculated the discard rates as $discard/(landings+discard)$ and summari
 Unrepresented combinations of gear and guild were automatically assigned a discard rate of 0. We manually set the discard rates for a number of guilds which are only targeted by a single specialist gear to 1. These were cetaceans, pinnipeds, birds, and macrophytes. Harpoons for cetaceans, Rifles for pinnipeds, and kelp harvesting for macrophytes were then all assigned a discard rate of 0.
 
 
-#### EU fleet discards
+#### EU fleet discards {.unnumbered}
 
 STECF provides a record of fisheries discards “FDI-catches-by-country” for the years 2015-2019. These records are at a coarser resolution than the data used above for landings and fishing effort. We limited the dataset to records from FAO fisheries area 27.2.A, to represent the Norwegian Sea. Some entries are marked as confidential when there is a risk of identifying specific vessels.
 For entries with known discard quantities, we calculated the discard rates as $discard/(landings+discard)$ and summarised to mean discard rates for StrathE2E gear classes and guilds over the whole time period. Unrepresented combinations of gear and guild were automatically assigned a discard rate of 0. We manually set the discard rates for a number of guilds which are only targeted by a single specialist gear to 1. These were cetaceans, pinnipeds, birds, and macrophytes. Harpoons for cetaceans, and kelp harvesting for macrophytes were then  assigned a discard rate of 0.
 
 
-#### Additional bycatch in the Norwegian Sea
+#### Additional bycatch in the Norwegian Sea {.unnumbered}
 
-##### Bycatch of cetaceans
+##### Bycatch of cetaceans {.unnumbered}
 
 The ICES Fisheries Overview of the Norwegian Sea Ecoregion [@ices2022] (page 21) states that “Marine mammals that get entangled in fishing gear may drown or die later from injuries or from being partially entangled in parts from the fishing gear. In the Norwegian Sea, the largest bycatch of marine mammals occurs in the bottom set gillnet fisheries targeting cod and monkfish. Harbour porpoises, harbour seals, and grey seals are frequently killed in these fisheries. Around 2000 harbour porpoises are taken in Norwegian commercial fisheries each year.” and "Bycatch of larger whales are less frequent. The number of bycatches of sperm whale and humpback whale in Norwegian fisheries is usually fewer than ten individuals annually (per species), and many of these are released alive.". 
 NAMMCO considers the bycatch of white-sided dolphin to be "negligible to non-existent" (https://nammco.no/atlantic-white-sided-dolphin-2/#1475845220355-579f0567-e59c) and the extent of bycatch of white beaked dolphin being "unknown" (https://nammco.no/white-beaked-dolphin/#1475845220355-579f0567-e59c). We thus choose to use the available data for porpoises as an estimation of the bycatch of cetaceans in the Norwegian Sea.
 
-We used the data from [@moan2020] to estimate the number of porpoises bycatch from gillnets fisheries from 2014 to 2018. We used the table 3 of the article (Table \@ref(tab:porpoisetable)). We made an average of the 4 methods of estimation of the number of porpoises bycatch for the regions 2 and 3 (Figure \@ref(fig:bycatchcetaceans)). We multiplied the number of porpoises catched by their mean weight from [@pedersen2021] (57.5kg) to obtain a yearly mean weight of cetacean bycatch.
+We used the data from [@moan2020] to estimate the number of porpoises bycatch from gillnets fisheries from 2014 to 2018. We used the table 3 of the article (Table \@ref(tab:porpoisetable)). We made an average of the 4 methods of estimation of the number of porpoises bycatch for the regions 2 and 3 (Figure \@ref(fig:bycatchcetaceans)). We multiplied the number of porpoises catched by their mean weight from [@pedersen2021] (57.5kg) to obtain a yearly mean weight of cetacean bycatch and then divided by the surface area of the whole domain to obtain bycatch in $t \cdot m^{-2}$.
 We unfortunately couldn't catch any data on bycatch of cetaceans by gears other than gillnets which is the gear causing the most bycatch.
 
-##### Bycatch of pinnipeds
+##### Bycatch of pinnipeds {.unnumbered}
 
-The ICES Fisheries Overview of the Norwegian Sea Ecoregion [@ices2022] (page 21) states that "In the Norwegian Sea, the largest bycatch of marine mammals occurs in the bottom set gillnet fisheries targeting cod and monkfish. Harbour porpoises, harbour seals, and grey seals are frequently killed in these fisheries. (...)  Surveys of grey seals have shown a 50–60% reduction in pup production between 2007 and 2015 in mid-Norway, probably as a result of increased bycatches in gillnet fisheries for monkfish and cod. Bycatch of seals in coastal areas is uncertain (owing to unreliable species identification) but believed to be in the order of around 200 individuals per species.".
+The ICES Fisheries Overview of the Norwegian Sea Ecoregion [@ices2022] (page 21) states that "In the Norwegian Sea, the largest bycatch of marine mammals occurs in the bottom set gillnet fisheries targeting cod and monkfish. Harbour porpoises, harbour seals, and grey seals are frequently killed in these fisheries. (...)  Surveys of grey seals have shown a 50–60% reduction in pup production between 2007 and 2015 in mid-Norway, probably as a result of increased bycatches in gillnet fisheries for monkfish and cod. Bycatch of seals in coastal areas is uncertain (owing to unreliable species identification) but believed to be in the order of around 200 individuals per species.
 
-For the pinnipeds, we used discards data from gillnets fisheries from [@moan2021]. We used data of harbour and grey seals on the coast of Norway from the region 2 of Figure \@ref(fig:bycatchseals)). The data used estimates based on data from 2015 for harbour seals and for 2011 and 2017 for the grey seals (Table \@ref(tab:sealtable)).
+For the pinnipeds, we used discards data from gillnets fisheries from [@moan2021]. We used data of harbour and grey seals on the coast of Norway from the region 2 of Figure \@ref(fig:bycatchseals)). The data used estimates based on data from 2015 for harbour seals and for 2011 and 2017 for the grey seals (Table \@ref(tab:sealtable)). We used data from [@pedersen2021] to multiply the number of idividuals by their mean weight and then divided by the surface area of the whole domain  to obtain bycatch in $t \cdot m^{-2}$.
 
-We summed the discard weights for each gear and guilds as $discards/(landings+discards)$ and summarised to mean discard rates for StrathE2E gear classes and guilds.
+We summed the discard weights for each gear and guilds as $discards/(landings+discards)$ and summarised to mean discard rates for StrathE2E gear classes and guilds .
 
-![(#fig:bycatchcetaceans) From [@moan2020].] Main areas (numbered) and regions (colour shaded) in the study area. Red dots indicate locations of harbour porpoise bycatch incidents. Note that one incident may involve more than one harbour porpoise.(img/Regions_Moan.png)
+##### Bycatch of birds {.unnumbered}
 
-![(#tab:porpoisetable) From [@moan2020].] Estimated average yearly harbour porpoise bycatch in the years 2014 to 2018, by different grouping variables, using four estimation approaches.(img/Porpoise_table.png)
+The bycatch of birds was estimated using the estimations from [@hildesofiefantoft2021] for the year 2018. The data was used to estimate the number of birds bycatch from gillnets fisheries. We used the table 6.1 of the report (Table \@ref(tab:birdtable)). We multiplied the number of birds bycatched by their mean weight from [@pedersen2021] to obtain a yearly mean weight of birds bycatch by statistical area. We kept only the statistical areas 00 and 05 . We then divided the weight by the surface area of each statistical area  to obtain estimations of bycatch in $t \cdot m^{-2}$.
 
-![(#tab:sealtable) From [@moan2021].] Average yearly harbour and grey seal bycatch in each region and fishery. All values (except CVs) rounded to nearest tenth. (img/Seal_table.png)
+\newpage
+![(#fig:bycatchcetaceans) From [@moan2020]. Main areas (numbered) and regions (colour shaded) in the study area. Red dots indicate locations of harbour porpoise bycatch incidents. Note that one incident may involve more than one harbour porpoise.](img/Regions_Moan.png)
+\newpage
+![(#tab:porpoisetable) From [@moan2020]. Estimated average yearly harbour porpoise bycatch in the years 2014 to 2018, by different grouping variables, using four estimation approaches.](img/Porpoise_table.png)
+\newpage
+![(#tab:sealtable) From [@moan2021]. Average yearly harbour and grey seal bycatch in each region and fishery. All values (except CVs) rounded to nearest tenth. ](img/Seal_table.png)
+\newpage
+![(#fig:bycatchseals) From [@moan2021]. Partitioning of the Norwegian coastline into separate regions, as indicated by the red division lines. Red, green and blue dots indicate seal bycatch locations in each region. We used bycatch data from region 2.(Moan and Bjoørge,2021)](img/Moan_seals.png)
+\newpage
+![(#tab:birdtable) From [@hildesofiefantoft2021], Table 6.1 (translated from Norwegian).](img/Discards_birds.png)
+\newpage
 
-![(#fig:bycatchseals) From [@moan2021].Partitioning of the Norwegian coastline into separate regions, as indicated by the red division lines. Red, green and blue dots indicate seal bycatch locations in each region. We used bycatch data from region 2.(Moan and Bjoørge,2021)](img/Moan_seals.png)
 
 ### Final processing {.unnumbered}
 
@@ -710,9 +725,13 @@ We summed the discard weights for each gear and guilds as $discards/(landings+di
 
 5.  Fishing power was calculated as catch / activity per gear.
 
+### Losses by processing-at-sea rates {.unnumbered}
 
+Processing-at-sea refers to the practice on some types of vessels of eviscerating selected proportions of the catch and returning the viscera to the sea as offal.
+To calculate the processing-at-sea rates, we used data from the Norwegian directorate for fisheries landings which reports both post-processed weight (produktvekt) and estimated round weight (Rundvekt). To obtain the part of the landings being rejected at sea as offal, we calculated $(Round weight-post-processed weight)/Round weight$. We thus obtainend the offal rates for each gear and guild for the Norwegian fleet. We considered the other fleets to have a similar ratio of offal to round weight as the Norwegian fleet.
 
 # End {.unnumbered}
+
 
 ## Acknowledgements {.unnumbered}
 
