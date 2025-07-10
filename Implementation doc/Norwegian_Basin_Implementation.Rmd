@@ -14,7 +14,7 @@ output:
 knit: (function(inputFile, encoding) {
       pagedown::chrome_print(inputFile, 
                         encoding = encoding, 
-                        timeout = 150)})
+                        timeout = 1000)})
 main-color: "#000000"
 secondary-color: "#737372"
 main-font: "Quicksand"
@@ -90,9 +90,9 @@ The shallow layer represents water from the surface to `r SDepth` m depth, and s
 The offshore/deep zone covers the same area as the offshore/shallow zone, but represents water between `r SDepth` m and `r DDepth` m deep.
 There is a second internal boundary between the two offshore zones.
 
-![(#fig:spatialschematic) The spatial structure of StrathE2E; Ocean volumes and seafloor habitats. StrathE2E is built around a simplified spatial structure which represents shelf seas. These spatial units are connected to each other and to boundaries as shown to the right. The volumes connected to each spatial component are highlighted in blue.](img/schematic%20overhang.svg)
-
-\newpage
+```{r spatialschematic, fig.cap = "The spatial structure of StrathE2E; Ocean volumes and seafloor habitats. StrathE2E is built around a simplified spatial structure which represents shelf seas. These spatial units are connected to each other and to boundaries as shown to the right. The volumes connected to each spatial component are highlighted in blue.", out.width = "95%"}
+knitr::include_graphics("img/schematic overhang.svg")
+```
 
 The seafloor of the model domain is represented by 5 habitat types.
 There are three sediment classes for the inshore zone – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3).
@@ -100,9 +100,12 @@ The fourth class (rock, 0) represents an absence of soft sediment.
 The rock class has different geochemical properties and supports the kelp forests in the model food web.
 In the offshore zone, the seafloor being too deep to correctly be represented within StrathE2E, a imaginary floating layer of sediment called "overhang" will be added to the model to represent deep sea interactions (Figure \@ref(fig:habitats)).
 
-*The perimeter of the model domain is defined by a `r DDepth`m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline. In consultation with local collaborators, we imposed additional boundaries to limit the eastward extent of the model domain at 42.2W and Southward along 33.75S, 54.35W to 36S, 50W. This coincides with changes in the pattern of fishing effort according to Global Fishing Watch, and Brazil's exclusive economic zone.*
+*The perimeter of the model domain is defined by a `r DDepth`m depth contour and the Norwegian coastline. Open ocean boundaries occur wherever there is no coastline.*
 
-![(#fig:habitats) Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are derived from the Norwegian Geological Survey and extended by the Random Forest model already deployed for the Barents Sea and North East Greenland [-@laverick2022].](img/habitats.png)
+```{r habitats, fig.cap = "Map of the model domain. StrathE2E defines seabed sediment habitats as inshore (blues) or offshore (yellows). Within each zone, three sediment classes are represented – fine (muddy, 1), medium (sandy, 2) and coarse (gravel, 3). A fourth class (rock, 0) represents an absence of soft sediment. The overhang in the model domain which does not contact the sea floor is indicated in red. Sedimentary data are derived from the Norwegian Geological Survey and extended by the Random Forest model already deployed for the Barents Sea and North East Greenland (Laverick 2022).", out.width = "100%"}
+knitr::include_graphics("img/study_area.png")
+```
+
 
 # Fixed Physical {.unnumbered}
 
@@ -110,7 +113,7 @@ In the offshore zone, the seafloor being too deep to correctly be represented wi
 
 #### Water column inshore/shallow and offshore/deep zone area proportions and layer thicknesses; seabed habitat area proportions and sediment properties: {.unnumbered}
 
-In 2023 a Random Forest model was trained on a Norwegian Geological Survey sediment map to return a 1/100th degree resolution atlas of seabed sediment properties for the Barents Sea and North East Greenland [@laverick2023].
+In 2023 a Random Forest model was trained on a Norwegian Geological Survey sediment map to return a 1/100th degree resolution atlas of seabed sediment properties for the Barents Sea and North East Greenland [-@laverick2022].
 This model was repurposed to predict for the Norwegian shelf to return area proportions of depth zones and seabed habitats for StrathE2E.
 The model provides gridded data sets of bathymetry, mean grain size, mud, sand and gravel content.
 
@@ -122,7 +125,7 @@ $$log_{10}(porosity) = p_3 + p_4\left(\frac{1}{1+e^{(\frac{-log_{10}(D_{50})-p_1
 
 $$permeability = 10^{p_5}∙D_{50}^{*p_6}$$
 
-where D~50~\* = 0.11 ≤ D~50~ ≤ 0.50 p~5~ = -9.213, p~6~ = 4.615 [@heath20'15].
+where D~50~\* = 0.11 ≤ D~50~ ≤ 0.50 p~5~ = -9.213, p~6~ = 4.615 [-@heath2015].
 
 These relationships are coded into the StrathE2E2 R-package with the parameters in the csv setup file for the North Sea model.
 The parameters are probably a reasonable starting point for any future model of a new region.
@@ -130,7 +133,7 @@ Derivation of the parameters is described in the following text sub-sections.
 
 #### Parameters for in-built relationship between sediment mud content, and slowly degrading (refractory) organic nitrogen content of seabed sediments (see description in this document): {.unnumbered}
 
-Values for each sediment type derived from parameterised relationships between total organic nitrogen content of sediments (TON%, percent by weight), mud content (mud%, percent by weight) and median grain size (D~50~, mm).
+Values for each sediment type derived from parametrised relationships between total organic nitrogen content of sediments (TON%, percent by weight), mud content (mud%, percent by weight) and median grain size (D~50~, mm).
 
 $$mud\% = 10^{p_7}∙𝐷_{50}^{𝑝_8}$$ p~7~ = 0.657, p~8~ = -0.800
 
@@ -143,7 +146,7 @@ Proportion of TON estimated to be refractory = 0.9
 These relationships are coded into the StrathE2E2 R-package with the parameters in the csv setup file for the North Sea model.
 The relationships and parameters are probably a reasonable starting point for any future model of a new region, though there are clear regional variations.
 Derivation of the parameters is described in the following sub-sections.
-
+\newpage
 ## Model area proportions {.unnumbered}
 
 ```{r area_proportions_cap}
@@ -171,7 +174,7 @@ data_frame(Property = c("Sea-surface area proportion",
 
 ```
 
-We derived the area-proportions of seabed habitat in the inshore and offshore zones from output of the Random Forest model described by Laverick et al. [-@laverick2023].
+We derived the area-proportions of seabed habitat in the inshore and offshore zones from output of the Random Forest model described by Laverick et al. [-@laverick2022].
 The model allows for the prediction of a range of seabed data, including the presence of rock, the percentage of mud, sand and gravel fractions in the sediments and the whole–sediment mean grain size.
 These values are derived from habitat classes used by the Norwegian Geological survey in partnership with the Russian Federal State Unitarian Research and Production Company for Geological Sea Survey (NGU-SEVMORGEO).
 We assigned the NGU-SEVMORGEO sediment classes as fine, medium, coarse, or absence of sediment habitats within each zone (Figure \@ref(fig:habitats)).
@@ -195,15 +198,15 @@ permeability <- which(str_detect(physical$Description, "Defined_permeability"))
 nitrogen <- which(str_detect(physical$Description, "Defined_total_N"))
 grain <- which(str_detect(physical$Description, "grain_size"))
 
-data_frame(Habitat = c("S0", "S1", "S2", "S3", "D0"),
-           Depth = c("Shallow","Shallow","Shallow","Shallow", "Deep"),
-           Zone = c("Inshore","Inshore","Inshore","Inshore", "Offshore"),
-           Sediment = c("None (Rock)", "Fine", "Medium", "Coarse","None (Overhang)"),
+data_frame(Habitat = c("S0", "S1", "S2", "S3", "D1", "D2", "D3", "D0"),
+           Depth = c("Shallow","Shallow","Shallow","Shallow", "Deep","Deep","Deep","Deep"),
+           Zone = c("Inshore","Inshore","Inshore","Inshore", "Offshore","Offshore","Offshore","Offshore"),
+           Sediment = c("None (Rock)", "Fine", "Medium", "Coarse", "Fine", "Medium", "Coarse","None (Overhang)"),
            `Area Proportion` = physical$Value[proportions],
-           `Grain size` = c(NA, physical$Value[grain[1:3]], NA),
-           Porosity = c(NA, physical$Value[porosity[1:3]], NA),
-           Permeability = c(NA, physical$Value[permeability[1:3]], NA),
-           `Nitrogen content` = c(NA, physical$Value[nitrogen[1:3]], NA)) %>% 
+           `Grain size` = c(NA, physical$Value[grain[1:3]],physical$Value[grain[4:6]], NA),
+           Porosity = c(NA, physical$Value[porosity[1:3]], physical$Value[porosity[4:6]], NA),
+           Permeability = c(NA, physical$Value[permeability[1:3]], physical$Value[permeability[4:6]], NA),
+           `Nitrogen content` = c(NA, physical$Value[nitrogen[1:3]],physical$Value[nitrogen[4:6]], NA)) %>% 
   group_by(Zone, Depth) %>% 
   gt() %>% 
   fmt_number(columns = c("Area Proportion", "Grain size", "Porosity", "Permeability", "Nitrogen content"), 
@@ -217,11 +220,11 @@ data_frame(Habitat = c("S0", "S1", "S2", "S3", "D0"),
 
 ## Sediment porosity {.unnumbered}
 
-Log-transformed porosity has been shown to have a sigmoidal relationship with log~10~(median grain size) (D~50~, mm) [@wilson18]:
+Log-transformed porosity has been shown to have a sigmoidal relationship with log~10~(median grain size) (D~50~, mm) [@wilson2018]:
 
 $$log_{10}(porosity) = p_3 + p_4\left(\frac{1}{1+e^{(\frac{-log_{10}(D_{50})-p_1}{p_2})}}\right)$$
 
-We use this relationship to calculate porosity for sea bed sediments in the Norwegian Sea (`r table.ref("tab_habitat_proportions")`), using an alternative parameterisation to Wilson [@pace21].
+We use this relationship to calculate porosity for sea bed sediments in the Norwegian Sea (`r table.ref("tab_habitat_proportions")`), using an alternative parameterisation to Wilson [@pace2021].
 This alternative set of parameters extends the relationship to fine, muddy sediments (`r table.ref("tab_porosity")`).
 
 ```{r porosity_cap}
@@ -256,7 +259,7 @@ where: seawater density = 1027 kg.m^-3^ at salinity 35 and temperature 10°C; se
 
 Hence, $H = Permeability · 6.8004·10^6$ (m.s^-1^ at salinity 35 and temperature 10°C)
 
-Whole sediment permeability can be related to the proportion of sediment classed as mud (D~50~ \< 62 μm) [@pace21].
+Whole sediment permeability can be related to the proportion of sediment classed as mud (D~50~ \< 62 μm) [@pace2021].
 This relationship was used in the production of the Norwegian Basin model (`r table.ref("tab_habitat_proportions")`).
 
 ## Sediment organic nitrogen content {.unnumbered}
@@ -326,7 +329,7 @@ Demersal fish recruitment dates were also approximated by the recruitment dates 
 ### Spawning and recruitment start and end dates for benthos guilds {.unnumbered}
 
 The annual weight-specific fecundity and recruitment for the benthos guilds are assumed to be uniform between the start and end dates.
-For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected to obtain timing dates [@bakke2019; @hamed2019; @james2012].
+For the **Scavenger and carnivorous benthos** guild, the crab *Cancer pagurus* and the two sea urchins *Echinus esculentus* and *Strongylocentrotus droebachiensis* were elected to obtain timing dates [@bakke2019; @hamed2024; @james2012].
 Finally, for the **Suspension/deposit feeding benthos** guild, it was particularly difficult to select reference species in the area and even more finding coherent spawning and recruitment dates.
 A large number of species have been reported in the area [@buhl-mortensen2015] going from cold water corals like *Desmophyllum pertusum* (formerly *Lophelia pertusa* ), to sponges and to shells.
 However, few specific dates for spawning were available and, when available, several species had multiple spawning per year which could not be included into the model.
@@ -388,10 +391,10 @@ Monthly resolution time-varying physical and chemical driving parameters for the
 -   Surface shortwave radiation from CMIP6 used to force the NEMO-ERSEM coupled hydro-geochemical runs mentioned above.
 -   Freshwater volume outflows from CMIP6 used to force the NEMO-ERSEM coupled hydro-geochemical runs mentioned above.
 -   River nitrate and ammonia concentrations taken from the IMAGE model to force the NEMO-ERSEM coupled hydro-geochemical runs mentioned above.
--   Atmospheric deposition of nitrate and ammonia from ISIMIP3a ([Inter-Sectoral Impact Model Intercomparison Project](https://data.isimip.org/10.48364/ISIMIP.759077.2); [@yang22]) with SSP projects from ISIMIP3b used to force the NEMO-ERSEM coupled hydro-geochemical runs mentioned above.
+-   Atmospheric deposition of nitrate and ammonia from ISIMIP3a ([Inter-Sectoral Impact Model Intercomparison Project](https://data.isimip.org/10.48364/ISIMIP.759077.2); [@yang2022]) with SSP projects from ISIMIP3b used to force the NEMO-ERSEM coupled hydro-geochemical runs mentioned above.
 -   Remote sensing data products on Suspended Particulate Matter (Globcolour L3b; <ftp://ftp.hermes.acri.fr/GLOB/merged/month/>).
 -   Habitat disturbance due to tidal currents and waves from **TBD** [@laverick2022].
--   Wave height, period, and direction from the ERA-5 reanalysis monthly means accessed through [CDS](https://cds.climate.copernicus.eu/cdsapp#!/dataset/10.24381/cds.f17050d7?tab=overview) for 1980-2021 [@Hersbach19].
+-   Wave height, period, and direction from the ERA-5 reanalysis monthly means accessed through [CDS](https://cds.climate.copernicus.eu/cdsapp#!/dataset/10.24381/cds.f17050d7?tab=overview) for 1980-2021 [@hersbach2020].
 
 Details of how these data were processed are given below, supported by the [nemomedusR](https://jack-h-laverick.github.io/nemoRsem/) and [MiMeMo.tools](https://jack-h-laverick.github.io/MiMeMo.tools/) packages.
 
@@ -414,7 +417,7 @@ Values were summarised into period-specific climatological annual cycles of data
 ### Monthly averaged suspended particulate matter (SPM) concentrations (mg.m^-3^) in the shallow zone and the deep zone upper layer: {.unnumbered}
 
 Monthly averaged values of inorganic suspended particulate matter in sea water are available from the Globcolour project, starting from September 1997.
-These data are derived from satellite observations using the algorithm of Gohin [-@gohin11].
+These data are derived from satellite observations using the algorithm of Gohin [-@gohin2011].
 Data were downloaded from the ftp server (<ftp://ftp.hermes.acri.fr/GLOB/merged/month/>).
 We summarised these values as zonal statistics for the model domain to acquire a climatological annual cycle of data for the 2010-2019 simulation period only.
 
@@ -424,18 +427,18 @@ Light attenuation in open water was parameterised from a linear relationship bet
 
 ### Monthly averaged daily integrated irradiance at the sea surface (E.m^-2^.d^-1^): {.unnumbered}
 
-Derived from HadGEM2-ES model output [@jones11] which forces the NEMO-ERSEM model run used throughout our implementation.
+Derived from HadGEM2-ES model output [@jones2011] which forces the NEMO-ERSEM model run used throughout our implementation.
 Monthly mean values were summarised into climatological annual cycles of data for decadal periods and NEMO-ERSEM ensembles.
 
 ### Monthly averaged daily atmospheric deposition rates of oxidised and reduced nitrogen onto the sea surface in the shallow and deep zones (mMN.m^-2^.d^-1^): {.unnumbered}
 
-Sourced from the "histsoc" files for a 1901 - 2021 hindcast as monthly averages [@yang22], available from [CDS](https://cds.climate.copernicus.eu/cdsapp#!/dataset/10.24381/cds.f17050d7?tab=overview).
+Sourced from the "histsoc" files for a 1901 - 2021 hindcast as monthly averages [@yang2022], available from [CDS](https://cds.climate.copernicus.eu/cdsapp#!/dataset/10.24381/cds.f17050d7?tab=overview).
 Monthly values were summarised into climatological annual cycles of monthly oxidised and reduced nitrogen deposition rates extracted for 2010-2019.
 ISIMIPb Projections for SSP126 and SSP370 were processed in the same way for decadal periods up to and including the 2060s.
 
 ### Monthly averaged, freshwater river inflow rates (expressed as a daily proportion of the receiving layer volume), and concentrations of oxidised and reduced dissolved inorganic nitrogen in the inflowing river waters (mMN.m^-3^): {.unnumbered}
 
-Freshwater inflow derived from HadGEM2-ES model output [@jones11] which forces the NEMO-MEDUSA model run used throughout our implementation.
+Freshwater inflow derived from HadGEM2-ES model output [@jones2011] which forces the NEMO-MEDUSA model run used throughout our implementation.
 Monthly values were summaries into a climatological annual cycle of data for both the 2010-2019 and 2040-2049 periods.
 
 ### Volume fluxes into the model domain across open sea boundaries, and from the upper layer of the offshore/deep zone into the inshore/shallow zone, expressed as proportions of the receiving layer volume per day: {.unnumbered}
@@ -450,7 +453,7 @@ We calculated the depth-averaged concentrations for pixels within the shallow an
 We then sampled the pixels using the same transects around the model domain as for sampling volume fluxes.
 Only transects where water flowed into the model domain were sampled, and the average concentration of inflowing waters for target variables was calculated weighting by the flow rate across a transect and the cross-sectional area represented by a transect (average depth and length).
 Concentrations were then averaged into climatological annual cycles.
-The flow weighted averaging of concnetrations was calculated on the 5-day NEMO-ERSEM timestep, before averaging to a monthly climatology of concentrations.
+The flow weighted averaging of concentrations was calculated on the 5-day NEMO-ERSEM time step, before averaging to a monthly climatology of concentrations.
 
 # Fishing fleet {.unnumbered}
 
@@ -465,7 +468,7 @@ These parameters have to be derived by fitting.
 Finally, there are parameters which we can consider as driving data since they would be expected to vary with time.
 These are the activity rates of each gear, and their spatial distributions across the habitat types.
 
-Our principal data sources for the Norwegian Sea were were ICES (<https://www.ices.dk/data/dataset-collections/Pages/Fish-catch-and-stock-assessment.aspx>), IMR , the Norwegian directorate of fisheries (Fiskeridirektoratet) (<https://www.fiskeridir.no/Tall-og-analyse/AApne-data>), and Global Fishing Watch [@kroosdama2018].
+Our principal data sources for the Norwegian Sea were were ICES (<https://www.ices.dk/data/dataset-collections/Pages/Fish-catch-and-stock-assessment.aspx>), IMR , the Norwegian directorate of fisheries (Fiskeridirektoratet) (<https://www.fiskeridir.no/Tall-og-analyse/AApne-data>), and Global Fishing Watch [@kroodsma2018].
 These were supplemented with additional data sources to improve the representation of catch, bycatch, discard, and small recreational and artisanal fisheries.
 
 ## Static gear-definition parameters in the fishing fleet model {.unnumbered}
@@ -500,8 +503,6 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
 
 ```
 
-[@nedreaas2006; @clegg2020]#discards
-
 ## Potentially time-varying parameters of the fishing fleet model {.unnumbered}
 
 The following briefly describes the potentially time-varying driving data for the fishing fleet model.
@@ -520,7 +521,7 @@ This assumes the International fishing fleet operates a similar gear distributio
 
 ### Spatial proportional distribution of activity by each gear {.unnumbered}
 
-Proportion of domain-wide annual average activity rate over each seabed habitat type, derived by overlaying spatial distributions of activity from IMR (Norwegian), STECF (EU), and Global Fishing Watch (International), onto spatial distributions of seabed sediment types derived from the atlas of sediment properties [@laverick2023].
+Proportion of domain-wide annual average activity rate over each seabed habitat type, derived by overlaying spatial distributions of activity from IMR (Norwegian), STECF (EU), and Global Fishing Watch (International), onto spatial distributions of seabed sediment types derived from the atlas of sediment properties [@laverick2022].
 
 ## Data processing to derive timevarying parameters of the fishing fleet model Norwegian fishing catch and activity in the Norwegian Sea {.unnumbered}
 
@@ -652,7 +653,7 @@ To approximate international catch we use the ICES data on fisheries landings fr
 3. Kelp harvesting, Dredge fishing, and the tourist and recreational catch was added to the international matrix after the application of the inflation factor.
 
 #### International effort by gear {.unnumbered}
-To approximate international catch we use the GFW data [@kroosdama2018] to calculate an inflation factor.
+To approximate international catch we use the GFW data [@kroodsma2018] to calculate an inflation factor.
 1. We divide the total effort by mobile and static gears by the total international effort represented by flags other than Russia. The appropriate correction factors were matched to StrathE2E gear types based on wthe GFW gears. The following gears were not inflated as they are unique to the Norwegian fleet: Harpoons, Dredge, Kelp harvesting, Recreational.
 2. We sum the Norwegian and EU effort vectors described above, and multiply by the GFW correction factor per gear.
 3. The tourist, recreational (described above), harpoons, dredge, kelp harvesting effort were added to the international effort after the application of the inflation factor.
@@ -711,6 +712,10 @@ The bycatch of birds was estimated using the estimations from [@hildesofiefantof
 ![(#tab:birdtable) From [@hildesofiefantoft2021], Table 6.1 (translated from Norwegian).](img/Discards_birds.png)
 \newpage
 
+### Losses by processing-at-sea rates {.unnumbered}
+
+Processing-at-sea refers to the practice on some types of vessels of eviscerating selected proportions of the catch and returning the viscera to the sea as offal.
+To calculate the processing-at-sea rates, we used data from the Norwegian directorate for fisheries landings which reports both post-processed weight (produktvekt) and estimated round weight (Rundvekt). To obtain the part of the landings being rejected at sea as offal, we calculated $(Round weight-post-processed weight)/Round weight$. We thus obtainend the offal rates for each gear and guild for the Norwegian fleet. We considered the other fleets to have a similar ratio of offal to round weight as the Norwegian fleet.
 
 ### Final processing {.unnumbered}
 
@@ -725,10 +730,189 @@ The bycatch of birds was estimated using the estimations from [@hildesofiefantof
 
 5.  Fishing power was calculated as catch / activity per gear.
 
-### Losses by processing-at-sea rates {.unnumbered}
 
-Processing-at-sea refers to the practice on some types of vessels of eviscerating selected proportions of the catch and returning the viscera to the sea as offal.
-To calculate the processing-at-sea rates, we used data from the Norwegian directorate for fisheries landings which reports both post-processed weight (produktvekt) and estimated round weight (Rundvekt). To obtain the part of the landings being rejected at sea as offal, we calculated $(Round weight-post-processed weight)/Round weight$. We thus obtainend the offal rates for each gear and guild for the Norwegian fleet. We considered the other fleets to have a similar ratio of offal to round weight as the Norwegian fleet.
+# Target Data {.unnumbered}
+
+A set of independent data, referred as "Target data", was collected in order to evaluate the model and to fit some of the parameters. The target data correspond to four csv tables:
+- The first is a table of observed annual-based indices, summarising the annual mean value of a range of parameters including productions, consumption, landings, discards, bycatch, concentrations of chlorophyll and nitrogen, production/biomass ratios and other metabolic ratios. The dataset contains a mean value ad the standard deviation of the mean value (`r table.ref("tab_annualobs")`).
+- The second isis a table of observed monthly-based indices, representing the monthly concentrations of surface chlorophylle with a median value and values for the lower and upper centiles (0.2 and 0.8).(`r table.ref("tab_monthlyobs")`).
+- The third is a table of independently known regional harvest ratios for each guild for the whole model domain.
+
+## Annual target data {.unnumbered}
+
+The independent data of annual-indices of the ecosystem were taken from various sources and translated to $mMN \cdot m^{-2} \cdot y^{-1}$ using the conversion rates used in [@heath2021] (`r table.ref("tab_convert")`).
+
+- The annual total primary production and chlorphyll concentrations was taken from COPERNICUS-GlobColour assuming redfield ratio [@europeanunion-copernicusmarineservice2022].
+- The annual production of zooplankton was estimated from a simulation using the NORWECOM [@skogen2018] model ran in January 2025 by Morten Skogen.
+- The annual productions of fish, birds, cetaceans and pinnipeds were estimated from the values of [@skaret2016].
+- The annual productions of benthos were estimated from [@blanchard2002].
+- The estimations of consumptions were taken from the data of [@skaret2016], [@pedersen2021], [@christensen2001] and [@blanchard2002].
+- The landings and discards were calculated on the same way described in section Fishing fleet.
+- The Production/Biomass ratios were calculated from [@blanchard2002], [@christensen2001], [@mackinson2008] and [@fredriksen1995].
+- The other metabolic ratios for macrophytes were taken from [@broch2012] 
+- Denitrification estimated from [@mctigue2016]
+- Nitrate concentration in sediment from [@laverick2022]
+- Nitrate concentration in water column from [@mork2024a]
+- Bycatch of birds from [@baerum2019]
+- Bycatch of seals and cetaceans from [@moan2016]
+
+## Monthly target data {.unnumbered}
+
+Monthly chlorophyll concentrations were taken from COPERNICUS-GlobColour assuming redfield ratio [@europeanunion-copernicusmarineservice2022].
+
+\newpage
+```{r convert_cap}
+tab_annualobs_cap <- table_nums(name = "tab_convert", 
+    caption = stringr::str_glue("Conversion from g to mMN."))
+```
+
+`r table_nums("tab_convert")`
+
+```{r tab_convert}
+
+Target_annual <- read.csv(str_glue("Files/nitrogen_carbon_WW_conversions_ed.csv"))%>%
+  gt()
+Target_annual
+```
+
+\newpage
+```{r annualobs_cap}
+tab_annualobs_cap <- table_nums(name = "tab_annualobs", 
+    caption = stringr::str_glue("Annual-based indices of the state of the ecosystem in the study area for 2010-2019."))
+```
+
+`r table_nums("tab_annualobs")`
+
+```{r tab_annualobs}
+
+Target_annual <- read.csv(str_glue("Files/{implementation}/{Period}/Target/annual_observed_{toupper(implementation)}_{Period}.csv"),fileEncoding = "latin1")%>%
+  filter(Use1_0==1)%>%
+  select(-c(Use1_0,Name,Region, Time_period))
+
+split_target <- Target_annual %>%
+  mutate(group = ceiling(row_number() / 19)) %>%
+  group_split(group, .keep = FALSE)
+
+split_target[[1]] %>%
+  gt()%>%
+  fmt_number(
+    columns = c("Annual_measure", "SD_of_measure"),
+    decimals = 4,
+    use_seps = FALSE
+  ) %>%
+  cols_align(
+    align = 'center',
+    columns = vars(
+      Annual_measure,
+      SD_of_measure,
+      Units,
+      Description	,
+      Source
+    )
+  ) %>%
+  tab_options(row_group.background.color = "whitesmoke")
+```
+
+\newpage
+
+`r table_nums("tab_annualobs", display = "cite")` Continued.
+
+```{r tab_annualobs_2}
+split_target[[2]] %>%
+  gt()%>%
+  fmt_number(
+    columns = c("Annual_measure", "SD_of_measure"),
+    decimals = 4,
+    use_seps = FALSE
+  ) %>%
+  cols_align(
+    align = 'center',
+    columns = vars(
+      Annual_measure,
+      SD_of_measure,
+      Units,
+      Description	,
+      Source
+    )
+  ) %>%
+  tab_options(row_group.background.color = "whitesmoke")
+```
+\newpage
+
+`r table_nums("tab_annualobs", display = "cite")` Continued.
+
+```{r tab_annualobs_3}
+split_target[[3]] %>%
+  gt()%>%
+  fmt_number(
+    columns = c("Annual_measure", "SD_of_measure"),
+    decimals = 4,
+    use_seps = FALSE
+  ) %>%
+  cols_align(
+    align = 'center',
+    columns = vars(
+      Annual_measure,
+      SD_of_measure,
+      Units,
+      Description,
+      Source
+    )
+  ) %>%
+  tab_options(row_group.background.color = "whitesmoke")
+```
+\newpage
+
+`r table_nums("tab_annualobs", display = "cite")` Continued.
+
+```{r tab_annualobs_4}
+split_target[[4]] %>%
+  gt()%>%
+  fmt_number(
+    columns = c("Annual_measure", "SD_of_measure"),
+    decimals = 4,
+    use_seps = FALSE
+  ) %>%
+  cols_align(
+    align = 'center',
+    columns = vars(
+      Annual_measure,
+      SD_of_measure,
+      Units,
+      Description	,
+      Source
+    )
+  ) %>%
+  tab_options(row_group.background.color = "whitesmoke")
+```
+
+
+\newpage
+
+```{r monthlyobs_cap}
+tab_monthlyobs_cap <- table_nums(name = "tab_monthlyobs", 
+    caption = stringr::str_glue("Monthly-based indices of the state of the ecosystem in the study area for 2010-2019."))
+```
+`r table_nums("tab_monthlyobs")`
+```{r tab_monthlyobs}
+
+Target_monthly <- read.csv(str_glue("Files/{implementation}/{Period}/Target/monthly_observed_{toupper(implementation)}_{Period}.csv"),fileEncoding = "UTF-8")
+  
+Target_monthly %>%
+  select(-c(low_cent_value,upp_cent_value	))%>%
+  drop_na()%>%
+  gt() %>%
+  fmt_number(
+    columns = c("median", "lower_centile","upper_centile"),
+    decimals = 4,
+    use_seps = FALSE
+  ) %>%
+  cols_align(
+    align = 'center'
+  ) %>%
+  tab_options(row_group.background.color = "whitesmoke")
+
+```
 
 # End {.unnumbered}
 

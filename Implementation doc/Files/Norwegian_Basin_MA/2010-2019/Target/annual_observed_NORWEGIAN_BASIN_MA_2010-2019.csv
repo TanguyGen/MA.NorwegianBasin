@@ -1,0 +1,87 @@
+Annual_measure,SD_of_measure,Use1_0,Name,Units,Description,Region,Time_period,Source
+787.4670885,71.39054471,1,Obs_TAPP,mMN/m2/y,Annual_total_primary_production,Norwegian_Sea_model_area,2010-2019,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104
+NA,NA,0,Obs_NP,mMN/m2/y,Annual_new_production_from_depth_integrated_nitrate_plus_summer_river_and_atmos_inputs,NA,NA,Insufficient_data_in_time_period
+309,167,1,Obs_KelpP,gC/m2/y,Annual_WITHIN_FOREST_NET_production_of_macrophytes,Norwegian_coast,1995-2019,Frigstad et al 2021
+890,667.5,1,Obs_OmnizooP,mMN/m2/y,Annual_ominiv_zooplankton_gross_production,Norwegian_Sea_model_area,2010-2019,Morten Norwecom
+215,215,1,Obs_CarnzooP,mMN/m2/y,Annual_carnivorous_zooplankton_gross_production,Norwegian_Sea_model_area,2010-2020,Morten Norwecom
+40.166,40.166,1,Obs_PFishP,mMN/m2/y,Annual_planktivorous_fish_gross_production,Norwegian and Barents sea,2000,Skaret and Pitcher 2016
+0.9016,2,1,Obs_DFishP,mMN/m2/y,Annual_demersal_fish_gross_production,Norwegian and Barents sea,1988-2003,Skaret and Pitcher 2016
+77,77,1,Obs_BensuspP,mMN/m2/y,Annual_susp/dep_benthos_gross_production,20_percent_of_Barents_Sea,1990-1995,Blanchard_et_al_2002
+7,7,1,Obs_BencarnP,mMN/m2/y,Annual_carn/scan_benthos_gross_production,20_percent_of_Barents_Sea,1990-1995,Blanchard_et_al_2002
+0.01253,0.01253,1,Obs_birdP,mMN/m2/y,Annual_net_production_of_birds,Norwegian and Barents sea,2000,Skaret and Pitcher 2016
+0.03449,0.03449,1,Obs_sealP,mMN/m2/y,Annual_net_production_of_pinnipeds,Norwegian and Barents sea,2000,Skaret and Pitcher 2016
+0.01691,0.01691,1,Obs_cetaP,mMN/m2/y,Annual_net_production_of_cetaceans,Norwegian and Barents sea,2000,Skaret and Pitcher 2016
+NA,NA,0,Obs_maxbenthslar,mMN/m3,Annual_monthly_max_conc_of_benthos_susp/dep_larvae,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_maxbenthclar,mMN/m3,Annual_monthly_max_conc_of_benthos_carn/scav_larvae,NA,NA,Insufficient_data_in_time_period
+12.5487647,9.411573525,1,Obs_Conpfishfish,mMN/m2/y,Annual_consumption_of_planktivorous_fish_by_fish,Norwegian_Sea_model_area,2000,Christensen et al 2001
+11.7035681,8.777676075,1,Obs_Condfishfish,mMN/m2/y,Annual_consumption_of_demersal_fish_by_fish,Norwegian_Sea_model_area,2000,Christensen et al 2001
+14.768,11.076,1,Obs_Conzoofish,mMN/m2/y,Annual_consumption_of_omniv_zooplankton_by_fish_and_fish_larvae,Barents_Sea,1997,Dommasnes_et_al_2001
+51.75,38.8125,1,Obs_Conzoocarnz,mMN/m2/y,Annual_consumption_of_omniv_zooplankton_by_carn_zooplankton,Barents_Sea,1990-1995,Blanchard_et_al_2002
+44.0330603,33.02479523,1,Obs_Conbenfish,mMN/m2/y,Annual_consumption_of_benthos_by_fish,Norwegian_Sea_model_area,1990-1995,Pedersen et al 2021
+1.5008,1.1256,1,Obs_Contotal_bird,mMN/m2/y,Annual_food_consumption_by_birds,Norwegian_Sea_model_area,1990-1995,Pedersen et al 2021
+0.25005,0.25005,1,Obs_Proppfishbird,dimensionless,Proportion_planktivorous_fish_in_diet_of_birds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.212,0.212,1,Obs_Propdfishbird,dimensionless,Proportion_demersal_fish_in_diet_of_birds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.19505,0.19505,1,Obs_Propmfishbird,dimensionless,Proportion_migratory_fish_in_diet_of_birds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.04,0.03,1,Obs_Propdiscbird,dimensionless,Proportion_discards_in_diet_of_birds,Barents_Sea,1997,Dommasnes_et_al_2001
+3.5449,3.5449,1,Obs_Contotal_seal,mMN/m2/y,Annual_food_consumption_by_pinnipeds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.105,0.105,1,Obs_Proppfishseal,dimensionless,Proportion_planktivorous_fish_in_diet_of_pinnipeds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.230475,0.230475,1,Obs_Propdfishseal,dimensionless,Proportion_demersal_fish_in_diet_of_pinnipeds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.33511,0.33511,1,Obs_Propmfishseal,dimensionless,Proportion_migratory_fish_in_diet_of_pinnipeds,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+4.7185,4.7185,1,Obs_Contotal_ceta,mMN/m2/y,Annual_food_consumption_by_cetaceans,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.284322324,0.284322324,1,Obs_Proppfishceta,dimensionless,Proportion_planktivorous_fish_in_diet_of_cetaceans,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.0547,0.0547,1,Obs_Propdfishceta,dimensionless,Proportion_demersal_fish_in_diet_of_cetaceans,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.3442,0.3442,1,Obs_Propmfishceta,dimensionless,Proportion_migratory_fish_in_diet_of_cetaceans,Norwegian and Barents sea,1997-2001,Skaret and Pitcher 2016
+0.932,0.233,1,Obs_Pland_livewt,mMN/m2/y,Annual_planktivorous_fish_landings_(live_weight),Norwegian Fishing zone,2010-2019,Fiskeridirektoratet
+0.241,0.06025,1,Obs_Dland_livewt,mMN/m2/y,Annual_demersal_fish_landings_(live_weight),Norwegian Fishing zone,2010-2019,Fiskeridirektoratet
+0.611,0.15275,1,Obs_Mland_livewt,mMN/m2/y,Annual_migratory_fish_landings_(live_weight),Norwegian Fishing zone,2010-2019,Fiskeridirektoratet
+0.000314423,7.86E-05,1,Obs_Bsland_livewt,mMN/m2/y,Annual_susp/dep_benthos_landings_(live_weight),Norwegian Fishing zone,2010-2019,Fiskeridirektoratet
+0.0000339,0.000008475,1,Obs_Bcland_livewt,mMN/m2/y,Annual_carn/scav_benthos_landings_(live_weight),Norwegian Fishing zone,2010-2019,Fiskeridirektoratet
+0.00000165,4.13E-07,1,Obs_Zcland_livewt,mMN/m2/y,Annual_carn_zooplankton_landings_(live_weight),Barents_Sea,2011-2019,Norwegian_Fisheries_Directorate/STECF/ICES_FAO
+0.302693808,0.075673452,1,Obs_Kland_livewt,mMN/m2/y,Annual_macrophyte_landings_(live_weight),Barents_Sea,2011-2019, Dehnhard et al 2024  NINA Report 2502 - 167460t per year kelp plus ascophyllum
+0.65,0.325,1,Obs_kelp_pb,/y,Annual_CARBON_gross_PB_ratio_of_macrophytes,Northern_Norway,General,Sjøtun_et_al_1995/Dommasnes et al. 2001
+10,5.00E+00,1,Obs_benslar_pb,/y,Annual_gross_PB_ratio_larvae_of_susp/dep_benthos,General_value,General,Mackinson_and_Daskalov_2007
+10,5.00E+00,1,Obs_benclar_pb,/y,Annual_gross_PB_ratio_larvae_of_carn/scav_benthos,General_value,General,Mackinson_and_Daskalov_2007
+6.44,3.22E+00,1,Obs_bens_pb,/y,Annual_gross_PB_ratio_susp/dep_feeding_benthos,Barents Sea,1990-1995,Blanchard_et_al_2002
+2.42,1.21E+00,1,Obs_benc_pb,/y,Annual_gross_PB_ratio_carn/scav_feeding_benthos,Barents Sea,1990-1995,Blanchard_et_al_2002
+7.3478,3.67E+00,1,Obs_omni_pb,/y,Annual_gross_PB_ratio_omniv_zooplankton,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+1.9581,9.79E-01,1,Obs_carn_pb,/y,Annual_gross_PB_ratio_carniv_zooplankton,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+4,2.00E+00,1,Obs_fishplar_pb,/y,Annual_gross_PB_ratio_larvae_of_planktivorous_fish,General_value,General,Mackinson_and_Daskalov_2007
+4,2.00E+00,1,Obs_fishdlar_pb,/y,Annual_gross_PB_ratio_larvae_of_demersal_fish,General_value,General,Mackinson_and_Daskalov_2007
+1.6068,8.03E-01,1,Obs_fishp_pb,/y,Annual_gross_PB_ratio_planktivorous_fish,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+0.5377,2.69E-01,1,Obs_fishd_pb,/y,Annual_gross_PB_ratio_demersal_fish,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+0.6908,3.45E-01,1,Obs_fishm_pb,/y,Annual_gross_PB_ratio_migratory_fish,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+1,5.00E-01,1,Obs_bird_pb,/y,Annual_net_PB_ratio_birds,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+0.143,7.15E-02,1,Obs_seal_pb,/y,Annual_net_PB_ratio_pinnipeds,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+0.0356,1.78E-02,1,Obs_ceta_pb,/y,Annual_net_PB_ratio_cetaceans,Barents_and_Norwegian Sea,1997,Dommasnes_et_al_2001
+0.39,0.39,1,Obs_exud_C_kelp,dimensionless,Annual_average_proportion_of_macrophyte_C_uptake_which_is_exuded,General_value,2010,"Broch and Slagstad, 2012"
+0.12,0.12,1,Obs_kelp_NC,dimensionless,Annual_average_molar_NC_ratio_of_macrophytes,General_value,2010,"Broch and Slagstad, 2012"
+90.7,90.7,1,Obs_Denitrif,mMN/m2/y,Annual_denitrification,Chuchi_Sea,2013,McTigue_et_al_2016
+0.03203,0.03203,1,Obs_Dfdiscardp,dimensionless,Proportion_of_demersal_fish_catch_discarded,Barents_Sea,2011-2019,Norwegian_Fisheries_Directorate/STECF/ICES_FAO
+NA,NA,0,Obs_s_x_ammonia,mMN/m3,Annual_average_ammonia_conc_in_porewater_of_sand_gs_0.25mm,NA,NA,Insufficient_data_in_time_period
+18.56,18.56,0,Obs_d_x_ammonia,mMN/m3,Annual_average_ammonia_conc_in_porewater_of_mud_gs_0.12mm,Barents_Sea,2017,Freitas_et_al_2020
+NA,NA,0,Obs_s_x_nitrate,mMN/m3,Annual_average_nitrate_conc_in_porewater_of_sand_gs_0.25mm,Barents_Sea,General,Insufficient_data_in_time_period
+4.016,4.016,0,Obs_d_x_nitrate,mMN/m3,Annual_average_nitrate_conc_in_porewater_of_mud_gs_0.12mm,Barents_Sea,2017,Freitas_et_al_2020
+0.035275,0.035275,1,Obs_s_x_TON,%N(gN/g_dry_sed),Annual_average_organic_N_content_of_sand_gs_0.25mm_(0.19-0.43mm),Barents_Sea,General,Laverick_et_al_submitted
+0.136053,0.136053,1,Obs_d_x_TON,%N(gN/g_dry_sed),Annual_average_organic_N_content_of_mud_gs_0.12mm_(0.03-0.07mm),Barents_Sea,General,Laverick_et_al_submitted
+0.093479397,0.093479397,1,Obs_NDJF_s_chl,mg/m3,Average_winter_(Nov-Feb)_chlorophyll_conc_shallow_layer,Norwegian_Sea_model_area,2010-2019,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104_assuming_Redfield_CN
+0.491541747,0.491541747,1,Obs_MJJA_s_chl,mg/m3,Average_summer_(May-Aug)_chlorophyll_conc_shallow_layer,Norwegian_Sea_model_area,2010-2019,Copernicus remote sensing data from OCEANCOLOUR_GLO_BGC_L4_MY_009_104_assuming_Redfield_CN
+10,10,1,Obs_NDJF_s_nitrate,mMN/m3,Average_winter_(Nov-Feb)_nitrate_conc_shallow_layer,Norwegian Sea,2020,Mork et al 2024
+3,3,1,Obs_MJJA_s_nitrate,mMN/m3,Average_summer_(May-Aug)_nitrate_conc_shallow_layer,Norwegian Sea,2020,Mork et al 2024
+11,11,1,Obs_NDJF_d_nitrate,mMN/m3,Average_winter_(Nov-Feb)_nitrate_conc_deep_layer,Norwegian Sea,2020,Mork et al 2024
+11,11,1,Obs_MJJA_d_nitrate,mMN/m3,Average_summer_(May-Aug)_nitrate_conc_deep_layer,Norwegian Sea,2020,Mork et al 2024
+NA,NA,0,Obs_NDJF_s_ammonia,mMN/m3,Average_winter_(Nov-Feb)_ammonia_conc_shallow_layer,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_MJJA_s_ammonia,mMN/m3,Average_summer_(May-Aug)_ammonia_conc_shallow_layer,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_NDJF_d_ammonia,mMN/m3,Average_winter_(Nov-Feb)_ammonia_conc_deep_layer,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_MJJA_d_ammonia,mMN/m3,Average_summer_(May-Aug)_ammonia_conc_deep_layer,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_carn_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_carnzoo_depth_av_conc,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_omni_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_omnivzoo_depth_av_conc,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_phyt_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_phyt_surface_layer_conc,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_nit_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_nitrate_surface_layer_conc,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_amm_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_ammonia_surface_layer_conc,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_pfish_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_planktivorous_fish_density_per_m2,NA,NA,Insufficient_data_in_time_period
+NA,NA,0,Obs_dfish_io_ratio,dimensionless,Inshore_offshore_ratio_of_annual_mean_demersal_fish_density_per_m2,NA,NA,Insufficient_data_in_time_period
+0.000072,0.000072,1,Obs_birddisc,mMN/m2/y,Annual_bycatch_of_birds,Norwegian coast,2006-2015,Borum et al 2019
+0.000392503,0.000392503,1,Obs_sealdisc,mMN/m2/y,Annual_bycatch_of_pinnipeds,Norwegian coast,2006-2015,Moan_2016
+0.000392721,0.000392721,1,Obs_cetadisc,mMN/m2/y,Annual_bycatch_of_cetaceans,Norwegian coast,2006-2015,Moan_2016
+0.15,1.50E-01,1,Obs_kelp_beachcast,dimensionless,Proportion_of_macrophyte_annual_nitrogen_uptake_exported_as_beachcast,New_Zealand,General,Zemke_White_et_al_2005
+0.011609,0.00290225,1,Obs_Ctland_livewt,mMN/m2/y,Obs_cetacean_landings_by_whale_hunters,Norwegian Fishing zone,2010-2019,NAMMCO_data_converted_to_weight

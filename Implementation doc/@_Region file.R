@@ -1,7 +1,7 @@
 
 ## Set repeated commands specific to the project region
 ## This version is parameterised for the Norwegian Basin
-implementation <- "Norwegian_Basin"
+implementation <- "Norwegian_Basin_MA"
 
 library(sf)
 

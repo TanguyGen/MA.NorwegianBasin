@@ -1,0 +1,13 @@
+Gear_name,Gear_code,Discardrate_PF,Discardrate_DF,Discardrate_MF,Discardrate_FDB,Discardrate_CSB,Discardrate_CZ,Discardrate_BD,Discardrate_SL,Discardrate_CT,Discardrate_KP
+Mollusc_dredge,MD,1,0,1,0,1,1,1,1,1,1
+Harpoons,HARP,1,1,1,1,1,1,1,1,0,1
+Kelp_harvester,KH,1,1,1,1,1,1,1,1,1,0
+Longlines+Gillnets,LLGN,0.080769771,0.102823111,0.507681928,1,0,0,1,1,0.999997669,1
+Pelagic_Seiners_FOREIGN,PSF,0,0,0,1,1,1,1,1,1,1
+Pelagic_Seiners_NORW,PSN,0,0,0,1,0,1,1,1,1,1
+Pelagic_trawlers_FOREIGN,PTF,0.001824772,0,0.000330221,1,1,1,1,1,1,1
+Pelagic_trawlers_NORW,PTN,0.013509599,0.082859375,0.012368633,1,0,0,1,1,1,1
+Creels,CR,1,0,1,0,0,1,1,1,1,1
+Recreational,REC,1,0,0,1,1,1,1,1,1,1
+Shelf_Trawlers,ST,0.267271818,0.015427788,0.46574529,0,0,0,1,1,1,1
+NA,NA,1,1,1,1,1,1,1,1,1,0
