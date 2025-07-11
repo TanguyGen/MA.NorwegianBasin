@@ -499,8 +499,6 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
   arrange(`StrathE2E Gear`)%>%
   distinct()%>%
   gt()
-
-gears
 ```
 
 ## Potentially time-varying parameters of the fishing fleet model {.unnumbered}
