@@ -500,7 +500,7 @@ data_frame(`StrathE2E Gear`= gears$Aggregated_gear %>%
   distinct()%>%
   gt()
 
-
+gears
 ```
 
 ## Potentially time-varying parameters of the fishing fleet model {.unnumbered}
@@ -736,7 +736,7 @@ To calculate the processing-at-sea rates, we used data from the Norwegian direct
 A set of independent data, referred as "Target data", was collected in order to evaluate the model and to fit some of the parameters. The target data correspond to four csv tables:
 - The first is a table of observed annual-based indices, summarising the annual mean value of a range of parameters including productions, consumption, landings, discards, bycatch, concentrations of chlorophyll and nitrogen, production/biomass ratios and other metabolic ratios. The dataset contains a mean value ad the standard deviation of the mean value (`r table.ref("tab_annualobs")`).
 - The second isis a table of observed monthly-based indices, representing the monthly concentrations of surface chlorophylle with a median value and values for the lower and upper centiles (0.2 and 0.8).(`r table.ref("tab_monthlyobs")`).
-- The third is a table of independently known regional harvest ratios for each guild for the whole model domain.
+
 
 ## Annual target data {.unnumbered}
 
